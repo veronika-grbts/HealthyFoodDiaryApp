@@ -5,7 +5,7 @@ CREATE TYPE ActivityLevel AS ENUM ('Low', 'Medium', 'High');
 CREATE TYPE MealType AS ENUM ('Breakfast', 'Lunch', 'Dinner');
 
 
-CREATE TABLE "public.User" (
+CREATE TABLE Users (
 	"phone_number" bigint NOT NULL UNIQUE,
 	"name" varchar(50) NOT NULL,
 	"age" integer NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE "public.User" (
 
 
 
-CREATE TABLE "public.UserAllergy" (
+CREATE TABLE UserAllergy (
 	"id" serial NOT NULL,
 	"number_phone" bigint NOT NULL,
 	"type_meal" VARCHAR(50) NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE "public.UserAllergy" (
 
 
 
-CREATE TABLE "public.Products" (
+CREATE TABLE Products (
 	"product_id" serial NOT NULL,
 	"name" varchar(100) NOT NULL,
 	"calories" FLOAT NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE "public.Products" (
 
 
 
-CREATE TABLE "public.UserSelectedProduct" (
+CREATE TABLE UserSelectedProduct (
 	"id" serial NOT NULL,
 	"phone_number" bigint NOT NULL,
 	"product_id" integer NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE "public.UserSelectedProduct" (
 );
 
 
-CREATE TABLE "public.MealOption" (
+CREATE TABLE MealOption (
     "id_option" serial NOT NULL,
     "name" varchar(100) NOT NULL,
     "calories" FLOAT NOT NULL,
@@ -76,36 +76,36 @@ CREATE TABLE "public.MealOption" (
 );
 
 CREATE VIEW BreakfastOptions AS
-SELECT * FROM "public.MealOption"
+SELECT * FROM MealOption
 WHERE "type_meal" = 'Breakfast';
 
 
 CREATE VIEW LunchOptions AS
-SELECT * FROM "public.MealOption"
+SELECT * FROM MealOption
 WHERE "type_meal" = 'Lunch';
 
 
 CREATE VIEW DinnerOptions AS
-SELECT * FROM "public.MealOption"
+SELECT * FROM MealOption
 WHERE "type_meal" = 'Dinner';
 
-CREATE TABLE "public.UserSelectedMenu" (
+CREATE TABLE UserSelectedMenu (
   "id" serial NOT NULL,
   "phone_number" bigint NOT NULL,
-  "breakfast_id" integer REFERENCES "public.MealOption"("id_option"),
-  "breakfast_drink_id" integer REFERENCES "public.Drinks"("id_drink"),
-  "lunch_id" integer REFERENCES "public.MealOption"("id_option"),
-  "lunch_drink_id" integer REFERENCES "public.Drinks"("id_drink"),
-  "dinner_id" integer REFERENCES "public.MealOption"("id_option"),
-  "dinner_drink_id" integer REFERENCES "public.Drinks"("id_drink"),
+  "breakfast_id" integer REFERENCES MealOption("id_option"),
+  "breakfast_drink_id" integer REFERENCES Drinks("id_drink"),
+  "lunch_id" integer REFERENCES MealOption("id_option"),
+  "lunch_drink_id" integer REFERENCES Drinks("id_drink"),
+  "dinner_id" integer REFERENCES MealOption("id_option"),
+  "dinner_drink_id" integer REFERENCES Drinks("id_drink"),
   CONSTRAINT "UserSelectedMenu_pk" PRIMARY KEY ("id"),
-  CONSTRAINT "UserSelectedMenu_fk0" FOREIGN KEY ("phone_number") REFERENCES "public.User"("phone_number")
+  CONSTRAINT "UserSelectedMenu_fk0" FOREIGN KEY ("phone_number") REFERENCES User("phone_number")
 ) WITH (
   OIDS=FALSE
 );
 
 
-CREATE TABLE "public.Drinks" (
+CREATE TABLE Drinks (
 	"id_drink" serial NOT NULL,
 	"name_drink" varchar(50) NOT NULL,
 	"calories" FLOAT NOT NULL,
@@ -118,7 +118,7 @@ CREATE TABLE "public.Drinks" (
 );
 
 
-CREATE TABLE "public.Ingredients" (
+CREATE TABLE Ingredients (
 	"id_ingredients" serial NOT NULL,
 	"name_ingredients" varchar(50) NOT NULL,
 	CONSTRAINT "Ingredients_pk" PRIMARY KEY ("id_ingredients")
@@ -127,7 +127,7 @@ CREATE TABLE "public.Ingredients" (
 );
 
 
-CREATE TABLE "public.MealIngredients" (
+CREATE TABLE MealIngredients (
 	"id_mi" serial NOT NULL,
 	"meal_id" integer NOT NULL,
 	"ingredient_id" integer NOT NULL,
@@ -138,7 +138,7 @@ CREATE TABLE "public.MealIngredients" (
 
 
 
-CREATE TABLE "public.MealIngredientsDrink" (
+CREATE TABLE MealIngredientsDrink (
 	"id_ingredient_drink" serial NOT NULL,
 	"id_drink" integer NOT NULL,
 	"id_ingredients" integer NOT NULL,
@@ -149,14 +149,14 @@ CREATE TABLE "public.MealIngredientsDrink" (
 
 
 
-ALTER TABLE "public.UserAllergy" ADD CONSTRAINT "UserAllergy_fk0" FOREIGN KEY ("number_phone") REFERENCES "public.User"("phone_number") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE UserAllergy ADD CONSTRAINT "UserAllergy_fk0" FOREIGN KEY ("number_phone") REFERENCES User("phone_number") ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE "public.UserSelectedProduct" ADD CONSTRAINT "UserSelectedProduct_fk0" FOREIGN KEY ("phone_number") REFERENCES "public.User"("phone_number") ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE "public.UserSelectedProduct" ADD CONSTRAINT "UserSelectedProduct_fk1" FOREIGN KEY ("product_id") REFERENCES "public.Products"("product_id")ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE UserSelectedProduct ADD CONSTRAINT "UserSelectedProduct_fk0" FOREIGN KEY ("phone_number") REFERENCES User("phone_number") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE UserSelectedProduct ADD CONSTRAINT "UserSelectedProduct_fk1" FOREIGN KEY ("product_id") REFERENCES Products("product_id")ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE "public.MealIngredients" ADD CONSTRAINT "MealIngredients_fk0" FOREIGN KEY ("meal_id") REFERENCES "public.MealOption"("id_option")ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE "public.MealIngredients" ADD CONSTRAINT "MealIngredients_fk1" FOREIGN KEY ("ingredient_id") REFERENCES "public.Ingredients"("id_ingredients")ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE MealIngredients ADD CONSTRAINT "MealIngredients_fk0" FOREIGN KEY ("meal_id") REFERENCES MealOption("id_option")ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE MealIngredients ADD CONSTRAINT "MealIngredients_fk1" FOREIGN KEY ("ingredient_id") REFERENCES Ingredients("id_ingredients")ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE "public.MealIngredientsDrink" ADD CONSTRAINT "MealIngredientsDrink_fk0" FOREIGN KEY ("id_drink") REFERENCES "public.Drinks"("id_drink")ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE "public.MealIngredientsDrink" ADD CONSTRAINT "MealIngredientsDrink_fk1" FOREIGN KEY ("id_ingredients") REFERENCES "public.Ingredients"("id_ingredients")ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE MealIngredientsDrink ADD CONSTRAINT "MealIngredientsDrink_fk0" FOREIGN KEY ("id_drink") REFERENCES Drinks("id_drink")ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE MealIngredientsDrink ADD CONSTRAINT "MealIngredientsDrink_fk1" FOREIGN KEY ("id_ingredients") REFERENCES Ingredients("id_ingredients")ON UPDATE CASCADE ON DELETE CASCADE;
 
