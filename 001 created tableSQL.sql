@@ -29,7 +29,7 @@ CREATE TABLE Users (
 CREATE TABLE UserAllergy (
 	"id" serial NOT NULL,
 	"number_phone" bigint NOT NULL,
-	"type_meal" VARCHAR(50) NOT NULL,
+	"id_ingredient" integer NOT NULL,
 	CONSTRAINT "UserAllergy_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -160,3 +160,4 @@ ALTER TABLE MealIngredients ADD CONSTRAINT "MealIngredients_fk1" FOREIGN KEY ("i
 ALTER TABLE MealIngredientsDrink ADD CONSTRAINT "MealIngredientsDrink_fk0" FOREIGN KEY ("id_drink") REFERENCES Drinks("id_drink")ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE MealIngredientsDrink ADD CONSTRAINT "MealIngredientsDrink_fk1" FOREIGN KEY ("id_ingredients") REFERENCES Ingredients("id_ingredients")ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE UserAllergy ADD CONSTRAINT fk_userallergy_ingredients FOREIGN KEY ("id_ingredients") REFERENCES Ingredients ("id_ingredients") ON UPDATE CASCADE ON DELETE CASCADE;

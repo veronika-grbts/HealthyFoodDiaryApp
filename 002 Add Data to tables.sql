@@ -154,13 +154,9 @@ INSERT INTO "public.User" (
 SELECT * from Users
 
 -- Created allergies for user
-INSERT INTO UserAllergy ("number_phone", "type_meal")
+INSERT INTO UserAllergy ("number_phone", "id_ingredient")
 VALUES
-    (380973090484, 'цибуля ріпчаста');
-
-INSERT INTO "public.UserAllergy" ("number_phone", "type_meal")
-VALUES
-    (380973399488, 'яблуко');
+    (380973090484, 122);
 
 SELECT * from UserAllergy
     
