@@ -1,0 +1,453 @@
+2024-02-14 11:13:53 DEBUG AbstractServiceRegistryImpl:428 - Implicitly destroying ServiceRegistry on de-registration of all child ServiceRegistries
+2024-02-14 11:13:53 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 11:13:53 DEBUG BootstrapServiceRegistryImpl:295 - Implicitly destroying Boot-strap registry on de-registration of all child ServiceRegistries
+2024-02-14 11:15:00 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-14 11:15:01 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-14 11:15:01 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 11:15:01 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 11:15:01 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 11:15:01 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 11:15:01 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 11:15:01 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 11:15:02 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 11:15:02 INFO  HibernateMethods:115 - User information with phone number 380507730042: User(phoneNumber=380507730042, name=Костя, age=33, weight=97.3, height=180.0, gender=true, activityLevel=High, allergies=false, cause=false, totalCaloric=1660.0, totalProtein=110.0, totalFat=40.0, totalCarbs=70.0)
+2024-02-14 11:15:02 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 11:17:33 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-14 11:17:34 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-14 11:17:34 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 11:17:34 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 11:17:34 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 11:17:34 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 11:17:34 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 11:17:34 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 11:17:35 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 11:17:35 INFO  HibernateMethods:115 - User information with phone number 380973399488: User(phoneNumber=380973399488, name=Павло, age=30, weight=104.0, height=181.0, gender=true, activityLevel=Low, allergies=true, cause=true, totalCaloric=1659.0, totalProtein=100.0, totalFat=66.0, totalCarbs=57.0)
+2024-02-14 11:17:35 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 13:45:34 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-14 13:45:35 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-14 13:45:35 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 13:45:35 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 13:45:35 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 13:45:35 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 13:45:35 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 13:45:35 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 13:45:36 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 13:45:37 INFO  HibernateMethods:98 - User successfully created with phone number 380998833676
+2024-02-14 13:45:37 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 13:45:37 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 13:45:37 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 13:45:37 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 13:45:37 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 13:45:37 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 13:45:37 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 13:45:37 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 13:45:37 INFO  HibernateMethods:115 - User information with phone number 380998833676: User(phoneNumber=380998833676, name=Анастасия, age=22, weight=58.5, height=178.0, gender=false, activityLevel=Low, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-14 13:45:37 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 13:50:30 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-14 13:50:30 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-14 13:50:31 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 13:50:31 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 13:50:31 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 13:50:31 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 13:50:31 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 13:50:31 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 13:50:31 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 13:50:32 INFO  HibernateMethods:115 - User information with phone number 380998833676: User(phoneNumber=380998833676, name=Анастасия, age=22, weight=58.5, height=178.0, gender=false, activityLevel=Low, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-14 13:50:32 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 13:54:08 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-14 13:54:08 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-14 13:54:09 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 13:54:09 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 13:54:09 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 13:54:09 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 13:54:09 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 13:54:09 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 13:54:09 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 13:54:11 INFO  HibernateMethods:98 - User successfully created with phone number 380954488232
+2024-02-14 13:54:11 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 13:54:11 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 13:54:11 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 13:54:11 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 13:54:11 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 13:54:11 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 13:54:11 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 13:54:11 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 13:54:11 INFO  HibernateMethods:115 - User information with phone number 380954488232: User(phoneNumber=380954488232, name=Женя, age=34, weight=94.2, height=178.0, gender=true, activityLevel=Low, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-14 13:54:11 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 13:55:55 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-14 13:55:55 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-14 13:55:55 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 13:55:55 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 13:55:55 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 13:55:55 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 13:55:55 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 13:55:56 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 13:55:56 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 13:55:56 INFO  HibernateMethods:115 - User information with phone number 380983090400: User(phoneNumber=380983090400, name=Юрій, age=29, weight=99.3, height=187.0, gender=true, activityLevel=Low, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-14 13:55:56 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 14:34:06 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-14 14:34:07 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-14 14:34:07 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 14:34:07 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 14:34:07 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 14:34:07 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 14:34:07 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 14:34:07 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 14:34:08 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 14:34:08 INFO  HibernateMethods:115 - User information with phone number 380983090400: User(phoneNumber=380983090400, name=Юрій, age=29, weight=99.3, height=187.0, gender=true, activityLevel=Low, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-14 14:34:08 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 16:26:40 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-14 16:26:40 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-14 16:26:41 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 16:26:41 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 16:26:41 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 16:26:41 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 16:26:41 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 16:26:41 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 16:26:41 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 16:26:42 WARN  SqlExceptionHelper:137 - SQL Error: 0, SQLState: 22P02
+2024-02-14 16:26:42 ERROR SqlExceptionHelper:142 - ОШИБКА: неверное значение для перечисления activitylevel: "Middle"
+2024-02-14 16:26:42 INFO  AbstractBatchImpl:213 - HHH000010: On release of batch it still contained JDBC statements
+2024-02-14 16:26:42 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 16:30:26 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-14 16:30:27 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-14 16:30:27 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 16:30:27 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 16:30:27 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 16:30:27 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 16:30:27 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 16:30:27 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 16:30:28 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 16:30:28 INFO  HibernateMethods:98 - User successfully created with phone number 380987711232
+2024-02-14 16:30:28 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 16:30:28 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 16:30:28 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 16:30:28 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 16:30:28 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 16:30:28 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 16:30:28 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 16:30:29 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 16:30:29 INFO  HibernateMethods:115 - User information with phone number 380987711232: User(phoneNumber=380987711232, name=Владик, age=34, weight=102.1, height=181.0, gender=true, activityLevel=High, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-14 16:30:29 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 16:34:28 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-14 16:34:29 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-14 16:34:29 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 16:34:29 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 16:34:29 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 16:34:29 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 16:34:29 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 16:34:29 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 16:34:30 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 16:34:30 INFO  HibernateMethods:98 - User successfully created with phone number 380972239876
+2024-02-14 16:34:30 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 16:34:30 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 16:34:30 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 16:34:30 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 16:34:30 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 16:34:30 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 16:34:30 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 16:34:31 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 16:34:31 INFO  HibernateMethods:115 - User information with phone number 380972239876: User(phoneNumber=380972239876, name=Маша, age=23, weight=56.3, height=156.0, gender=false, activityLevel=Medium, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-14 16:34:31 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 16:40:15 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-14 16:40:16 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-14 16:40:16 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-14 16:40:16 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-14 16:40:16 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-14 16:40:16 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-14 16:40:16 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-14 16:40:16 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-14 16:40:17 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-14 16:40:17 INFO  HibernateMethods:115 - User information with phone number 380987711232: User(phoneNumber=380987711232, name=Владик, age=34, weight=102.1, height=181.0, gender=true, activityLevel=High, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-14 16:40:17 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 11:28:25 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 11:28:42 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 11:28:43 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 11:28:43 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 11:28:43 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 11:28:43 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 11:28:43 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 11:28:45 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 11:28:46 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 11:28:47 INFO  HibernateMethods:98 - User successfully created with phone number 380974455878
+2024-02-15 11:28:47 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 11:28:47 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 11:28:47 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 11:28:47 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 11:28:47 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 11:28:47 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 11:28:47 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 11:28:47 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 11:28:48 INFO  HibernateMethods:115 - User information with phone number 380974455878: User(phoneNumber=380974455878, name=Катерина, age=25, weight=55.3, height=155.0, gender=false, activityLevel=Medium, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-15 11:28:48 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 11:45:32 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 11:45:33 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 11:45:33 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 11:45:33 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 11:45:33 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 11:45:33 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 11:45:33 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 11:45:33 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 11:45:34 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 11:45:34 INFO  HibernateMethods:98 - User successfully created with phone number 390981111222
+2024-02-15 11:45:34 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 11:45:34 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 11:45:34 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 11:45:34 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 11:45:34 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 11:45:34 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 11:45:34 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 11:45:34 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 11:45:34 INFO  HibernateMethods:115 - User information with phone number 390981111222: User(phoneNumber=390981111222, name=Егор, age=29, weight=89.4, height=188.0, gender=true, activityLevel=High, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-15 11:45:34 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 11:55:07 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 11:55:07 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 11:55:07 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 11:55:07 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 11:55:07 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 11:55:07 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 11:55:07 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 11:55:07 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 11:55:08 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 11:55:09 INFO  HibernateMethods:98 - User successfully created with phone number 380981111111
+2024-02-15 11:55:09 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 11:55:09 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 11:55:09 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 11:55:09 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 11:55:09 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 11:55:09 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 11:55:09 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 11:55:09 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 11:55:09 INFO  HibernateMethods:115 - User information with phone number 380981111111: User(phoneNumber=380981111111, name=Гриша, age=23, weight=122.1, height=187.0, gender=true, activityLevel=Low, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-15 11:55:09 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 12:00:49 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 12:00:49 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 12:00:49 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 12:00:49 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 12:00:49 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 12:00:49 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 12:00:49 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 12:00:49 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 12:00:50 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 12:00:50 INFO  HibernateMethods:98 - User successfully created with phone number 380981122333
+2024-02-15 12:00:50 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 12:00:51 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 12:00:51 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 12:00:51 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 12:00:51 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 12:00:51 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 12:00:51 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 12:00:51 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 12:00:51 INFO  HibernateMethods:115 - User information with phone number 380981122333: User(phoneNumber=380981122333, name=Гоша, age=16, weight=87.3, height=177.0, gender=true, activityLevel=High, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-15 12:00:51 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 12:10:57 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 12:10:57 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 12:10:57 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 12:10:57 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 12:10:57 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 12:10:57 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 12:10:57 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 12:10:57 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 12:10:58 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 12:10:58 INFO  HibernateMethods:115 - User information with phone number 380987711232: User(phoneNumber=380987711232, name=Владик, age=34, weight=102.1, height=181.0, gender=true, activityLevel=High, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-15 12:10:58 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 12:11:58 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 12:11:59 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 12:11:59 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 12:11:59 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 12:11:59 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 12:11:59 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 12:11:59 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 12:11:59 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 12:12:00 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 12:12:00 INFO  HibernateMethods:115 - User information with phone number 380987711232: User(phoneNumber=380987711232, name=Владик, age=34, weight=102.1, height=181.0, gender=true, activityLevel=High, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-15 12:12:00 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 12:15:18 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 12:15:18 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 12:15:18 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 12:15:18 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 12:15:18 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 12:15:18 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 12:15:18 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 12:15:18 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 12:15:19 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 12:15:20 INFO  HibernateMethods:98 - User successfully created with phone number 380987766454
+2024-02-15 12:15:20 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 12:15:20 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 12:15:20 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 12:15:20 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 12:15:20 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 12:15:20 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 12:15:20 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 12:15:20 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 12:15:20 INFO  HibernateMethods:115 - User information with phone number 380987766454: User(phoneNumber=380987766454, name=Гоша, age=35, weight=88.6, height=178.0, gender=true, activityLevel=Medium, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-15 12:15:20 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 13:05:01 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 13:05:01 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 13:05:01 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 13:05:01 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 13:05:01 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 13:05:01 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 13:05:01 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 13:05:02 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 13:05:02 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 13:05:02 INFO  HibernateMethods:115 - User information with phone number 380973399481: User(phoneNumber=380973399481, name=Марія, age=30, weight=104.0, height=181.0, gender=true, activityLevel=Low, allergies=true, cause=true, totalCaloric=1659.0, totalProtein=100.0, totalFat=66.0, totalCarbs=57.0)
+2024-02-15 13:05:02 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 15:47:43 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 15:47:45 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 15:47:45 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 15:47:45 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 15:47:45 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 15:47:45 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 15:47:45 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 15:47:45 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 15:47:47 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 15:47:47 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:02:51 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 16:02:51 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 16:02:52 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 16:02:52 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:02:52 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 16:02:52 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 16:02:52 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 16:02:52 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 16:02:52 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 16:02:53 INFO  HibernateMethods:115 - User information with phone number 380954488232: User(phoneNumber=380954488232, name=Женя, age=34, weight=94.2, height=178.0, gender=true, activityLevel=Low, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-15 16:02:53 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:14:04 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 16:14:04 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 16:14:04 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 16:14:04 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:14:04 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 16:14:04 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 16:14:04 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 16:14:04 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 16:14:05 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 16:14:05 INFO  HibernateMethods:98 - User successfully created with phone number 380992222898
+2024-02-15 16:14:05 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:14:05 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 16:14:05 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:14:05 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 16:14:05 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 16:14:05 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 16:14:05 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 16:14:05 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 16:14:05 INFO  HibernateMethods:115 - User information with phone number 380992222898: User(phoneNumber=380992222898, name=Гриша, age=34, weight=67.9, height=177.0, gender=true, activityLevel=Medium, allergies=false, cause=false, totalCaloric=1360.0, totalProtein=60.0, totalFat=40.0, totalCarbs=55.0)
+2024-02-15 16:14:05 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:16:01 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 16:16:01 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 16:16:02 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 16:16:02 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:16:02 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 16:16:02 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 16:16:02 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 16:16:02 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 16:16:02 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 16:16:03 INFO  HibernateMethods:115 - User information with phone number 380998833676: User(phoneNumber=380998833676, name=Анастасия, age=22, weight=58.5, height=178.0, gender=false, activityLevel=Low, allergies=false, cause=false, totalCaloric=1540.0, totalProtein=130.0, totalFat=60.0, totalCarbs=50.0)
+2024-02-15 16:16:03 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:39:20 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 16:39:20 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 16:39:20 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 16:39:20 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:39:20 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 16:39:20 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 16:39:20 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 16:39:20 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 16:39:21 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 16:39:21 INFO  HibernateMethods:98 - User successfully created with phone number 380987766565
+2024-02-15 16:39:21 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:39:21 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 16:39:21 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:39:21 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 16:39:21 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 16:39:21 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 16:39:21 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 16:39:21 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 16:39:21 INFO  HibernateMethods:115 - User information with phone number 380987766565: User(phoneNumber=380987766565, name=Саша, age=24, weight=77.1, height=167.0, gender=false, activityLevel=Medium, allergies=false, cause=false, totalCaloric=2383.69995, totalProtein=60.0, totalFat=40.0, totalCarbs=55.0)
+2024-02-15 16:39:21 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:54:13 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 16:54:13 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 16:54:14 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 16:54:14 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:54:14 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 16:54:14 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 16:54:14 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 16:54:14 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 16:54:14 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 16:54:15 INFO  HibernateMethods:98 - User successfully created with phone number 380987777898
+2024-02-15 16:54:15 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:54:15 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 16:54:15 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 16:54:15 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 16:54:15 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 16:54:15 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 16:54:15 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 16:54:15 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 16:54:15 INFO  HibernateMethods:115 - User information with phone number 380987777898: User(phoneNumber=380987777898, name=Пуговка, age=34, weight=56.2, height=155.0, gender=false, activityLevel=Low, allergies=false, cause=false, totalCaloric=1716.4, totalProtein=60.0, totalFat=40.0, totalCarbs=55.0)
+2024-02-15 16:54:15 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 18:32:53 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 18:32:54 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 18:32:54 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 18:32:54 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 18:32:54 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 18:32:54 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 18:32:54 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 18:32:54 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 18:32:55 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 18:32:55 WARN  SqlExceptionHelper:137 - SQL Error: 0, SQLState: 23505
+2024-02-15 18:32:55 ERROR SqlExceptionHelper:142 - ОШИБКА: повторяющееся значение ключа нарушает ограничение уникальности "User_pk"
+  Подробности: Ключ "(phone_number)=(380987766454)" уже существует.
+2024-02-15 18:32:55 INFO  AbstractBatchImpl:213 - HHH000010: On release of batch it still contained JDBC statements
+2024-02-15 18:32:55 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 18:34:03 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-15 18:34:03 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-15 18:34:04 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 18:34:04 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 18:34:04 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 18:34:04 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 18:34:04 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 18:34:04 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 18:34:04 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 18:34:04 WARN  SqlExceptionHelper:137 - SQL Error: 0, SQLState: 23505
+2024-02-15 18:34:04 ERROR SqlExceptionHelper:142 - ОШИБКА: повторяющееся значение ключа нарушает ограничение уникальности "User_pk"
+  Подробности: Ключ "(phone_number)=(380992222898)" уже существует.
+2024-02-15 18:34:04 INFO  AbstractBatchImpl:213 - HHH000010: On release of batch it still contained JDBC statements
+2024-02-15 18:34:04 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 18:34:30 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 18:34:30 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 18:34:30 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 18:34:30 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 18:34:30 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 18:34:30 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 18:34:30 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 18:34:30 INFO  HibernateMethods:98 - User successfully created with phone number 380999999999
+2024-02-15 18:34:30 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 18:34:30 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-15 18:34:30 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-15 18:34:30 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-15 18:34:30 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-15 18:34:30 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-15 18:34:30 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-15 18:34:30 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-15 18:34:30 INFO  HibernateMethods:115 - User information with phone number 380999999999: User(phoneNumber=380999999999, name=Nika, age=20, weight=53.5, height=155.0, gender=false, activityLevel=Low, allergies=false, cause=false, totalCaloric=1767.9, totalProtein=86.2, totalFat=57.0, totalCarbs=216.0)
+2024-02-15 18:34:30 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-16 10:15:46 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-02-16 10:15:47 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-02-16 10:15:48 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-16 10:15:48 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-16 10:15:48 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-16 10:15:48 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-16 10:15:48 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-16 10:15:49 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-16 10:15:50 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-16 10:15:50 INFO  HibernateMethods:98 - User successfully created with phone number 380973000989
+2024-02-16 10:15:50 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-16 10:15:50 WARN  pooling:75 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2024-02-16 10:15:50 INFO  pooling:119 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/healthyfooddiary]
+2024-02-16 10:15:50 INFO  pooling:125 - HHH10001001: Connection properties: {password=2607, user=postgres}
+2024-02-16 10:15:50 INFO  pooling:132 - HHH10001003: Autocommit mode: false
+2024-02-16 10:15:50 INFO  DriverManagerConnectionProviderImpl:322 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2024-02-16 10:15:50 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-02-16 10:15:50 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-02-16 10:15:50 INFO  HibernateMethods:115 - User information with phone number 380973000989: User(phoneNumber=380973000989, name=Виталий, age=25, weight=89.5, height=178.0, gender=true, activityLevel=Medium, allergies=false, cause=true, totalCaloric=3027.4, totalProtein=147.7, totalFat=98.0, totalCarbs=369.0)
+2024-02-16 10:15:50 INFO  pooling:550 - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/healthyfooddiary]

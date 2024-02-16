@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1360.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SignUpController">
+    <children>
+        <!-- ����� ��� ������� ImageView -->
+        <ImageView fitHeight="720.0" fitWidth="1360.0" pickOnBounds="true">
+            <image>
+                <Image url="@flat-lay-plate-with-keto-diet-food-golden-fork.jpg" />
+            </image>
+        </ImageView>
+
+        <!-- ���������� ������������� � ��������� -->
+        <AnchorPane fx:id="yourImageView" prefHeight="720.0" prefWidth="1360.0" style="-fx-background-color: #201e1e; -fx-opacity: 0.2;" />
+
+        <!-- ��� AnchorPane � ��������� �������� � ������� -->
+        <AnchorPane prefHeight="548.0" prefWidth="410.0" style="-fx-border-radius: 25px; -fx-background-radius: 25px; -fx-stroke: #201e1e; -fx-border-width: 1 1 1 1; -fx-border-color: #F4E9E9;" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="475.0" AnchorPane.rightAnchor="475.0" AnchorPane.topAnchor="110.0">
+            <children>
+                <AnchorPane fx:id="imagePlus" layoutX="2.0" prefHeight="550.0" prefWidth="410.0" style="-fx-background-color: #201e1e; -fx-opacity: 0.3; -fx-background-radius: 25px; -fx-border-radius: 25px; -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, gray, white);" />
+                <AnchorPane fx:id="signUpPane1" layoutX="36.0" layoutY="82.0" prefHeight="378.0" prefWidth="350.0">
+                    <children>
+                        <TextField fx:id="signUpName" layoutX="12.0" layoutY="150.0" prefHeight="41.0" prefWidth="326.0" promptText="Ім'я користувача">
+                            <effect>
+                                <ColorAdjust />
+                            </effect>
+                        </TextField>
+                        <TextField fx:id="sighUpPhone" layoutX="12.0" layoutY="75.0" prefHeight="41.0" prefWidth="326.0" promptText="Номер телефона (380 _ _ _ _ _ _ _ _ _ _ )">
+                            <effect>
+                                <ColorAdjust />
+                            </effect>
+                            <font>
+                                <Font name="Marlett" size="15.0" />
+                            </font>
+                        </TextField>
+                        <Button fx:id="nextBtn1" layoutX="84.0" layoutY="365.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="161.0" style="-fx-background-radius: 15px; -fx-background-color: linear-gradient(from 0% 0% to 100% 100%,  #F4E9E9, white);" text="Далі" textFill="#201e1e">
+                            <font>
+                                <Font name="Lucida Sans Typewriter Regular" size="18.0" />
+                            </font>
+                            <effect>
+                                <DropShadow color="#0000006b" />
+                            </effect>
+                        </Button>
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="signUpPane2" layoutX="21.0" layoutY="86.0" prefHeight="378.0" prefWidth="366.0" visible="false">
+                    <children>
+                        <TextField fx:id="signUpAge" layoutX="14.0" layoutY="5.0" prefHeight="41.0" prefWidth="342.0" promptText="Вік" />
+                        <TextField fx:id="signUpWeight" layoutX="14.0" layoutY="138.0" prefHeight="41.0" prefWidth="342.0" promptText="Вага( в кг)" />
+                        <TextField fx:id="signUpHeight" layoutX="13.0" layoutY="69.0" prefHeight="41.0" prefWidth="342.0" promptText="Зріст ( в см)" />
+                        <ComboBox fx:id="signUpActivityLevel" editable="true" layoutX="14.0" layoutY="205.0" prefHeight="41.0" prefWidth="342.0" promptText="Рівень активності у житті" visibleRowCount="3" />
+                        <ComboBox fx:id="signUpGender" editable="true" layoutX="14.0" layoutY="272.0" prefHeight="41.0" prefWidth="342.0" promptText="стать" visibleRowCount="2" />
+                        <Button fx:id="nextBtn2" layoutX="96.0" layoutY="360.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="168.0" style="-fx-background-radius: 15px; -fx-background-color: linear-gradient(from 0% 0% to 100% 100%,  #F4E9E9, white);" text="Далі">
+                            <font>
+                                <Font name="Lucida Sans Typewriter Regular" size="18.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </AnchorPane>
+                <Text fill="#c23517" stroke="#f2f2f2" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign" AnchorPane.bottomAnchor="471.875" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="192.4921875" AnchorPane.topAnchor="21.59375">
+                    <font>
+                        <Font name="Lucida Bright" size="48.0" />
+                    </font>
+                    <effect>
+                        <DropShadow color="#0000005f" spread="0.11" />
+                    </effect>
+                </Text>
+                <Text fill="#d4d0c7" strokeType="OUTSIDE" strokeWidth="0.0" text="Up" AnchorPane.bottomAnchor="467.875" AnchorPane.leftAnchor="221.0" AnchorPane.rightAnchor="137.8359375" AnchorPane.topAnchor="23.578125">
+                    <font>
+                        <Font name="Impact" size="48.0" />
+                    </font>
+                    <effect>
+                        <DropShadow color="#00000089" />
+                    </effect>
+                </Text>
+                <AnchorPane fx:id="signUpPane3" layoutX="21.0" layoutY="86.0" prefHeight="378.0" prefWidth="366.0" visible="false">
+                    <children>
+                        <CheckBox fx:id="checkBoxAllergy" layoutX="14.0" layoutY="60.0" mnemonicParsing="false" text="Наявність алергії" textFill="#ffd8c3">
+                            <font>
+                                <Font name="Cambria Bold" size="24.0" />
+                            </font>
+                            <effect>
+                                <DropShadow color="#00000063" />
+                            </effect>
+                        </CheckBox>
+                        <CheckBox fx:id="checkBoxCause" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Схуднення" textFill="#ffd8c3">
+                            <font>
+                                <Font name="Cambria Bold" size="24.0" />
+                            </font>
+                        </CheckBox>
+                        <Button fx:id="finishBtn" layoutX="96.0" layoutY="360.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="168.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%,  #F4E9E9, white); -fx-background-radius: 15px;" text="Готово">
+                            <font>
+                                <Font name="Lucida Sans Typewriter Regular" size="18.0" />
+                            </font>
+                        </Button>
+                  <ImageView fx:id="ImagePlus" fitHeight="32.0" fitWidth="38.0" layoutX="264.0" layoutY="60.0" onMouseClicked="#Handle" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@add-button.png" />
+                     </image>
+                  </ImageView>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
