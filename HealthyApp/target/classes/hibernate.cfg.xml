@@ -19,7 +19,7 @@
     <mapping class="entity.Products"/>
     <mapping class="entity.UserSelectedProduct"/>
     <mapping class="entity.MealOption"/>
-
+    <mapping class="entity.Ingredients"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
 

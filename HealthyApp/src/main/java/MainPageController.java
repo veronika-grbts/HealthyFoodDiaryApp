@@ -52,8 +52,8 @@ public class MainPageController {
         name_id.setText(user.getName());
         numberPhone.setText(String.valueOf(user.getPhoneNumber()));
         age.setText(String.valueOf(user.getAge()));
-        height.setText(String.valueOf(user.getHeight()));
-        weight.setText(String.valueOf(user.getWeight()));
+        height.setText(String.valueOf(user.getHeight()) +" см");
+        weight.setText(String.valueOf(user.getWeight()) + " кг");
         gender.setText(user.isGender() ? "чоловік" : "жінка");
         allergy.setText(user.isAllergies() ? "так" : "ні");
     }

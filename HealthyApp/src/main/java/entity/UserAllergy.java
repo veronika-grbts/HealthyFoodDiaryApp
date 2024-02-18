@@ -26,7 +26,8 @@ public class UserAllergy {
     @JoinColumn(name = "number_phone", nullable = false)
     private User user;
 
-    @Column(name = "type_meal", nullable = false)
-    private String typeIngredients;
+    @ManyToOne
+    @JoinColumn(name = "id_ingredients", nullable = false)
+    private Ingredients ingredients;
 
 }

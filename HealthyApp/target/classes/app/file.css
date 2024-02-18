@@ -1,0 +1,9 @@
+.table-row-cell {
+    -fx-background-color: rgba(121, 146, 54, 0.8); /* Цвет фона столбцов */
+    -fx-border-width: 0; /* Убираем границы между строками */
+}
+
+.table-row-cell .table-cell {
+    -fx-text-fill: #ffffff; /* Цвет текста */
+    -fx-border-width: 0; /* Убираем границы внутри ячеек */
+}

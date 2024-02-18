@@ -1,6 +1,9 @@
 package util;
 
 import entity.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,36 +12,60 @@ import org.hibernate.query.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 
 @Slf4j
 public class HibernateMethods {
 
-    public void addUserAllergy(long phoneNumber, String typeIngredients) {
+    public void addUserAllergyForUser(long phoneNumber, int ingredientId) {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
             try (Session session = sessionFactory.openSession()) {
                 session.beginTransaction();
 
+                // Получаем пользователя по номеру телефона
                 User user = session.get(User.class, phoneNumber);
-                if (user != null) {
-                    boolean hasAllergy = user.isAllergies();
-                    if (hasAllergy) {
-                        UserAllergy userAllergy = UserAllergy.builder()
-                                .user(user)
-                                .typeIngredients(typeIngredients)
-                                .build();
 
-                        session.save(userAllergy);
-                        session.getTransaction().commit();
+                // Получаем ингредиент по его id
+                Ingredients ingredient = session.get(Ingredients.class, ingredientId);
 
-                        log.info("Allergy successfully added for user with phone number {}", phoneNumber);
-                    } else {
-                        log.warn("User with phone number {} has no allergies", phoneNumber);
-                    }
+                // Проверяем, что пользователь и ингредиент существуют
+                if (user != null && ingredient != null) {
+                    // Создаем новую запись в таблице UserAllergy
+                    UserAllergy userAllergy = UserAllergy.builder()
+                            .user(user)
+                            .ingredients(ingredient)
+                            .build();
+
+                    // Сохраняем запись в базе данных
+                    session.save(userAllergy);
+                    session.getTransaction().commit();
+
+                    log.info("Allergy successfully added for user with phone number {}", phoneNumber);
                 } else {
-                    log.warn("User with phone number {} not found", phoneNumber);
+                    log.warn("User with phone number {} or ingredient with ID {} not found", phoneNumber, ingredientId);
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public Ingredients findIngredientByName(String ingredientName) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                Query<Ingredients> query = session.createQuery("FROM Ingredients WHERE nameIngredients = :name", Ingredients.class);
+                query.setParameter("name", ingredientName);
+                Ingredients ingredient = query.uniqueResult();
+                session.getTransaction().commit();
+                return ingredient;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -105,6 +132,7 @@ public class HibernateMethods {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
             try (Session session = sessionFactory.openSession()) {
                 session.beginTransaction();
+
                 CriteriaBuilder builder = session.getCriteriaBuilder();
                 CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
                 Root<User> root = criteriaQuery.from(User.class);
@@ -126,6 +154,7 @@ public class HibernateMethods {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
             try (Session session = sessionFactory.openSession()) {
                 session.beginTransaction();
+
                 User user = session.get(User.class, phoneNumber);
                 session.getTransaction().commit();
                 return user != null;
@@ -135,8 +164,44 @@ public class HibernateMethods {
             return false;
         }
     }
-}
 
+    public List<Ingredients> getAllIngredients() {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                Query<Ingredients> query = session.createQuery("FROM Ingredients", Ingredients.class);
+                List<Ingredients> ingredientsList = query.list();
+                session.getTransaction().commit();
+                return ingredientsList;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}
+    /*public void fillComboBoxWithIngredients(ComboBox<String> comboBox) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+
+                // Создаем запрос к базе данных, чтобы получить все значения столбца nameIngredients
+                CriteriaBuilder builder = session.getCriteriaBuilder();
+                CriteriaQuery<String> criteriaQuery = builder.createQuery(String.class);
+                Root<Ingredients> root = criteriaQuery.from(Ingredients.class);
+                criteriaQuery.select(root.get("nameIngredients"));
+                List<String> names = session.createQuery(criteriaQuery).getResultList();
+
+                // Закрываем транзакцию
+                session.getTransaction().commit();
+
+                // Добавляем полученные значения в ComboBox
+                ObservableList<String> items = FXCollections.observableArrayList(names);
+                comboBox.setItems(items);
+            }
+        }
+    }
+}*/
 
    /* public void createUserSelectedMenu(long phoneNumber){
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {

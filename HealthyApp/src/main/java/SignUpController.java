@@ -1,25 +1,28 @@
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 import Method.CalorieCalculator;
 import entity.ActivityLevel;
+import entity.Ingredients;
 import entity.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import util.HibernateMethods;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
 public class SignUpController {
     private HibernateMethods hibernateMethods = new HibernateMethods();
 
@@ -60,10 +63,10 @@ public class SignUpController {
     private TextField signUpHeight;
 
     @FXML
-    private ComboBox<String> signUpGender;
+    private ComboBox<ActivityLevel> signUpActivityLevel;
 
     @FXML
-    private ComboBox<ActivityLevel> signUpActivityLevel;
+    private ComboBox<String> signUpGender;
 
     @FXML
     private Button nextBtn2;
@@ -80,49 +83,72 @@ public class SignUpController {
     @FXML
     private Button finishBtn;
 
-    private ComboBox<String> additionalComboBox;
+    @FXML
+    private ImageView ImagePlus;
 
     @FXML
     void Handle(MouseEvent event) {
-        // Вызываем метод, который добавляет поле
-        addAdditionalField();
+        // Создание нового ComboBox
+        ComboBox<String> newComboBox = new ComboBox<>();
+
+        // Установка размеров и позиции нового ComboBox
+        double x = 14; // Начальная координата X
+        double y = 100; // Начальная координата Y
+        double deltaY = 40; // Расстояние между ComboBox
+
+        // Определяем координаты для нового ComboBox
+        int numberOfExistingComboBoxes = signUpPane3.getChildren().stream()
+                .filter(node -> node instanceof ComboBox)
+                .mapToInt(node -> 1)
+                .sum();
+
+        y += numberOfExistingComboBoxes * deltaY; // Добавляем отступ в зависимости от количества существующих ComboBox
+
+        newComboBox.setLayoutX(x);
+        newComboBox.setLayoutY(y);
+        newComboBox.setPrefWidth(300); // Устанавливаем ширину ComboBox
+        newComboBox.setPrefHeight(30); // Устанавливаем высоту ComboBox
+
+        // Добавление элементов в ComboBox
+        List<Ingredients> allIngredients = hibernateMethods.getAllIngredients();
+        if (allIngredients != null) {
+            for (Ingredients ingredient : allIngredients) {
+                newComboBox.getItems().add(ingredient.getNameIngredients());
+            }
+            // Добавление нового ComboBox на панель
+            signUpPane3.getChildren().add(newComboBox);
+
+            // Добавление обработчика события для выбора элемента в новом ComboBox
+            newComboBox.setOnAction(e -> {
+                String selectedProduct = newComboBox.getValue();
+                Ingredients ingredient = hibernateMethods.findIngredientByName(selectedProduct);
+                if (ingredient != null) {
+                    hibernateMethods.addUserAllergyForUser(Long.parseLong(sighUpPhone.getText()), ingredient.getIdIngredients());
+                } else {
+                    System.out.println("Выбранный ингредиент не найден.");
+                }
+            });
+        } else {
+            // Обработка случая, когда список ингредиентов пуст
+            System.out.println("Список ингредиентов пуст.");
+        }
     }
+
     @FXML
     void initialize() {
-
         signUpActivityLevel.getItems().addAll(ActivityLevel.High, ActivityLevel.Medium, ActivityLevel.Low);
         signUpGender.getItems().addAll("чоловік", "жінка");
-        ObservableList<String> data = signUpGender.getItems();
-                signUpGender.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null || newValue.isEmpty()) {
-                signUpGender.setItems(data); // Показать все элементы списка, если поле пустое
-                signUpGender.hide(); // Скрыть выпадающий список
-            } else {
-                ObservableList<String> filteredData = FXCollections.observableArrayList();
-                for (String item : data) {
-                    if (item.toLowerCase().contains(newValue.toLowerCase())) {
-                        filteredData.add(item);
-                    }
-                }
-                signUpGender.setItems(filteredData); // Показать только отфильтрованные элементы списка
-                signUpGender.show(); // Показать выпадающий список
-            }
-        });
 
         nextBtn1.setOnAction(event -> {
             signUpPane1.setVisible(false);
             signUpPane2.setVisible(true);
-
         });
-
 
         nextBtn2.setOnAction(event -> {
             signUpPane2.setVisible(false);
             signUpPane3.setVisible(true);
-
-
+            imagePlus.setOnMouseClicked(this::Handle);
         });
-
 
         finishBtn.setOnAction(event -> {
             String phone = sighUpPhone.getText();
@@ -142,9 +168,30 @@ public class SignUpController {
             double fat = CalorieCalculator.calculateFat(calories);
             double carbs = CalorieCalculator.calculateCarbs(calories);
 
+            // Создаем пользователя
             hibernateMethods.createUser(Long.parseLong(phone), name, age, weight, height, gender, activityLevel, hasAllergy, hasCause, calories, protein, fat, carbs);
 
-            // Переход на главную страницу с данными нового пользователя
+            // Добавляем аллергию только если пользователь выбрал аллергию
+            if (hasAllergy) {
+                // Добавляем аллергию для каждого выбранного продукта в комбобоксе
+                for (Node node : signUpPane3.getChildren()) {
+                    if (node instanceof ComboBox) {
+                        ComboBox<String> comboBox = (ComboBox<String>) node;
+                        String selectedProduct = comboBox.getValue();
+                        if (selectedProduct != null && !selectedProduct.isEmpty()) {
+                            Ingredients ingredient = hibernateMethods.findIngredientByName(selectedProduct);
+                            if (ingredient != null) {
+                                hibernateMethods.addUserAllergyForUser(Long.parseLong(phone), ingredient.getIdIngredients());
+                                System.out.println(ingredient.getIdIngredients() + " " + Long.parseLong(phone));
+                            } else {
+                                System.out.println("Выбранный ингредиент не найден.");
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Переходим на главную страницу с данными нового пользователя
             User newUser = hibernateMethods.getUserInfo(Long.parseLong(phone));
             try {
                 HibbernateRunner.setRoot("mainpage", newUser);
@@ -152,19 +199,5 @@ public class SignUpController {
                 e.printStackTrace();
             }
         });
-    }
-    private void addAdditionalField() {
-        additionalComboBox = new ComboBox<>();
-        // Устанавливаем параметры ComboBox
-        // Например, вы можете добавить элементы в ComboBox
-        additionalComboBox.getItems().addAll("Option 1", "Option 2", "Option 3");
-        // Устанавливаем размеры ComboBox
-        additionalComboBox.setPrefWidth(300);
-        additionalComboBox.setPrefHeight(30);
-        // Устанавливаем позицию ComboBox
-        additionalComboBox.setLayoutX(14);
-        additionalComboBox.setLayoutY(100);
-        // Добавляем ComboBox на signUpPane3
-        signUpPane3.getChildren().add(additionalComboBox);
     }
 }

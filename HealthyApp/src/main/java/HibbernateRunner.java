@@ -16,7 +16,7 @@ public class HibbernateRunner extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HibbernateRunner.class.getResource("primary.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HibbernateRunner.class.getResource("calorieCalculator.fxml"));
         Parent root = fxmlLoader.load();
         scene = new Scene(root);
 
