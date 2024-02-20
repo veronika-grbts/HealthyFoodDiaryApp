@@ -23,19 +23,19 @@ public class User {
     private long phoneNumber;
 
     @Column(name = "name", nullable = false, length = 50)
-    private String name;
+    private String nameUser;
 
     @Column(name = "age", nullable = false)
-    private int age;
+    private int ageUser;
 
     @Column(name = "weight", nullable = false)
-    private double weight;
+    private double weightUser;
 
     @Column(name = "height", nullable = false)
-    private double height;
+    private double heightUser;
 
     @Column(name = "gender", nullable = false, length = 50)
-    private boolean gender;
+    private boolean genderUser;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "activity_level", columnDefinition = "activity_level", nullable = false)
@@ -43,21 +43,21 @@ public class User {
     private ActivityLevel activityLevel;
 
     @Column(name = "allergies", nullable = false)
-    private boolean allergies;
+    private boolean allergiesUser;
 
     @Column(name = "cause", nullable = false)
-    private boolean cause;
+    private boolean causeUser;
 
     @Column(name = "total_caloric", nullable = false)
-    private double totalCaloric;
+    private double totalCaloricUser;
 
     @Column(name = "total_protein", nullable = false)
-    private double totalProtein;
+    private double totalProteinUser;
 
     @Column(name = "total_fat", nullable = false)
-    private double totalFat;
+    private double totalFatUser;
 
     @Column(name = "total_carbohydrates", nullable = false)
-    private double totalCarbs;
+    private double totalCarbsUser;
 
 }

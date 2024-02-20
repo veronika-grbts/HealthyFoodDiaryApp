@@ -16,7 +16,8 @@ public class UserSelectedProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id")
+    private Integer idUserSelectedProduct;
 
     @ManyToOne
     @JoinColumn(name = "phone_number", nullable = false)
@@ -25,6 +26,20 @@ public class UserSelectedProduct {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Products products;
-    @JoinColumn(name = "grams", nullable = false)
-    private Double grams;
+
+    @Column(name = "grams", nullable = false)
+    private Double gramsUserSelectedProduct;
+
+    @Column(name = "fat_remaining", nullable = false)
+    private Double fatUserSelectedProduct;
+
+    @Column(name = "protein_remaining", nullable = false)
+    private Double proteinUserSelectedProduct;
+
+    @Column(name = "carbs_remaining", nullable = false)
+    private Double carbsUserSelectedProduct;
+
+    @Column(name = "calories_remaining", nullable = false)
+    private Double caloriesUserSelectedProduct;
+
 }

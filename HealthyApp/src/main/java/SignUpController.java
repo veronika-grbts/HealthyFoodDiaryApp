@@ -7,8 +7,6 @@ import Method.CalorieCalculator;
 import entity.ActivityLevel;
 import entity.Ingredients;
 import entity.User;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -18,11 +16,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import lombok.extern.slf4j.Slf4j;
 import util.HibernateMethods;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+@Slf4j
 public class SignUpController {
     private HibernateMethods hibernateMethods = new HibernateMethods();
 
@@ -125,12 +122,11 @@ public class SignUpController {
                 if (ingredient != null) {
                     hibernateMethods.addUserAllergyForUser(Long.parseLong(sighUpPhone.getText()), ingredient.getIdIngredients());
                 } else {
-                    System.out.println("Выбранный ингредиент не найден.");
+                  log.warn("the selected ingredient  was not found");
                 }
             });
         } else {
-            // Обработка случая, когда список ингредиентов пуст
-            System.out.println("Список ингредиентов пуст.");
+           log.warn("The list Products is empty");
         }
     }
 
@@ -182,9 +178,9 @@ public class SignUpController {
                             Ingredients ingredient = hibernateMethods.findIngredientByName(selectedProduct);
                             if (ingredient != null) {
                                 hibernateMethods.addUserAllergyForUser(Long.parseLong(phone), ingredient.getIdIngredients());
-                                System.out.println(ingredient.getIdIngredients() + " " + Long.parseLong(phone));
+
                             } else {
-                                System.out.println("Выбранный ингредиент не найден.");
+                                log.warn("the selected ingredient  was not found");
                             }
                         }
                     }
@@ -193,8 +189,9 @@ public class SignUpController {
 
             // Переходим на главную страницу с данными нового пользователя
             User newUser = hibernateMethods.getUserInfo(Long.parseLong(phone));
+            ApplicationContext.getInstance().setCurrentUser(newUser);
             try {
-                HibbernateRunner.setRoot("mainpage", newUser);
+                HibbernateRunner.setRoot("mainpage");
             } catch (IOException e) {
                 e.printStackTrace();
             }

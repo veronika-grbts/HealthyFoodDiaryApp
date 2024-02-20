@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Data
@@ -17,15 +16,19 @@ public class Products {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Integer productId;
-    @Column(name = "name", nullable = false, length = 100)
-    private String name;
 
-    @Column(nullable = false)
-    private Double calories;
-    @Column(nullable = false)
-    private Double fat;
-    @Column(nullable = false)
-    private Double protein;
-    @Column(nullable = false)
-    private Double carbs;
+    @Column(name = "name", nullable = false, length = 100)
+    private String nameProduct;
+
+    @Column(name = "calories", nullable = false)
+    private Double caloriesProducts;
+
+    @Column(name = "fat", nullable = false)
+    private Double fatProducts;
+
+    @Column(name = "protein", nullable = false)
+    private Double proteinProducts;
+
+    @Column(name = "carbs", nullable = false)
+    private Double carbsProducts;
 }

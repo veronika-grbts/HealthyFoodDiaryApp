@@ -5,13 +5,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -25,13 +25,11 @@ public class HibernateMethods {
 
                 // Получаем пользователя по номеру телефона
                 User user = session.get(User.class, phoneNumber);
-
-                // Получаем ингредиент по его id
                 Ingredients ingredient = session.get(Ingredients.class, ingredientId);
 
                 // Проверяем, что пользователь и ингредиент существуют
                 if (user != null && ingredient != null) {
-                    // Создаем новую запись в таблице UserAllergy
+
                     UserAllergy userAllergy = UserAllergy.builder()
                             .user(user)
                             .ingredients(ingredient)
@@ -51,8 +49,6 @@ public class HibernateMethods {
         }
     }
 
-
-
     public Ingredients findIngredientByName(String ingredientName) {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
             try (Session session = sessionFactory.openSession()) {
@@ -69,54 +65,81 @@ public class HibernateMethods {
         }
     }
 
-    public void addUserSelectedProduct(long phoneNumber, String name, double grams) {
+    public Products findProductByName(String productName) {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
             try (Session session = sessionFactory.openSession()) {
                 session.beginTransaction();
+                Query<Products> query = session.createQuery("FROM Products WHERE nameProduct = :name", Products.class);
+                query.setParameter("name", productName);
+                Products products = query.uniqueResult();
+                session.getTransaction().commit();
+                return products;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void addUserSelectedProduct(long phoneNumber, int productId, double grams, double remainingCalories,
+                                       double remainingFat, double remainingProtein, double remainingCarbs) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+
+                // Получаем пользователя по номеру телефона
                 User user = session.get(User.class, phoneNumber);
 
-                Query<Products> query = session.createQuery("FROM Products WHERE name = :name", Products.class);
-                query.setParameter("name", name);
-                Products products = query.uniqueResult();
+                Products products = session.get(Products.class, productId);
 
+                // Проверяем, что пользователь и ингредиент существуют
                 if (user != null && products != null) {
+
                     UserSelectedProduct userSelectedProduct = UserSelectedProduct.builder()
                             .user(user)
                             .products(products)
-                            .grams(grams)
+                            .gramsUserSelectedProduct(grams)
+                            .fatUserSelectedProduct(remainingFat)
+                            .proteinUserSelectedProduct(remainingProtein)
+                            .carbsUserSelectedProduct(remainingCarbs)
+                            .caloriesUserSelectedProduct(remainingCalories)
                             .build();
 
+                    // Сохраняем запись в базе данных
                     session.save(userSelectedProduct);
                     session.getTransaction().commit();
 
                     log.info("Product successfully added for user with phone number {}", phoneNumber);
                 } else {
-                    log.warn("User with phone number {} or product with name {} not found", phoneNumber, name);
+                    log.warn("User with phone number {} or product with id {} not found", phoneNumber, productId);
                 }
             }
 
         }
     }
 
-    public void createUser(long phoneNumber, String name, int age, double weight, double height, boolean gender, ActivityLevel activityLevel, boolean allergies, boolean cause, double totalCaloric, double totalProtein, double totalFat, double totalCarbs) {
+
+    public void createUser(long phoneNumber, String name, int age, double weight, double height, boolean gender,
+                           ActivityLevel activityLevel, boolean allergies, boolean cause, double totalCaloric,
+                           double totalProtein, double totalFat, double totalCarbs) {
 
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
             try (Session session = sessionFactory.openSession()) {
                 session.beginTransaction();
                 User newUser = User.builder()
                         .phoneNumber(phoneNumber)
-                        .name(name)
-                        .age(age)
-                        .weight(weight)
-                        .height(height)
-                        .gender(gender)
+                        .nameUser(name)
+                        .ageUser(age)
+                        .weightUser(weight)
+                        .heightUser(height)
+                        .genderUser(gender)
                         .activityLevel(activityLevel)
-                        .allergies(allergies)
-                        .cause(cause)
-                        .totalCaloric(totalCaloric)
-                        .totalProtein(totalProtein)
-                        .totalFat(totalFat)
-                        .totalCarbs(totalCarbs)
+                        .allergiesUser(allergies)
+                        .causeUser(cause)
+                        .totalCaloricUser(totalCaloric)
+                        .totalProteinUser(totalProtein)
+                        .totalFatUser(totalFat)
+                        .totalCarbsUser(totalCarbs)
                         .build();
 
                 session.save(newUser);
@@ -179,78 +202,236 @@ public class HibernateMethods {
             return null;
         }
     }
-}
-    /*public void fillComboBoxWithIngredients(ComboBox<String> comboBox) {
+
+    public List<Products> getUserSelectedProduct(long phoneNumber) {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
             try (Session session = sessionFactory.openSession()) {
                 session.beginTransaction();
+                Query<Products> query = session.createQuery("FROM Products ", Products.class);
+                List<Products> productList = query.list();
+                session.getTransaction().commit();
+                return productList;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-                // Создаем запрос к базе данных, чтобы получить все значения столбца nameIngredients
-                CriteriaBuilder builder = session.getCriteriaBuilder();
-                CriteriaQuery<String> criteriaQuery = builder.createQuery(String.class);
-                Root<Ingredients> root = criteriaQuery.from(Ingredients.class);
-                criteriaQuery.select(root.get("nameIngredients"));
-                List<String> names = session.createQuery(criteriaQuery).getResultList();
+    public List<UserSelectedProduct> getUserSelectedProductsForNumberPhone(long phoneNumber) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            List<UserSelectedProduct> userSelectedProducts = null;
+            try (Session session = sessionFactory.openSession()) {
+                CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+                CriteriaQuery<UserSelectedProduct> criteriaQuery = criteriaBuilder.createQuery(UserSelectedProduct.class);
+                Root<UserSelectedProduct> root = criteriaQuery.from(UserSelectedProduct.class);
 
-                // Закрываем транзакцию
+                // Добавляем условие для выборки продуктов конкретного пользователя
+                Predicate predicate = criteriaBuilder.equal(root.get("user").get("phoneNumber"), phoneNumber);
+                criteriaQuery.where(predicate);
+
+                userSelectedProducts = session.createQuery(criteriaQuery).getResultList();
+            } catch (HibernateException e) {
+                e.printStackTrace();
+            }
+            return userSelectedProducts;
+        }
+    }
+
+    public List<Products> getAllProduct() {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                Query<Products> query = session.createQuery("FROM Products", Products.class);
+                List<Products> productList = query.list();
+                session.getTransaction().commit();
+                return productList;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void DropProductUser(long phoneNumber) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+
+                // Создаем критерий запроса для удаления
+                CriteriaDelete<UserSelectedProduct> criteriaDelete = criteriaBuilder.createCriteriaDelete(UserSelectedProduct.class);
+                Root<UserSelectedProduct> root = criteriaDelete.from(UserSelectedProduct.class);
+
+                // Добавляем условие для выборки записей для указанного номера телефона
+                criteriaDelete.where(criteriaBuilder.equal(root.get("user").get("phoneNumber"), phoneNumber));
+                // Выполняем запрос на удаление
+                 session.createQuery(criteriaDelete).executeUpdate();
+
                 session.getTransaction().commit();
 
-                // Добавляем полученные значения в ComboBox
-                ObservableList<String> items = FXCollections.observableArrayList(names);
-                comboBox.setItems(items);
+                session.getTransaction().commit();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public double getTotalCaloriesForUser(long phoneNumber) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+                CriteriaQuery<Double> criteriaQuery = criteriaBuilder.createQuery(Double.class);
+                Root<UserSelectedProduct> root = criteriaQuery.from(UserSelectedProduct.class);
+
+                // Добавляем условие для выборки продуктов конкретного пользователя
+                Predicate predicate = criteriaBuilder.equal(root.get("user").get("phoneNumber"), phoneNumber);
+
+                // Сортируем результаты по убыванию и выбираем только первый элемент
+                criteriaQuery.select(root.get("caloriesUserSelectedProduct")).where(predicate)
+                        .orderBy(criteriaBuilder.desc(root.get("idUserSelectedProduct")));
+                Query<Double> query = session.createQuery(criteriaQuery).setMaxResults(1);
+
+                Double totalCalories = query.uniqueResult();
+
+
+                // Если для пользователя нет продуктов в таблице UserSelectedProduct, вернуть 0
+                if (totalCalories != null) {
+                    return totalCalories;
+                } else {
+                    return 0;
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+
+    public double getTotalFatForUser(long phoneNumber) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+                CriteriaQuery<Double> criteriaQuery = criteriaBuilder.createQuery(Double.class);
+                Root<UserSelectedProduct> root = criteriaQuery.from(UserSelectedProduct.class);
+
+                // Добавляем условие для выборки продуктов конкретного пользователя
+                Predicate predicate = criteriaBuilder.equal(root.get("user").get("phoneNumber"), phoneNumber);
+
+                // Сортируем результаты по убыванию и выбираем только первый элемент
+                criteriaQuery.select(root.get("fatUserSelectedProduct")).where(predicate)
+                        .orderBy(criteriaBuilder.desc(root.get("idUserSelectedProduct")));
+                Query<Double> query = session.createQuery(criteriaQuery).setMaxResults(1);
+
+                Double totalFat = query.uniqueResult();
+
+
+                // Если для пользователя нет продуктов в таблице UserSelectedProduct, вернуть 0
+                if (totalFat != null) {
+                    return totalFat;
+                } else {
+                    return 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+
+    public double getTotalProteinForUser(long phoneNumber) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+                CriteriaQuery<Double> criteriaQuery = criteriaBuilder.createQuery(Double.class);
+                Root<UserSelectedProduct> root = criteriaQuery.from(UserSelectedProduct.class);
+
+                // Добавляем условие для выборки продуктов конкретного пользователя
+                Predicate predicate = criteriaBuilder.equal(root.get("user").get("phoneNumber"), phoneNumber);
+
+                // Сортируем результаты по убыванию и выбираем только первый элемент
+                criteriaQuery.select(root.get("proteinUserSelectedProduct")).where(predicate)
+                        .orderBy(criteriaBuilder.desc(root.get("idUserSelectedProduct")));
+                Query<Double> query = session.createQuery(criteriaQuery).setMaxResults(1);
+                Double totalProtein = query.uniqueResult();
+                // Если для пользователя нет продуктов в таблице UserSelectedProduct, вернуть 0
+                if (totalProtein != null) {
+                    return totalProtein;
+                } else {
+                    return 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public double getTotalCarbsForUser(long phoneNumber) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+                CriteriaQuery<Double> criteriaQuery = criteriaBuilder.createQuery(Double.class);
+                Root<UserSelectedProduct> root = criteriaQuery.from(UserSelectedProduct.class);
+
+                // Добавляем условие для выборки продуктов конкретного пользователя
+                Predicate predicate = criteriaBuilder.equal(root.get("user").get("phoneNumber"), phoneNumber);
+
+                // Сортируем результаты по убыванию и выбираем только первый элемент
+                criteriaQuery.select(root.get("carbsUserSelectedProduct")).where(predicate)
+                        .orderBy(criteriaBuilder.desc(root.get("idUserSelectedProduct")));
+                Query<Double> query = session.createQuery(criteriaQuery).setMaxResults(1);
+
+                Double totalCarbs = query.uniqueResult();
+
+
+                // Если для пользователя нет продуктов в таблице UserSelectedProduct, вернуть 0
+                if (totalCarbs != null) {
+                    return totalCarbs;
+                } else {
+                    return 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    public void addNewProducts(String nameProduct, double calorieProduct, double fatProduct, double proteinProduct, double carbsProduct) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                // Проверяем существующие продукты с таким же именем
+                CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+                CriteriaQuery<Products> criteriaQuery = criteriaBuilder.createQuery(Products.class);
+                Root<Products> root = criteriaQuery.from(Products.class);
+                criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("nameProduct"), nameProduct));
+                Query<Products> query = session.createQuery(criteriaQuery);
+                List<Products> existingProducts = query.getResultList();
+
+                if (existingProducts.isEmpty()) {
+                    // Создаем новый продукт без указания product_id
+                    Products product = Products.builder()
+                            .nameProduct(nameProduct)
+                            .caloriesProducts(calorieProduct)
+                            .fatProducts(fatProduct)
+                            .proteinProducts(proteinProduct)
+                            .carbsProducts(carbsProduct)
+                            .build();
+
+                    session.save(product);
+                    session.getTransaction().commit();
+                    log.info("Product with {} name was created", nameProduct);
+                } else {
+                    log.warn("Product with the same name {} has already been created", nameProduct);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
-}*/
 
-   /* public void createUserSelectedMenu(long phoneNumber){
-        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
-            try (Session session = sessionFactory.openSession()) {
-                session.beginTransaction();
-                CriteriaBuilder builder = session.getCriteriaBuilder();
-                CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
-                Root<User> root = criteriaQuery.from(User.class);
-                criteriaQuery.select(root).where(builder.equal(root.get("phoneNumber"), phoneNumber));
-                User user = session.createQuery(criteriaQuery).uniqueResult();
-
-                if (user != null) {
-                    // Создаем подзапросы для завтрака, обеда и ужина
-                    CriteriaQuery<MealOption> breakfastQuery = builder.createQuery(MealOption.class);
-                    Root<MealOption> breakfastRoot = breakfastQuery.from(MealOption.class);
-                    breakfastQuery.select(breakfastRoot).where(builder.equal(breakfastRoot.get("typeMeal"), "Breakfast"))
-                            .orderBy(builder.asc(breakfastRoot.get("id")));
-                    MealOption breakfastOption = session.createQuery(breakfastQuery).setMaxResults(1).uniqueResult();
-
-                    CriteriaQuery<MealOption> lunchQuery = builder.createQuery(MealOption.class);
-                    Root<MealOption> lunchRoot = lunchQuery.from(MealOption.class);
-                    lunchQuery.select(lunchRoot).where(builder.equal(lunchRoot.get("typeMeal"), "Lunch"))
-                            .orderBy(builder.asc(lunchRoot.get("id")));
-                    MealOption lunchOption = session.createQuery(lunchQuery).setMaxResults(1).uniqueResult();
-
-                    CriteriaQuery<MealOption> dinnerQuery = builder.createQuery(MealOption.class);
-                    Root<MealOption> dinnerRoot = dinnerQuery.from(MealOption.class);
-                    dinnerQuery.select(dinnerRoot).where(builder.equal(dinnerRoot.get("typeMeal"), "Dinner"))
-                            .orderBy(builder.asc(dinnerRoot.get("id")));
-                    MealOption dinnerOption = session.createQuery(dinnerQuery).setMaxResults(1).uniqueResult();
-
-                    // Создаем меню с учетом аллергий пользователя
-                    UserSelectedMenu userSelectedMenu = UserSelectedMenu.builder()
-                            .user(user)
-                            .breakfastId(breakfastOption.getId())
-                            .breakfastDrinkId(selectRandomDrinkId(session))
-                            .lunchId(lunchOption.getId())
-                            .lunchDrinkId(selectRandomDrinkId(session))
-                            .dinnerId(dinnerOption.getId())
-                            .dinnerDrinkId(selectRandomDrinkId(session))
-                            .build();
-
-                    session.save(userSelectedMenu);
-                    session.getTransaction().commit();
-
-                    log.info("Меню успешно создано для пользователя с номером телефона {}", phoneNumber);
-                } else {
-                    log.warn("Пользователь с номером телефона {} не найден", phoneNumber);
-                }
-            }
-        }
-    }*/
+}

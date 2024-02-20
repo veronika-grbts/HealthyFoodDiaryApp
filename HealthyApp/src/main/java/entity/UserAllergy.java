@@ -20,7 +20,8 @@ public class UserAllergy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id")
+    private Integer idUserAllergy;
 
     @ManyToOne
     @JoinColumn(name = "number_phone", nullable = false)

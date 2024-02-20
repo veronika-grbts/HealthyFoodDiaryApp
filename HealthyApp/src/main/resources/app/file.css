@@ -1,9 +1,21 @@
 .table-row-cell {
-    -fx-background-color: rgba(121, 146, 54, 0.8); /* Цвет фона столбцов */
-    -fx-border-width: 0; /* Убираем границы между строками */
+    /* Стиль для каждой строки таблицы */
+    -fx-background-color: #FFFFFF; /* Цвет фона по умолчанию */
+   
 }
-
+.table-row-cell:odd {
+    /* Стиль для нечетных строк таблицы */
+    -fx-background-color: #ECECEC; /* Цвет фона для нечетных строк */
+   
+}
 .table-row-cell .table-cell {
     -fx-text-fill: #ffffff; /* Цвет текста */
-    -fx-border-width: 0; /* Убираем границы внутри ячеек */
+   
+}
+
+.table-view .column-header {
+    -fx-text-fill: white; /* Цвет текста */
+}
+.table-row-cell:empty {
+    -fx-background-color: transparent;
 }

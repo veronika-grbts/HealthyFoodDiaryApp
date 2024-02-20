@@ -785,22 +785,22 @@ false Z
 false Zulu
 false posixrules
 </TimeZones>
-      <StartupTime>1708065463</StartupTime>
+      <StartupTime>1708332071</StartupTime>
     </root>
     <database id="2" parent="1" name="healthyfooddiary">
       <ObjectId>18631</ObjectId>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1528</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1774</IntrospectionStateNumber>
       <Current>1</Current>
       <Relations>sequence|table|18656|18658|1
-sequence|table|18664|18666|1
-sequence|table|18672|18674|1
 sequence|table|18680|18682|1
 sequence|table|18700|18702|1
 sequence|table|18708|18710|1
 sequence|table|18716|18718|1
 sequence|table|18724|18726|1
 sequence|table|18740|18742|1
+sequence|table|19180|19182|1
+sequence|table|19188|19190|1
 </Relations>
     </database>
     <database id="3" parent="1" name="interface">
@@ -868,7 +868,7 @@ UC/10
 </Acl>
       <StateNumber>562</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1529</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1775</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <extension id="14" parent="2" name="plpgsql">
@@ -943,35 +943,35 @@ UC/10
       <Comment>block range index (BRIN) access method</Comment>
       <StateNumber>1</StateNumber>
     </access-method>
-    <sequence id="25" parent="13" name="public.Drinks_id_drink_seq">
+    <sequence id="25" parent="13" name="products_product_id_seq">
+      <ObjectId>19180</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1764</StateNumber>
+    </sequence>
+    <sequence id="26" parent="13" name="public.Drinks_id_drink_seq">
       <ObjectId>18700</ObjectId>
       <Owner>postgres</Owner>
       <StateNumber>1173</StateNumber>
     </sequence>
-    <sequence id="26" parent="13" name="public.Ingredients_id_ingredients_seq">
+    <sequence id="27" parent="13" name="public.Ingredients_id_ingredients_seq">
       <ObjectId>18708</ObjectId>
       <Owner>postgres</Owner>
       <StateNumber>1173</StateNumber>
     </sequence>
-    <sequence id="27" parent="13" name="public.MealIngredientsDrink_id_ingredient_drink_seq">
+    <sequence id="28" parent="13" name="public.MealIngredientsDrink_id_ingredient_drink_seq">
       <ObjectId>18724</ObjectId>
       <Owner>postgres</Owner>
       <StateNumber>1173</StateNumber>
     </sequence>
-    <sequence id="28" parent="13" name="public.MealIngredients_id_mi_seq">
+    <sequence id="29" parent="13" name="public.MealIngredients_id_mi_seq">
       <ObjectId>18716</ObjectId>
       <Owner>postgres</Owner>
       <StateNumber>1173</StateNumber>
     </sequence>
-    <sequence id="29" parent="13" name="public.MealOption_id_option_seq">
+    <sequence id="30" parent="13" name="public.MealOption_id_option_seq">
       <ObjectId>18680</ObjectId>
       <Owner>postgres</Owner>
       <StateNumber>1172</StateNumber>
-    </sequence>
-    <sequence id="30" parent="13" name="public.Products_product_id_seq">
-      <ObjectId>18664</ObjectId>
-      <Owner>postgres</Owner>
-      <StateNumber>1171</StateNumber>
     </sequence>
     <sequence id="31" parent="13" name="public.UserAllergy_id_seq">
       <ObjectId>18656</ObjectId>
@@ -983,10 +983,10 @@ UC/10
       <Owner>postgres</Owner>
       <StateNumber>1175</StateNumber>
     </sequence>
-    <sequence id="33" parent="13" name="public.UserSelectedProduct_id_seq">
-      <ObjectId>18672</ObjectId>
+    <sequence id="33" parent="13" name="userselectedproduct_id_seq">
+      <ObjectId>19188</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>1171</StateNumber>
+      <StateNumber>1764</StateNumber>
     </sequence>
     <object-type id="34" parent="13" name="activitylevel">
       <ObjectId>18633</ObjectId>
@@ -1039,9 +1039,9 @@ Dinner</Labels>
       <StateNumber>1455</StateNumber>
     </table>
     <table id="42" parent="13" name="products">
-      <ObjectId>18666</ObjectId>
+      <ObjectId>19182</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>1454</StateNumber>
+      <StateNumber>1764</StateNumber>
     </table>
     <table id="43" parent="13" name="userallergy">
       <ObjectId>18658</ObjectId>
@@ -1051,7 +1051,7 @@ Dinner</Labels>
     <table id="44" parent="13" name="users">
       <ObjectId>18651</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>1440</StateNumber>
+      <StateNumber>1764</StateNumber>
     </table>
     <table id="45" parent="13" name="userselectedmenu">
       <ObjectId>18742</ObjectId>
@@ -1059,9 +1059,9 @@ Dinner</Labels>
       <StateNumber>1453</StateNumber>
     </table>
     <table id="46" parent="13" name="userselectedproduct">
-      <ObjectId>18674</ObjectId>
+      <ObjectId>19190</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>1452</StateNumber>
+      <StateNumber>1770</StateNumber>
     </table>
     <view id="47" parent="13" name="breakfastoptions">
       <ObjectId>18688</ObjectId>
@@ -1400,48 +1400,48 @@ Dinner</Labels>
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1171</StateNumber>
-      <DefaultExpression>nextval(&apos;&quot;public.Products_product_id_seq&quot;&apos;::regclass)</DefaultExpression>
+      <StateNumber>1764</StateNumber>
+      <DefaultExpression>nextval(&apos;products_product_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
     <column id="90" parent="42" name="name">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1171</StateNumber>
+      <StateNumber>1764</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="91" parent="42" name="calories">
       <Position>3</Position>
       <DataType>double precision|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1171</StateNumber>
+      <StateNumber>1764</StateNumber>
       <TypeId>701</TypeId>
     </column>
     <column id="92" parent="42" name="fat">
       <Position>4</Position>
       <DataType>double precision|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1171</StateNumber>
+      <StateNumber>1764</StateNumber>
       <TypeId>701</TypeId>
     </column>
     <column id="93" parent="42" name="protein">
       <Position>5</Position>
       <DataType>double precision|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1171</StateNumber>
+      <StateNumber>1764</StateNumber>
       <TypeId>701</TypeId>
     </column>
     <column id="94" parent="42" name="carbs">
       <Position>6</Position>
       <DataType>double precision|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1171</StateNumber>
+      <StateNumber>1764</StateNumber>
       <TypeId>701</TypeId>
     </column>
     <index id="95" parent="42" name="Products_pk">
-      <ObjectId>18670</ObjectId>
-      <StateNumber>1171</StateNumber>
+      <ObjectId>19186</ObjectId>
+      <StateNumber>1764</StateNumber>
       <ColNames>product_id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
@@ -1450,8 +1450,8 @@ Dinner</Labels>
       <ClassIds>1978</ClassIds>
     </index>
     <key id="96" parent="42" name="Products_pk">
-      <ObjectId>18671</ObjectId>
-      <StateNumber>1171</StateNumber>
+      <ObjectId>19187</ObjectId>
+      <StateNumber>1764</StateNumber>
       <ColNames>product_id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>Products_pk</UnderlyingIndexName>
@@ -1756,33 +1756,62 @@ Dinner</Labels>
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1171</StateNumber>
-      <DefaultExpression>nextval(&apos;&quot;public.UserSelectedProduct_id_seq&quot;&apos;::regclass)</DefaultExpression>
+      <StateNumber>1764</StateNumber>
+      <DefaultExpression>nextval(&apos;userselectedproduct_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
     <column id="136" parent="46" name="phone_number">
       <Position>2</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1171</StateNumber>
+      <StateNumber>1764</StateNumber>
       <TypeId>20</TypeId>
     </column>
     <column id="137" parent="46" name="product_id">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1171</StateNumber>
+      <StateNumber>1764</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <column id="138" parent="46" name="grams">
       <Position>4</Position>
       <DataType>double precision|0s</DataType>
-      <StateNumber>1394</StateNumber>
+      <NotNull>1</NotNull>
+      <StateNumber>1764</StateNumber>
       <TypeId>701</TypeId>
     </column>
-    <index id="139" parent="46" name="UserSelectedProduct_pk">
-      <ObjectId>18678</ObjectId>
-      <StateNumber>1171</StateNumber>
+    <column id="139" parent="46" name="fat_remaining">
+      <Position>5</Position>
+      <DataType>real|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1773</StateNumber>
+      <TypeId>700</TypeId>
+    </column>
+    <column id="140" parent="46" name="protein_remaining">
+      <Position>6</Position>
+      <DataType>real|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1773</StateNumber>
+      <TypeId>700</TypeId>
+    </column>
+    <column id="141" parent="46" name="carbs_remaining">
+      <Position>7</Position>
+      <DataType>real|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1773</StateNumber>
+      <TypeId>700</TypeId>
+    </column>
+    <column id="142" parent="46" name="calories_remaining">
+      <Position>8</Position>
+      <DataType>real|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1773</StateNumber>
+      <TypeId>700</TypeId>
+    </column>
+    <index id="143" parent="46" name="UserSelectedProduct_pk">
+      <ObjectId>19194</ObjectId>
+      <StateNumber>1764</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
@@ -1790,16 +1819,16 @@ Dinner</Labels>
       <CollationIds>0</CollationIds>
       <ClassIds>1978</ClassIds>
     </index>
-    <key id="140" parent="46" name="UserSelectedProduct_pk">
-      <ObjectId>18679</ObjectId>
-      <StateNumber>1171</StateNumber>
+    <key id="144" parent="46" name="UserSelectedProduct_pk">
+      <ObjectId>19195</ObjectId>
+      <StateNumber>1764</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>UserSelectedProduct_pk</UnderlyingIndexName>
     </key>
-    <foreign-key id="141" parent="46" name="UserSelectedProduct_fk0">
-      <ObjectId>19050</ObjectId>
-      <StateNumber>1405</StateNumber>
+    <foreign-key id="145" parent="46" name="UserSelectedProduct_fk0">
+      <ObjectId>19196</ObjectId>
+      <StateNumber>1764</StateNumber>
       <ColNames>phone_number</ColNames>
       <RefTableId>18651</RefTableId>
       <RefColPositions>1</RefColPositions>
@@ -1809,11 +1838,11 @@ Dinner</Labels>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <foreign-key id="142" parent="46" name="UserSelectedProduct_fk1">
-      <ObjectId>19045</ObjectId>
-      <StateNumber>1404</StateNumber>
+    <foreign-key id="146" parent="46" name="UserSelectedProduct_fk1">
+      <ObjectId>19201</ObjectId>
+      <StateNumber>1764</StateNumber>
       <ColNames>product_id</ColNames>
-      <RefTableId>18666</RefTableId>
+      <RefTableId>19182</RefTableId>
       <RefColPositions>1</RefColPositions>
       <RefTableName>products</RefTableName>
       <RefKeyName>Products_pk</RefKeyName>
@@ -1821,107 +1850,107 @@ Dinner</Labels>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="143" parent="47" name="id_option">
+    <column id="147" parent="47" name="id_option">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="144" parent="47" name="name">
+    <column id="148" parent="47" name="name">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="145" parent="47" name="calories">
+    <column id="149" parent="47" name="calories">
       <Position>3</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="146" parent="47" name="fat">
+    <column id="150" parent="47" name="fat">
       <Position>4</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="147" parent="47" name="protein">
+    <column id="151" parent="47" name="protein">
       <Position>5</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="148" parent="47" name="carbs">
+    <column id="152" parent="47" name="carbs">
       <Position>6</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="149" parent="47" name="type_meal">
+    <column id="153" parent="47" name="type_meal">
       <Position>7</Position>
       <DataType>mealtype|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="150" parent="48" name="id_option">
+    <column id="154" parent="48" name="id_option">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="151" parent="48" name="name">
+    <column id="155" parent="48" name="name">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="152" parent="48" name="calories">
+    <column id="156" parent="48" name="calories">
       <Position>3</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="153" parent="48" name="fat">
+    <column id="157" parent="48" name="fat">
       <Position>4</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="154" parent="48" name="protein">
+    <column id="158" parent="48" name="protein">
       <Position>5</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="155" parent="48" name="carbs">
+    <column id="159" parent="48" name="carbs">
       <Position>6</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="156" parent="48" name="type_meal">
+    <column id="160" parent="48" name="type_meal">
       <Position>7</Position>
       <DataType>mealtype|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="157" parent="49" name="id_option">
+    <column id="161" parent="49" name="id_option">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="158" parent="49" name="name">
+    <column id="162" parent="49" name="name">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="159" parent="49" name="calories">
+    <column id="163" parent="49" name="calories">
       <Position>3</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="160" parent="49" name="fat">
+    <column id="164" parent="49" name="fat">
       <Position>4</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="161" parent="49" name="protein">
+    <column id="165" parent="49" name="protein">
       <Position>5</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="162" parent="49" name="carbs">
+    <column id="166" parent="49" name="carbs">
       <Position>6</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>1172</StateNumber>
     </column>
-    <column id="163" parent="49" name="type_meal">
+    <column id="167" parent="49" name="type_meal">
       <Position>7</Position>
       <DataType>mealtype|0s</DataType>
       <StateNumber>1172</StateNumber>

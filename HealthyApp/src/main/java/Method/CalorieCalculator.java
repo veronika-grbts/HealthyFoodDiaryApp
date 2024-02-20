@@ -2,7 +2,6 @@ package Method;
 
 import entity.ActivityLevel;
 
-import java.text.DecimalFormat;
 
 public class CalorieCalculator {
 
@@ -16,9 +15,9 @@ public class CalorieCalculator {
     private static final double FEMALE_CONSTANT_C = 1.85;
     private static final double FEMALE_CONSTANT_D = 4.676;
 
-    private static final double PROTEIN_CALORIES_PERCENTAGE = 0.2; // 15%
-    private static final double FAT_CALORIES_PERCENTAGE = 0.3;     // 25%
-    private static final double CARBS_CALORIES_PERCENTAGE = 0.5;   // 60%
+    private static final double PROTEIN_CALORIES_PERCENTAGE = 0.2; // 20%
+    private static final double FAT_CALORIES_PERCENTAGE = 0.3;     // 30%
+    private static final double CARBS_CALORIES_PERCENTAGE = 0.5;   // 50%
 
 
     public static double calculateCalories(double weight, double height, int age, boolean isMale, ActivityLevel activityLevel) {

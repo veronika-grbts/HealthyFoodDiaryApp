@@ -81,81 +81,7 @@
          <font>
             <Font name="System Italic" size="24.0" />
          </font></TextField>
-      <VBox layoutY="-6.0" prefHeight="737.0" prefWidth="332.0" style="-fx-background-color: #452f42;">
-         <children>
-            <Pane prefHeight="130.0" prefWidth="332.0">
-               <children>
-                  <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="61.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@vegetables.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="123.0" layoutY="50.0" text="Healthy" textFill="#f4e9e9">
-                     <font>
-                        <Font name="Gabriola" size="36.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="209.0" layoutY="55.0" text="Diary" textFill="#f4e9e9">
-                     <font>
-                        <Font name="Ebrima" size="24.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-                <Button fx:id="mainPageBtn" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="336.0" style="-fx-background-color: #452f42;" text="Профіль користувача" textFill="#f4e9e9">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@woman.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-                </Button>
-                <Button fx:id="calculatorPageBtn" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="332.0" style="-fx-background-color: #452f42;" text="Лічильник калорій   " textFill="#f4e9e9">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-               <graphic>
-                  <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@calories-calculator.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-                </Button>
-                <Button fx:id="createdMenuPageBtn" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="346.0" style="-fx-background-color: #452f42;" text="Створення меню      " textFill="#f4e9e9">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-               <graphic>
-                  <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@diet.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-                </Button>
-                <Button fx:id="changePageBtn" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="339.0" style="-fx-background-color: #452f42;" text="Редагування              " textFill="#f4e9e9">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-               <graphic>
-                  <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@settings%20(1).png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-                </Button>
-         </children>
-         <effect>
-            <DropShadow color="#513c3cb5" offsetY="4.0" spread="0.01" />
-         </effect>
-      </VBox>
-      <Pane layoutX="332.0" layoutY="73.0" prefHeight="123.0" prefWidth="1028.0" style="-fx-background-color: #6f991d;">
+      <Pane layoutX="282.0" layoutY="73.0" prefHeight="123.0" prefWidth="1078.0" style="-fx-background-color: #6f991d;">
          <children>
             <Label layoutX="65.0" layoutY="39.0" text="Профіль користувача" textFill="#f4e9e9">
                <font>
@@ -175,5 +101,79 @@
             <DropShadow />
          </effect>
       </ImageView>
+      <VBox prefHeight="737.0" prefWidth="283.0" style="-fx-background-color: #452f42;">
+         <children>
+            <Pane prefHeight="130.0" prefWidth="332.0">
+               <children>
+                  <ImageView fitHeight="45.0" fitWidth="55.0" layoutX="41.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@diary-book.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="95.0" layoutY="46.0" text="Healthy" textFill="#f4e9e9">
+                     <font>
+                        <Font name="Gabriola" size="36.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="181.0" layoutY="51.0" text="Diary" textFill="#f4e9e9">
+                     <font>
+                        <Font name="Ebrima" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Button fx:id="mainPageBtn" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="336.0" style="-fx-background-color: #452f42;" text="Профіль користувача" textFill="#f4e9e9">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@woman.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="calculatorPageBtn" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="332.0" style="-fx-background-color: #452f42;" text="Лічильник калорій   " textFill="#f4e9e9">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@calories-calculator.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="createdMenuPageBtn" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="346.0" style="-fx-background-color: #452f42;" text="Створення меню      " textFill="#f4e9e9">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@diet.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="changePageBtn" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="339.0" style="-fx-background-color: #452f42;" text="Редагування              " textFill="#f4e9e9">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@settings.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+         <effect>
+            <DropShadow color="#513c3cb5" offsetY="4.0" spread="0.01" />
+         </effect>
+      </VBox>
     </children>
 </AnchorPane>

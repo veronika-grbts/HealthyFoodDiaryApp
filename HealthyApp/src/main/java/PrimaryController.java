@@ -41,7 +41,10 @@ public class PrimaryController {
                 String phoneNumber = phoneNumberField.getText();
                 User user = getUserInfo(Long.parseLong(phoneNumber));
                 if (user != null) {
-                    HibbernateRunner.setRoot("mainpage", user);
+                    // Сохраняем пользователя в ApplicationContext
+                    ApplicationContext.getInstance().setCurrentUser(user);
+                    // Переходим на главную страницу
+                    HibbernateRunner.setRoot("mainpage");
                 } else {
                     showErrorAlert("User not found", "User with the provided phone number was not found.");
                 }
@@ -54,7 +57,7 @@ public class PrimaryController {
 
         signUpBtn.setOnAction(event -> {
             try {
-                HibbernateRunner.setRoot("signUp", null);
+                HibbernateRunner.setRoot("signUp");
             } catch (IOException e) {
                 e.printStackTrace();
             }

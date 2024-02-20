@@ -29,7 +29,7 @@
         <AnchorPane prefHeight="548.0" prefWidth="410.0" style="-fx-border-radius: 25px; -fx-background-radius: 25px; -fx-stroke: #201e1e; -fx-border-width: 1 1 1 1; -fx-border-color: #F4E9E9;" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="475.0" AnchorPane.rightAnchor="475.0" AnchorPane.topAnchor="110.0">
             <children>
                 <AnchorPane fx:id="imagePlus" layoutX="2.0" prefHeight="550.0" prefWidth="410.0" style="-fx-background-color: #201e1e; -fx-opacity: 0.4; -fx-background-radius: 25px; -fx-border-radius: 25px; -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, gray, white);" />
-                <AnchorPane fx:id="signUpPane1" layoutX="36.0" layoutY="82.0" prefHeight="378.0" prefWidth="350.0" visible="false">
+                <AnchorPane fx:id="signUpPane1" layoutX="36.0" layoutY="82.0" prefHeight="378.0" prefWidth="350.0">
                     <children>
                         <TextField fx:id="sighUpPhone" layoutX="12.0" layoutY="75.0" prefHeight="41.0" prefWidth="326.0" promptText="Номер телефона (380 _ _ _ _ _ _ _ _ _ _ )">
                             <effect>
@@ -54,14 +54,14 @@
                         </Button>
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="signUpPane2" layoutX="21.0" layoutY="86.0" prefHeight="378.0" prefWidth="366.0">
+                <AnchorPane fx:id="signUpPane2" layoutX="21.0" layoutY="86.0" prefHeight="378.0" prefWidth="366.0" visible="false">
                     <children>
                         <TextField fx:id="signUpAge" layoutX="14.0" layoutY="5.0" prefHeight="41.0" prefWidth="342.0" promptText="Вік" />
                         <TextField fx:id="signUpWeight" layoutX="14.0" layoutY="138.0" prefHeight="41.0" prefWidth="342.0" promptText="Вага( в кг)" />
                         <TextField fx:id="signUpHeight" layoutX="13.0" layoutY="69.0" prefHeight="41.0" prefWidth="342.0" promptText="Зріст ( в см)" />
                         <ComboBox fx:id="signUpActivityLevel" editable="true" layoutX="14.0" layoutY="205.0" prefHeight="41.0" prefWidth="342.0" promptText="Рівень активності у житті" visibleRowCount="3">
                      <tooltip>
-                         <Tooltip autoHide="true" text="Рівень активності у житті означає кількість фізичної активності у Вашому житті. Low - мінімальна або відсутня.&#10;Medium - середня 2 -3 рази на тиждень.&#10;Hight - 5 та більше разів на тиждень" textAlignment="JUSTIFY" wrapText="true" />
+                        <Tooltip autoHide="true" text="Рівень активності у житті означає кількість фізичної активності у Вашому житті.&#10; Low - мінімальна або відсутня. Medium - середня 2 -3 рази на тиждень.&#10;Hight - 5 та більше разів на тиждень" textAlignment="JUSTIFY" wrapText="true" />
                      </tooltip></ComboBox>
                         <ComboBox fx:id="signUpGender" editable="true" layoutX="14.0" layoutY="272.0" prefHeight="41.0" prefWidth="342.0" promptText="стать" visibleRowCount="2" />
                         <Button fx:id="nextBtn2" layoutX="96.0" layoutY="360.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="168.0" style="-fx-background-radius: 15px; -fx-background-color: linear-gradient(from 0% 0% to 100% 100%,  #F4E9E9, white);" text="Далі">

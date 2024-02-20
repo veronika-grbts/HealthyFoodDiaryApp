@@ -27,14 +27,17 @@ public class MealOption {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false)
-    private Double calories;
-    @Column(nullable = false)
-    private Double fat;
-    @Column(nullable = false)
-    private Double protein;
-    @Column(nullable = false)
-    private Double carbs;
+    @Column(name = "calories",nullable = false)
+    private Double caloriesMealOption;
+
+    @Column(name = "fat",nullable = false)
+    private Double fatMealOption;
+
+    @Column(name = "protein",nullable = false)
+    private Double proteinMealOption;
+
+    @Column(name = "carbs",nullable = false)
+    private Double carbsMealOption;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type_meal", columnDefinition = "type_meal", nullable = false)

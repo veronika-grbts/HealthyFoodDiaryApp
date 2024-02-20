@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -5,7 +6,6 @@ import entity.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import util.HibernateMethods;
 
 public class MainPageController {
 
@@ -49,12 +49,26 @@ public class MainPageController {
     private TextField allergy;
 
     public void fillUserData(User user) {
-        name_id.setText(user.getName());
+        name_id.setText(user.getNameUser());
         numberPhone.setText(String.valueOf(user.getPhoneNumber()));
-        age.setText(String.valueOf(user.getAge()));
-        height.setText(String.valueOf(user.getHeight()) +" см");
-        weight.setText(String.valueOf(user.getWeight()) + " кг");
-        gender.setText(user.isGender() ? "чоловік" : "жінка");
-        allergy.setText(user.isAllergies() ? "так" : "ні");
+        age.setText(String.valueOf(user.getAgeUser()));
+        height.setText(String.valueOf(user.getHeightUser()) +" см");
+        weight.setText(String.valueOf(user.getWeightUser()) + " кг");
+        gender.setText(user.isGenderUser() ? "чоловік" : "жінка");
+        allergy.setText(user.isAllergiesUser() ? "так" : "ні");
+    }
+    @FXML
+    void initialize() {
+        calculatorPageBtn.setOnAction(event -> {
+            try {
+                HibbernateRunner.setRoot("calorieCalculator");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+
     }
 }
+
+
