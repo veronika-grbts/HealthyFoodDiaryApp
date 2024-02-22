@@ -19,6 +19,11 @@ public class CalorieCalculator {
     private static final double FAT_CALORIES_PERCENTAGE = 0.3;     // 30%
     private static final double CARBS_CALORIES_PERCENTAGE = 0.5;   // 50%
 
+    private static final double BREAKFAST_PERCENTAGE = 0.25;
+    private static final double LUNCH_PERCENTAGE = 0.3;
+    private static final double DINNER_PERCENTAGE = 0.2;
+
+
 
     public static double calculateCalories(double weight, double height, int age, boolean isMale, ActivityLevel activityLevel) {
         double bmr;
@@ -49,18 +54,45 @@ public class CalorieCalculator {
     }
 
 
-    // Метод для расчета количества белков
+    // Метод для расчета количества белков на день
     public static double calculateProtein(double totalCalories) {
         return Math.round(((totalCalories * PROTEIN_CALORIES_PERCENTAGE) / 4.1) * 10.0)/ 10.0; // 1 г белка = 4.1 калории
     }
 
-    // Метод для расчета количества жиров
+    // Метод для расчета количества жиров на день
     public static double calculateFat(double totalCalories) {
         return Math.round(((totalCalories * FAT_CALORIES_PERCENTAGE) / 9.3) * 10.0)/ 10.0; // 1 г жира = 9.3 калорий
     }
 
-    // Метод для расчета количества углеводов
+    // Метод для расчета количества углеводов на день
     public static double calculateCarbs(double totalCalories) {
         return Math.round(((totalCalories * CARBS_CALORIES_PERCENTAGE) / 4.1) * 10.0)/ 10.0; // 1 г углеводов = 4.1 калории
+    }
+
+    //Метод для расчета калаража для завтрака
+        public static double numberOfGramsForBreakfast(double totalCalories){
+            return Math.round((totalCalories * BREAKFAST_PERCENTAGE));
+    }
+
+    //Метод для расчета калаража для обеда
+    public static double numberOfGramsForLunch(double totalCalories){
+        return Math.round((totalCalories * LUNCH_PERCENTAGE));
+    }
+
+    //Метод для расчета калаража для ужина
+    public static double numberOfGramsForDinner(double totalCalories){
+        return Math.round((totalCalories * DINNER_PERCENTAGE));
+    }
+
+    // Метод для расчета калорий с учетом желаемого снижения веса
+    public static double calculateCaloriesLosingWeight(double totalCalorie) {
+        // Отнимаем 350 калорий от общей суммы
+        double result = totalCalorie - 350;
+       if (result < 1200) {
+            return 1200;
+        } else {
+            // Иначе возвращаем результат, учитывая снижение веса на 350 калорий
+            return result;
+        }
     }
 }

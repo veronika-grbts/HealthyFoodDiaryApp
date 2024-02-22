@@ -19,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import lombok.extern.slf4j.Slf4j;
 import util.HibernateMethods;
 
+
 @Slf4j
 public class SignUpController {
     private HibernateMethods hibernateMethods = new HibernateMethods();
@@ -165,7 +166,14 @@ public class SignUpController {
             double carbs = CalorieCalculator.calculateCarbs(calories);
 
             // Создаем пользователя
-            hibernateMethods.createUser(Long.parseLong(phone), name, age, weight, height, gender, activityLevel, hasAllergy, hasCause, calories, protein, fat, carbs);
+            if (hasCause){
+                double caloriesWithLosingWeight = CalorieCalculator.calculateCaloriesLosingWeight(calories);
+                hibernateMethods.createUser(Long.parseLong(phone), name, age, weight, height, gender, activityLevel, hasAllergy, hasCause, caloriesWithLosingWeight, protein, fat, carbs);
+
+            }
+            else {
+                hibernateMethods.createUser(Long.parseLong(phone), name, age, weight, height, gender, activityLevel, hasAllergy, hasCause, calories, protein, fat, carbs);
+            }
 
             // Добавляем аллергию только если пользователь выбрал аллергию
             if (hasAllergy) {

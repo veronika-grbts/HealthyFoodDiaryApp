@@ -211,9 +211,8 @@
                      <children>
                         <TableView fx:id="tableProduct" layoutX="-2.0" layoutY="-10.0" prefHeight="500.0" prefWidth="465.0" stylesheets="@app/file.css">
                           <columns>
-                            <TableColumn fx:id="nameProduct" editable="false" prefWidth="291.0" sortable="false" style="-fx-background-color: rgba(121, 146, 54, 0.6); -fx-font-family: &quot;System&quot;; -fx-font-size: 20px; -fx-font-weight: normal; -fx0text-fill: #ffffff;" text="Назва продукту" />
-                            <TableColumn fx:id="quantity" editable="false" minWidth="0.0" prefWidth="96.0" sortable="false" style="-fx-background-color: rgba(121, 146, 54, 0.6); -fx-font-size: 20px; -fx-font-weight: normal;" text="кількість" />
-                              <TableColumn fx:id="state" editable="false" minWidth="5.0" prefWidth="77.0" sortable="false" style="-fx-background-color: rgba(121, 146, 54, 0.6); -fx-font-size: 20px; -fx-font-weight: normal;" text="state" />
+                            <TableColumn fx:id="nameProduct" editable="false" prefWidth="354.0" sortable="false" style="-fx-background-color: rgba(121, 146, 54, 0.6); -fx-font-family: &quot;System&quot;; -fx-font-size: 20px; -fx-font-weight: normal; -fx0text-fill: #ffffff;" text="Назва продукту" />
+                            <TableColumn fx:id="quantity" editable="false" minWidth="0.0" prefWidth="110.0" sortable="false" style="-fx-background-color: rgba(121, 146, 54, 0.6); -fx-font-size: 20px; -fx-font-weight: normal;" text="кількість" />
                           </columns>
                         </TableView>
                      </children>

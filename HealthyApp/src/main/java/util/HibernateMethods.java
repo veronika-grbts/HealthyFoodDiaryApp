@@ -8,15 +8,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.persistence.criteria.*;
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Slf4j
-public class HibernateMethods {
+public class HibernateMethods{
 
     public void addUserAllergyForUser(long phoneNumber, int ingredientId) {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
@@ -81,8 +85,9 @@ public class HibernateMethods {
         }
     }
 
-    public void addUserSelectedProduct(long phoneNumber, int productId, double grams, double remainingCalories,
-                                       double remainingFat, double remainingProtein, double remainingCarbs) {
+    public void addUserSelectedProduct(long phoneNumber, int productId, double grams,
+                                       double remainingCalories, double remainingFat,
+                                       double remainingProtein, double remainingCarbs) {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
             try (Session session = sessionFactory.openSession()) {
                 session.beginTransaction();
@@ -119,8 +124,9 @@ public class HibernateMethods {
     }
 
 
-    public void createUser(long phoneNumber, String name, int age, double weight, double height, boolean gender,
-                           ActivityLevel activityLevel, boolean allergies, boolean cause, double totalCaloric,
+    public void createUser(long phoneNumber, String name, int age, double weight,
+                           double height, boolean gender, ActivityLevel activityLevel,
+                           boolean allergies, boolean cause, double totalCaloric,
                            double totalProtein, double totalFat, double totalCarbs) {
 
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
@@ -266,7 +272,7 @@ public class HibernateMethods {
                 // Добавляем условие для выборки записей для указанного номера телефона
                 criteriaDelete.where(criteriaBuilder.equal(root.get("user").get("phoneNumber"), phoneNumber));
                 // Выполняем запрос на удаление
-                 session.createQuery(criteriaDelete).executeUpdate();
+                session.createQuery(criteriaDelete).executeUpdate();
 
                 session.getTransaction().commit();
 
@@ -399,7 +405,9 @@ public class HibernateMethods {
             return 0;
         }
     }
-    public void addNewProducts(String nameProduct, double calorieProduct, double fatProduct, double proteinProduct, double carbsProduct) {
+    public void addNewProducts(String nameProduct, double calorieProduct,
+                               double fatProduct, double proteinProduct,
+                               double carbsProduct) {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
             try (Session session = sessionFactory.openSession()) {
                 session.beginTransaction();
@@ -434,4 +442,180 @@ public class HibernateMethods {
         }
     }
 
+    public Integer findMealIdByName(String mealName) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                Query<Integer> query = session.createQuery(
+                        "SELECT m.idOption FROM MealOption m WHERE m.name = :mealName", Integer.class);
+                query.setParameter("mealName", mealName);
+                return query.uniqueResult();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public Integer findDrinkIdByName(String drinkName) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                Query<Integer> query = session.createQuery(
+                        "SELECT d.idDrink FROM Drink d WHERE d.nameDrink = :drinkName", Integer.class);
+                query.setParameter("drinkName", drinkName);
+                return query.uniqueResult();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<MealOption> getAllMealOptionsByType(MealType mealType) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                CriteriaBuilder builder = session.getCriteriaBuilder();
+                CriteriaQuery<MealOption> criteria = builder.createQuery(MealOption.class);
+                Root<MealOption> root = criteria.from(MealOption.class);
+                criteria.select(root).where(builder.equal(root.get("mealType"), mealType));
+                Query<MealOption> query = session.createQuery(criteria);
+                return query.getResultList();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Drink> getAllDrinks() {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                CriteriaBuilder builder = session.getCriteriaBuilder();
+                CriteriaQuery<Drink> query = builder.createQuery(Drink.class);
+                Root<Drink> root = query.from(Drink.class);
+                query.select(root);
+                return session.createQuery(query).getResultList();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return Collections.emptyList();
+            }
+        }
+    }
+
+
+    public void saveUserSelectedMenu(long phoneNumber,
+                                     int breakfastId, int lunchId, int dinnerId,
+                                     int breakfastDrinkId, int lunchDrinkId,
+                                     int dinnerDrinkId, double gramsForBreakfast,
+                                     double gramsForDinner, double gramsForLunch) {
+
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            Session session = sessionFactory.openSession();
+            Transaction tx = null;
+            try {
+                tx = session.beginTransaction();
+
+                // Получаем пользователя по номеру телефона
+                User user = session.get(User.class, phoneNumber);
+                if (user != null) {
+                    UserSelectedMenu userSelectedMenu = UserSelectedMenu.builder()
+                            .user(user)
+                            .breakfast(session.get(MealOption.class, breakfastId))
+                            .breakfastDrink(session.get(Drink.class, breakfastDrinkId))
+                            .lunch(session.get(MealOption.class, lunchId))
+                            .lunchDrink(session.get(Drink.class, lunchDrinkId))
+                            .dinner(session.get(MealOption.class, dinnerId))
+                            .dinnerDrink(session.get(Drink.class, dinnerDrinkId))
+                            .gramsForBreakfastSelectedMenu(gramsForBreakfast)
+                            .gramsForLunchSelectedMenu(gramsForLunch)
+                            .gramsForDinnerSelectedMenu(gramsForDinner)
+                            .build();
+                    session.save(userSelectedMenu);
+                    tx.commit();
+                } else {
+                    log.warn("User with number phone {} did not find", phoneNumber);
+                }
+            } catch (Exception e) {
+                if ( tx!=null){
+                    tx.rollback();
+                }
+                e.printStackTrace();
+            }finally {
+                session.close();
+            }
+        }
+    }
+
+    // Метод для получения аллергий пользователя
+    public List<UserAllergy> getUserAllergies(User user) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                String hql = "FROM UserAllergy WHERE user = :user";
+                Query<UserAllergy> query = session.createQuery(hql, UserAllergy.class);
+                query.setParameter("user", user);
+                return query.list();
+            }
+        }catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    // Метод для получения ингредиентов блюда
+    public List<Ingredients> getIngredientsByMealOption(MealOption mealOption) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                String hql = "SELECT mi.ingredients FROM MealIngredients mi WHERE mi.mealOption = :mealOption";
+                Query<Ingredients> query = session.createQuery(hql, Ingredients.class);
+                query.setParameter("mealOption", mealOption);
+                return query.list();
+            }
+        }catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    // Метод для получения ингредиентов напитка
+    public List<Ingredients> getIngredientsByDrink(Drink drink) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+                String hql = "SELECT mdi.ingredients FROM MealIngredientsDrink mdi WHERE mdi.drink = :drink";
+                Query<Ingredients> query = session.createQuery(hql, Ingredients.class);
+                query.setParameter("drink", drink);
+                return query.list();
+            }
+        }catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public Set<Ingredients> getAllergicIngredientsForUser(User user) {
+        Set<Ingredients> allergicIngredients = new HashSet<>();
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
+            try (Session session = sessionFactory.openSession()) {
+                session.beginTransaction();
+
+                // Получаем список аллергий пользователя
+                List<UserAllergy> allergies = session.createQuery(
+                        "SELECT ua FROM UserAllergy ua WHERE ua.user = :user", UserAllergy.class)
+                        .setParameter("user", user)
+                        .list();
+                // Добавляем ингредиенты из аллергий пользователя в список
+                for (UserAllergy allergy : allergies) {
+                    allergicIngredients.add(allergy.getIngredients());
+                }
+                session.getTransaction().commit();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return allergicIngredients;
+    }
 }

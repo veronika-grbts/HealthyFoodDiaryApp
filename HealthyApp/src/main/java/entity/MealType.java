@@ -1,6 +1,6 @@
 package entity;
 
-public enum MealType {
+public enum MealType{
     Breakfast,
     Lunch,
     Dinner

@@ -78,7 +78,7 @@
                 </AnchorPane>
                 <AnchorPane fx:id="signUpPane3" layoutX="21.0" layoutY="86.0" prefHeight="378.0" prefWidth="366.0" visible="false">
                     <children>
-                        <CheckBox fx:id="checkBoxAllergy" layoutX="14.0" layoutY="60.0" mnemonicParsing="false" text="Наявність алергії" textFill="#ffd8c3">
+                        <CheckBox fx:id="checkBoxAllergy" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" text="Наявність алергії" textFill="#3b1100">
                             <font>
                                 <Font name="Cambria Bold" size="24.0" />
                             </font>
@@ -86,7 +86,7 @@
                                 <DropShadow color="#00000063" />
                             </effect>
                         </CheckBox>
-                        <CheckBox fx:id="checkBoxCause" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Схуднення" textFill="#ffd8c3">
+                        <CheckBox fx:id="checkBoxCause" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Схуднення" textFill="#3b1100">
                             <font>
                                 <Font name="Cambria Bold" size="24.0" />
                             </font>

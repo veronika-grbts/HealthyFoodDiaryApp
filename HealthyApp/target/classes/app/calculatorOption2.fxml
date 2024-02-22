@@ -28,12 +28,12 @@
             </Label>
             <ImageView fitHeight="385.0" fitWidth="469.0" layoutX="820.0" layoutY="-76.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@top-view-fresh-salad-with-fried-egg-removebg-preview.png" />
+                  <Image url="@../top-view-fresh-salad-with-fried-egg-removebg-preview.png" />
                </image>
             </ImageView>
             <ImageView fx:id="updateImage" fitHeight="39.0" fitWidth="45.0" layoutX="780.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@turning.png" />
+                  <Image url="@../turning.png" />
                </image>
             </ImageView>
             <Button fx:id="updateBtn" layoutX="772.0" layoutY="39.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="55.0" style="-fx-background-color: transparent;" />
@@ -48,7 +48,7 @@
                <children>
                   <ImageView fitHeight="45.0" fitWidth="55.0" layoutX="41.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@diary-book.png" />
+                        <Image url="@../diary-book.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="95.0" layoutY="46.0" text="Healthy" textFill="#f4e9e9">
@@ -70,7 +70,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@woman.png" />
+                        <Image url="@../woman.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -82,7 +82,7 @@
                <graphic>
                   <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@calories-calculator.png" />
+                        <Image url="@../calories-calculator.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -94,7 +94,7 @@
                <graphic>
                   <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@diet.png" />
+                        <Image url="@../diet.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -106,7 +106,7 @@
                <graphic>
                   <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@settings.png" />
+                        <Image url="@../settings.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -116,7 +116,7 @@
             <DropShadow color="#513c3cb5" offsetY="4.0" spread="0.01" />
          </effect>
       </VBox>
-    <AnchorPane layoutX="281.0" layoutY="196.0" minHeight="0.0" minWidth="0.0" prefHeight="526.0" prefWidth="1079.0" style="-fx-background-color: transparent;" stylesheets="@app/file.css">
+    <AnchorPane layoutX="281.0" layoutY="196.0" minHeight="0.0" minWidth="0.0" prefHeight="526.0" prefWidth="1079.0" style="-fx-background-color: transparent;" stylesheets="@file.css">
          <children>
             <AnchorPane layoutX="30.0" layoutY="56.0" prefHeight="168.0" prefWidth="510.0" style="-fx-background-color: rgba(169, 183, 203, 0.8); -fx-border-width: 1 1 1 1; -fx-border-radius: 25px; -fx-background-radius: 25px; -fx-border-color: #55607c; -fx-stroke: #201e1e;">
                <children>
@@ -197,7 +197,7 @@
                   </TextField>
                   <ImageView fx:id="plusProduct" fitHeight="27.0" fitWidth="25.0" layoutX="461.0" layoutY="71.0" onMouseClicked="#Handle" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@add(1).png" />
+                        <Image url="@../add(1).png" />
                      </image>
                      <effect>
                         <DropShadow color="#000000a1" height="5.45" offsetX="3.0" radius="0.8625" width="0.0" />
@@ -209,10 +209,10 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="480.0" prefWidth="460.0">
                      <children>
-                        <TableView fx:id="tableProduct" layoutX="-2.0" layoutY="-10.0" prefHeight="500.0" prefWidth="465.0" stylesheets="@app/file.css">
+                        <TableView fx:id="tableProduct" layoutX="-2.0" layoutY="-10.0" prefHeight="500.0" prefWidth="474.0" stylesheets="@option4.css">
                           <columns>
-                            <TableColumn fx:id="nameProduct" editable="false" prefWidth="354.0" sortable="false" style="-fx-background-color: rgba(121, 146, 54, 0.6); -fx-font-family: &quot;System&quot;; -fx-font-size: 20px; -fx-font-weight: normal; -fx0text-fill: #ffffff;" text="Назва продукту" />
-                            <TableColumn fx:id="quantity" editable="false" minWidth="0.0" prefWidth="110.0" sortable="false" style="-fx-background-color: rgba(121, 146, 54, 0.6); -fx-font-size: 20px; -fx-font-weight: normal;" text="кількість" />
+                            <TableColumn fx:id="nameProduct" editable="false" prefWidth="354.0" sortable="false" text="Назва продукту" />
+                            <TableColumn fx:id="quantity" editable="false" minWidth="0.0" prefWidth="110.0" sortable="false" text="кількість" />
                           </columns>
                         </TableView>
                      </children>
@@ -244,7 +244,7 @@
                   </Button>
                   <ImageView fx:id="closePane" fitHeight="25.0" fitWidth="25.0" layoutX="370.0" layoutY="15.0" onMouseClicked="#ClosePane" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@delete.png" />
+                        <Image url="@../delete.png" />
                      </image>
                      <effect>
                         <DropShadow color="#00000073" height="1.56" radius="0.0" width="0.0" />

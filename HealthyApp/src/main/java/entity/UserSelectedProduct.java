@@ -41,5 +41,4 @@ public class UserSelectedProduct {
 
     @Column(name = "calories_remaining", nullable = false)
     private Double caloriesUserSelectedProduct;
-
 }

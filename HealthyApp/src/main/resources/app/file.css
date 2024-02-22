@@ -16,6 +16,3 @@
 .table-view .column-header {
     -fx-text-fill: white; /* Цвет текста */
 }
-.table-row-cell:empty {
-    -fx-background-color: transparent;
-}

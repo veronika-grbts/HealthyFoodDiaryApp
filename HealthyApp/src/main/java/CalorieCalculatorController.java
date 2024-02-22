@@ -200,6 +200,14 @@ public class CalorieCalculatorController {
             }
         });
 
+        createdMenuPageBtn.setOnAction(event -> {
+            try {
+                HibbernateRunner.setRoot("createdMenu");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
     }
     private User getUserFromApplicationContext() {
         return ApplicationContext.getInstance().getCurrentUser();

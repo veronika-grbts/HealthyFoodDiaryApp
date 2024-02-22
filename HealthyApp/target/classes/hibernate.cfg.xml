@@ -20,6 +20,10 @@
     <mapping class="entity.UserSelectedProduct"/>
     <mapping class="entity.MealOption"/>
     <mapping class="entity.Ingredients"/>
+    <mapping class="entity.Drink"/>
+    <mapping class="entity.UserSelectedMenu"/>
+    <mapping class="entity.MealIngredients"/>
+    <mapping class="entity.MealIngredientsDrink"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
 
