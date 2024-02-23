@@ -4,7 +4,6 @@ import entity.ActivityLevel;
 
 
 public class CalorieCalculator {
-
     private static final double MALE_CONSTANT_A = 66.5;
     private static final double MALE_CONSTANT_B = 13.75;
     private static final double MALE_CONSTANT_C = 5.003;
@@ -23,9 +22,20 @@ public class CalorieCalculator {
     private static final double LUNCH_PERCENTAGE = 0.3;
     private static final double DINNER_PERCENTAGE = 0.2;
 
+    private static final double BREAKFAST_PROTEIN_PERCENTAGE = 0.27;
+    private static final double BREAKFAST_FAT_PERCENTAGE = 0.35;
+    private static final double BREAKFAST_CARBS_PERCENTAGE = 0.4;
 
+    private static final double LUNCH_PROTEIN_PERCENTAGE = 0.45;
+    private static final double LUNCH_FAT_PERCENTAGE = 0.45;
+    private static final double LUNCH_CARBS_PERCENTAGE = 0.4;
 
-    public static double calculateCalories(double weight, double height, int age, boolean isMale, ActivityLevel activityLevel) {
+    private static final double DINNER_PROTEIN_PERCENTAGE = 0.28;
+    private static final double DINNER_FAT_PERCENTAGE = 0.2;
+    private static final double DINNER_CARBS_PERCENTAGE = 0.2;
+
+    public static double calculateCalories(double weight, double height, int age,
+                                           boolean isMale, ActivityLevel activityLevel) {
         double bmr;
 
         if (isMale) {
@@ -36,7 +46,6 @@ public class CalorieCalculator {
 
         double calories = bmr * getActivityMultiplier(activityLevel);
 
-        // Округление до одного знака после запятой
         return Math.round(calories * 10.0) / 10.0;
     }
 
@@ -54,44 +63,66 @@ public class CalorieCalculator {
     }
 
 
-    // Метод для расчета количества белков на день
+    //Метод для розрахунку кількості білків на день
     public static double calculateProtein(double totalCalories) {
         return Math.round(((totalCalories * PROTEIN_CALORIES_PERCENTAGE) / 4.1) * 10.0)/ 10.0; // 1 г белка = 4.1 калории
     }
 
-    // Метод для расчета количества жиров на день
+    // Метод для розрахунку кількості жирів на день
     public static double calculateFat(double totalCalories) {
         return Math.round(((totalCalories * FAT_CALORIES_PERCENTAGE) / 9.3) * 10.0)/ 10.0; // 1 г жира = 9.3 калорий
     }
 
-    // Метод для расчета количества углеводов на день
+    // Метод розрахунку кількості вуглеводів на день
     public static double calculateCarbs(double totalCalories) {
         return Math.round(((totalCalories * CARBS_CALORIES_PERCENTAGE) / 4.1) * 10.0)/ 10.0; // 1 г углеводов = 4.1 калории
     }
 
-    //Метод для расчета калаража для завтрака
+    //Метод для розрахунку каларажу для сніданку
         public static double numberOfGramsForBreakfast(double totalCalories){
             return Math.round((totalCalories * BREAKFAST_PERCENTAGE));
     }
 
-    //Метод для расчета калаража для обеда
+    //Метод для розрахунку каларажу для обіду
     public static double numberOfGramsForLunch(double totalCalories){
         return Math.round((totalCalories * LUNCH_PERCENTAGE));
     }
 
-    //Метод для расчета калаража для ужина
+    //Метод для розрахунку каларажу для вечері
     public static double numberOfGramsForDinner(double totalCalories){
         return Math.round((totalCalories * DINNER_PERCENTAGE));
     }
 
-    // Метод для расчета калорий с учетом желаемого снижения веса
+    // Метод розрахунку норми на сніданок
+    public static Nutrition calculateBreakfastNorm(double totalCalories) {
+        double protein = calculateProtein(totalCalories) * BREAKFAST_PROTEIN_PERCENTAGE;
+        double fat = calculateFat(totalCalories) * BREAKFAST_FAT_PERCENTAGE;
+        double carbohydrates = calculateCarbs(totalCalories) * BREAKFAST_CARBS_PERCENTAGE;
+        return new Nutrition(protein, fat, carbohydrates);
+    }
+
+    //Метод розрахунку норми на обід
+    public static Nutrition calculateLunchNorm(double totalCalories) {
+        double protein = calculateProtein(totalCalories) * LUNCH_PROTEIN_PERCENTAGE;
+        double fat = calculateFat(totalCalories) * LUNCH_FAT_PERCENTAGE;
+        double carbohydrates = calculateCarbs(totalCalories) * LUNCH_CARBS_PERCENTAGE;
+        return new Nutrition(protein, fat, carbohydrates);
+    }
+
+    // Метод розрахунку норми на вечері
+    public static Nutrition calculateDinnerNorm(double totalCalories) {
+        double protein = calculateProtein(totalCalories) * DINNER_PROTEIN_PERCENTAGE;
+        double fat = calculateFat(totalCalories) * DINNER_FAT_PERCENTAGE;
+        double carbohydrates = calculateCarbs(totalCalories) * DINNER_CARBS_PERCENTAGE;
+        return new Nutrition(protein, fat, carbohydrates);
+    }
+
+    //Метод розрахунку калорій з урахуванням бажаного зниження ваги
     public static double calculateCaloriesLosingWeight(double totalCalorie) {
-        // Отнимаем 350 калорий от общей суммы
         double result = totalCalorie - 350;
        if (result < 1200) {
             return 1200;
         } else {
-            // Иначе возвращаем результат, учитывая снижение веса на 350 калорий
             return result;
         }
     }

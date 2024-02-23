@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 
 import Method.CalorieCalculator;
@@ -86,13 +88,12 @@ public class SignUpController {
 
     @FXML
     void Handle(MouseEvent event) {
-        // Создание нового ComboBox
+
         ComboBox<String> newComboBox = new ComboBox<>();
 
-        // Установка размеров и позиции нового ComboBox
-        double x = 14; // Начальная координата X
-        double y = 100; // Начальная координата Y
-        double deltaY = 40; // Расстояние между ComboBox
+        double x = 14;
+        double y = 100;
+        double deltaY = 40;
 
         // Определяем координаты для нового ComboBox
         int numberOfExistingComboBoxes = signUpPane3.getChildren().stream()
@@ -104,30 +105,34 @@ public class SignUpController {
 
         newComboBox.setLayoutX(x);
         newComboBox.setLayoutY(y);
-        newComboBox.setPrefWidth(300); // Устанавливаем ширину ComboBox
-        newComboBox.setPrefHeight(30); // Устанавливаем высоту ComboBox
+        newComboBox.setPrefWidth(300);
+        newComboBox.setPrefHeight(30);
 
-        // Добавление элементов в ComboBox
+        newComboBox.setEditable(true);
+
         List<Ingredients> allIngredients = hibernateMethods.getAllIngredients();
         if (allIngredients != null) {
             for (Ingredients ingredient : allIngredients) {
                 newComboBox.getItems().add(ingredient.getNameIngredients());
             }
-            // Добавление нового ComboBox на панель
+
             signUpPane3.getChildren().add(newComboBox);
 
-            // Добавление обработчика события для выбора элемента в новом ComboBox
+            // Додаємо обработчика события для выбора элемента в новом ComboBox
             newComboBox.setOnAction(e -> {
                 String selectedProduct = newComboBox.getValue();
                 Ingredients ingredient = hibernateMethods.findIngredientByName(selectedProduct);
                 if (ingredient != null) {
                     hibernateMethods.addUserAllergyForUser(Long.parseLong(sighUpPhone.getText()), ingredient.getIdIngredients());
                 } else {
-                  log.warn("the selected ingredient  was not found");
+                    log.warn("the selected ingredient  was not found");
                 }
             });
-        } else {
-           log.warn("The list Products is empty");
+
+            // Добавляем слушатель событий на текстовое поле ComboBox для фильтрации
+            newComboBox.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+                filterComboBox(newComboBox, newValue);
+            });
         }
     }
 
@@ -165,7 +170,7 @@ public class SignUpController {
             double fat = CalorieCalculator.calculateFat(calories);
             double carbs = CalorieCalculator.calculateCarbs(calories);
 
-            // Создаем пользователя
+
             if (hasCause){
                 double caloriesWithLosingWeight = CalorieCalculator.calculateCaloriesLosingWeight(calories);
                 hibernateMethods.createUser(Long.parseLong(phone), name, age, weight, height, gender, activityLevel, hasAllergy, hasCause, caloriesWithLosingWeight, protein, fat, carbs);
@@ -175,9 +180,9 @@ public class SignUpController {
                 hibernateMethods.createUser(Long.parseLong(phone), name, age, weight, height, gender, activityLevel, hasAllergy, hasCause, calories, protein, fat, carbs);
             }
 
-            // Добавляем аллергию только если пользователь выбрал аллергию
+
             if (hasAllergy) {
-                // Добавляем аллергию для каждого выбранного продукта в комбобоксе
+
                 for (Node node : signUpPane3.getChildren()) {
                     if (node instanceof ComboBox) {
                         ComboBox<String> comboBox = (ComboBox<String>) node;
@@ -195,7 +200,6 @@ public class SignUpController {
                 }
             }
 
-            // Переходим на главную страницу с данными нового пользователя
             User newUser = hibernateMethods.getUserInfo(Long.parseLong(phone));
             ApplicationContext.getInstance().setCurrentUser(newUser);
             try {
@@ -205,4 +209,26 @@ public class SignUpController {
             }
         });
     }
+
+    private void filterComboBox(ComboBox<String> comboBox, String filter) {
+        if (filter == null || filter.isEmpty()) {
+            // Если фильтр пустой, отображаем все элементы
+            comboBox.getItems().clear(); // очищаем ComboBox перед добавлением элементов
+            List<Ingredients> allIngredients = hibernateMethods.getAllIngredients();
+            if (allIngredients != null) {
+                for (Ingredients ingredient : allIngredients) {
+                    comboBox.getItems().add(ingredient.getNameIngredients());
+                }
+            }
+            comboBox.hide();
+        } else {
+            // Создаем фильтр, который будет искать элементы, содержащие введенные символы
+            Predicate<String> predicate = item -> item.toLowerCase().contains(filter.toLowerCase());
+            // Отфильтровываем элементы и отображаем только соответствующие
+            List<String> filteredItems = comboBox.getItems().stream().filter(predicate).collect(Collectors.toList());
+            comboBox.getItems().setAll(filteredItems);
+            comboBox.show();
+        }
+    }
+
 }

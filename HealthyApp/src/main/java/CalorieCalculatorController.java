@@ -133,7 +133,7 @@ public class CalorieCalculatorController {
     void initialize() {
         User user = getUserFromApplicationContext();
         updateCaloriesFields();
-        // Получаем все выбранные продукты для текущего пользователя
+
         List<UserSelectedProduct> userSelectedProducts = hibernateMethods.getUserSelectedProductsForNumberPhone(user.getPhoneNumber());
         if (userSelectedProducts != null) {
             tableProduct.getItems().addAll(userSelectedProducts);
@@ -165,7 +165,7 @@ public class CalorieCalculatorController {
                     if (user != null) {
                         addProductAndUpdateUserValues(user, product, grams);
                         updateTableContent();
-                        updateCaloriesFields(); // Обновляем поля калорий после добавления продукта
+                        updateCaloriesFields(); // Обновлення полів
                     } else {
                        log.warn("the selected user was not found");
                     }
@@ -219,7 +219,6 @@ public class CalorieCalculatorController {
     }
 
     private void updateTableContent() {
-        // Очистка текущего содержимого таблицы
         tableProduct.getItems().clear();
         User user = getUserFromApplicationContext();
         List<UserSelectedProduct> userSelectedProducts = hibernateMethods.getUserSelectedProductsForNumberPhone(user.getPhoneNumber());
@@ -258,30 +257,27 @@ public class CalorieCalculatorController {
         double proteinToAdd = (product.getProteinProducts() / 100) * grams;
         double carbsToAdd = (product.getCarbsProducts() / 100) * grams;
 
-        // Проверяем, есть ли у пользователя запись в таблице UserSelectedProduct
         List<UserSelectedProduct> userSelectedProducts = hibernateMethods.getUserSelectedProductsForNumberPhone(users.getPhoneNumber());
 
         if (userSelectedProducts != null && !userSelectedProducts.isEmpty()) {
-            // Получаем последний добавленный продукт пользователя
+
             UserSelectedProduct lastSelectedProduct = userSelectedProducts.get(userSelectedProducts.size() - 1);
 
-            //Вычитаем старые значения калорий, жиров, белков и углеводов
+
             double remainingCalories =  lastSelectedProduct.getCaloriesUserSelectedProduct();
             double remainingFat = lastSelectedProduct.getFatUserSelectedProduct();
             double remainingProtein = lastSelectedProduct.getProteinUserSelectedProduct();
             double remainingCarbs =  lastSelectedProduct.getCarbsUserSelectedProduct();
 
-            // Вычисляем новые значения калорий, жиров, белков и углеводов
+
             remainingCalories -= caloriesToAdd;
             remainingFat -= fatToAdd;
             remainingProtein -= proteinToAdd;
             remainingCarbs -= carbsToAdd;
 
 
-            // Добавляем новый продукт пользователя с обновленными значениями
             hibernateMethods.addUserSelectedProduct(users.getPhoneNumber(), product.getProductId(), grams, remainingCalories, remainingFat, remainingProtein, remainingCarbs);
         } else {
-            // Вычитаем значения для нового продукта из текущих показателей пользователя
             double remainingCalories = users.getTotalCaloricUser() - caloriesToAdd;
             double remainingFat = users.getTotalFatUser() - fatToAdd;
             double remainingProtein = users.getTotalProteinUser() - proteinToAdd;
@@ -290,5 +286,7 @@ public class CalorieCalculatorController {
             hibernateMethods.addUserSelectedProduct(users.getPhoneNumber(), product.getProductId(), grams, remainingCalories, remainingFat, remainingProtein, remainingCarbs);
         }
     }
+
+
 
 }

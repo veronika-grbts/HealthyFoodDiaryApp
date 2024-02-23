@@ -20,8 +20,6 @@ public class HibbernateRunner extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HibbernateRunner.class.getResource("primary.fxml"));
         Parent root = fxmlLoader.load();
         scene = new Scene(root);
-
-        // Устанавливаем сцену
         stage.setScene(scene);
         stage.show();
     }
@@ -34,10 +32,9 @@ public class HibbernateRunner extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
         Parent root = fxmlLoader.load();
 
-        // Проверяем, является ли fxml страницей "mainpage", и если да, то заполняем данные пользователя
         if (fxml.equals("mainpage")) {
             MainPageController mainPageController = fxmlLoader.getController();
-            // Получаем текущего пользователя из синглтона
+
             User user = ApplicationContext.getInstance().getCurrentUser();
             if (user != null) {
                 mainPageController.fillUserData(user);

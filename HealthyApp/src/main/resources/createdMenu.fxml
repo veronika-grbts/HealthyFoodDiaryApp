@@ -7,7 +7,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.Glow?>
@@ -155,48 +154,15 @@
                      <children>
                         <TableView fx:id="tableProduct" layoutX="-2.0" layoutY="-10.0" prefHeight="292.0" prefWidth="1033.0" stylesheets="@app/option5.css">
                            <columns>
-                              <TableColumn fx:id="state" editable="false" minWidth="5.0" prefWidth="152.0" sortable="false" text="state" />
-                              <TableColumn fx:id="nameProduct" editable="false" prefWidth="714.0" sortable="false" text="Назва продукту" />
-                              <TableColumn fx:id="quantity" editable="false" minWidth="0.0" prefWidth="145.0" sortable="false" text="кількість" />
+                              <TableColumn fx:id="typeMealColumn" editable="false" minWidth="5.0" prefWidth="180.0" sortable="false" text="Прийом їжі" />
+                              <TableColumn fx:id="nameProductColumn" editable="false" prefWidth="516.0" sortable="false" text="Назва продукту" />
+                              <TableColumn fx:id="quantityColumn" editable="false" minWidth="0.0" prefWidth="155.0" sortable="false" text="кількість" />
                            </columns>
                         </TableView>
                      </children>
                   </AnchorPane>
                </content>
             </ScrollPane>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="PaneAddProduct" prefHeight="720.0" prefWidth="1360.0" visible="false">
-         <children>
-            <AnchorPane prefHeight="720.0" prefWidth="1366.0" style="-fx-opacity: 0.7; -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, gray, black);" />
-            <AnchorPane layoutX="475.0" layoutY="85.0" prefHeight="550.0" prefWidth="410.0" style="-fx-border-radius: 25px; -fx-background-radius: 25px; -fx-background-color: #769047;" />
-            <AnchorPane layoutX="475.0" layoutY="85.0" prefHeight="550.0" prefWidth="410.0" style="-fx-border-radius: 25px; -fx-background-radius: 25px; -fx-stroce: #201e1e; -fx-border-width: 1 1 1 1; -fx-border-color: #F4E9E9;">
-               <children>
-                  <Label layoutX="56.0" layoutY="49.0" prefHeight="42.0" prefWidth="303.0" text="Adding a new product" textFill="#e6f0ff">
-                     <font>
-                        <Font name="Lucida Bright Demibold" size="26.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="nameProductField" layoutX="33.0" layoutY="128.0" prefHeight="41.0" prefWidth="342.0" promptText="Назва продукту" />
-                  <TextField fx:id="calorieProductField" layoutX="32.0" layoutY="194.0" prefHeight="41.0" prefWidth="342.0" promptText="калораж на 100г" />
-                  <TextField fx:id="proteinProductField" layoutX="32.0" layoutY="264.0" prefHeight="41.0" prefWidth="342.0" promptText="білків на 100г" />
-                  <TextField fx:id="fatproductField" layoutX="33.0" layoutY="332.0" prefHeight="41.0" prefWidth="342.0" promptText="жирів  на 100г" />
-                  <TextField fx:id="carbsProductsField" layoutX="35.0" layoutY="399.0" prefHeight="41.0" prefWidth="342.0" promptText="вуглеводів  на 100г" />
-                  <Button fx:id="addNewProductBtn" layoutX="129.0" layoutY="472.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="148.0" style="-fx-background-radius: 15px; -fx-background-color: linear-gradient(from 0% 0% to 100% 100%,  #F4E9E9, white);" text="Додати">
-                     <font>
-                        <Font name="Lucida Sans Typewriter Regular" size="18.0" />
-                     </font>
-                  </Button>
-                  <ImageView fx:id="closePane" fitHeight="25.0" fitWidth="25.0" layoutX="370.0" layoutY="15.0" onMouseClicked="#ClosePane" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@delete.png" />
-                     </image>
-                     <effect>
-                        <DropShadow color="#00000073" height="1.56" radius="0.0" width="0.0" />
-                     </effect>
-                  </ImageView>
-               </children>
-            </AnchorPane>
          </children>
       </AnchorPane>
    </children>

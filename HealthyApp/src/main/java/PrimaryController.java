@@ -41,9 +41,8 @@ public class PrimaryController {
                 String phoneNumber = phoneNumberField.getText();
                 User user = getUserInfo(Long.parseLong(phoneNumber));
                 if (user != null) {
-                    // Сохраняем пользователя в ApplicationContext
+                    // Зберігаємо user в ApplicationContext
                     ApplicationContext.getInstance().setCurrentUser(user);
-                    // Переходим на главную страницу
                     HibbernateRunner.setRoot("mainpage");
                 } else {
                     showErrorAlert("User not found", "User with the provided phone number was not found.");
