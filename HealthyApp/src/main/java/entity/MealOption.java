@@ -44,4 +44,7 @@ public class MealOption {
     @Type(type = "MealType")
     private MealType mealType;
 
+    @Column(name = "additional_dish_id")
+    private Integer additionalDishId;
+
 }

@@ -56,4 +56,32 @@ public class UserSelectedMenu {
 
     @Column(name = "calorie_dinner", nullable = false)
     private Double gramsForDinnerSelectedMenu;
+
+    @ManyToOne
+    @JoinColumn(name = "lunch_additional_dish_id")
+    private MealOption additionalDishId; // Новый столбец для дополнительного блюда обеда
+
+    @Column(name = "lunch_additional_dish_grams")
+    private double lunchAdditionalDishGrams;
+
+    @ManyToOne
+    @JoinColumn(name = "snack_first_dish_id")
+    private MealOption snackDishId;
+
+    @Column(name = "snack_first_dish_grams", nullable = false)
+    private Double gramsForSnackFirstDishGrams;
+
+    @ManyToOne
+    @JoinColumn(name = "snack_second_dish_id")
+    private MealOption snackSecondDishId;
+
+    @Column(name = "snack_second_dish_grams", nullable = false)
+    private Double gramsForSnackSecondDishGrams;
+
+    @ManyToOne
+    @JoinColumn(name = "dinner_additional_dish_id")
+    private MealOption additionalDinnerDishId;
+
+    @Column(name = "dinner_additional_dish_grams")
+    private double dinnerAdditionalDishGrams;
 }

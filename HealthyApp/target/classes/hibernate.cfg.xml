@@ -24,6 +24,7 @@
     <mapping class="entity.UserSelectedMenu"/>
     <mapping class="entity.MealIngredients"/>
     <mapping class="entity.MealIngredientsDrink"/>
+    <mapping class="entity.MainDishPairing"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
 

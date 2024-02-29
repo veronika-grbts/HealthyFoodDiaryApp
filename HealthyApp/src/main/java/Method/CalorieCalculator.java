@@ -19,6 +19,7 @@ public class CalorieCalculator {
     private static final double CARBS_CALORIES_PERCENTAGE = 0.5;   // 50%
 
     private static final double BREAKFAST_PERCENTAGE = 0.25;
+    private static final double FIRST_SNACK_PERCENTAGE = 0.12;
     private static final double LUNCH_PERCENTAGE = 0.3;
     private static final double DINNER_PERCENTAGE = 0.2;
 
@@ -62,6 +63,12 @@ public class CalorieCalculator {
         }
     }
 
+    public  Nutrition getNutritionNormForUser(double totalCalories) {
+        double protein = calculateProtein(totalCalories);
+        double fat = calculateFat(totalCalories);
+        double carbs = calculateCarbs(totalCalories);
+        return new Nutrition(protein, fat, carbs);
+    }
 
     //Метод для розрахунку кількості білків на день
     public static double calculateProtein(double totalCalories) {
@@ -91,6 +98,11 @@ public class CalorieCalculator {
     //Метод для розрахунку каларажу для вечері
     public static double numberOfGramsForDinner(double totalCalories){
         return Math.round((totalCalories * DINNER_PERCENTAGE));
+    }
+
+    //Метод для розрахунку каларажу для вечері
+    public static double numberOfGramsForSnack(double totalCalories){
+        return Math.round((totalCalories * FIRST_SNACK_PERCENTAGE));
     }
 
     // Метод розрахунку норми на сніданок

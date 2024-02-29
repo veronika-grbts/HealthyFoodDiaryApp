@@ -11,10 +11,7 @@ import org.hibernate.query.Query;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.*;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Slf4j
@@ -429,19 +426,23 @@ public class HibernateMethods{
     //Метод для пошуку айди їжі по назві
     public Integer findMealIdByName(String mealName) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
-            Query<Integer> query = session.createQuery(
-                    "SELECT m.idOption FROM MealOption m WHERE m.name = :mealName", Integer.class);
-            query.setParameter("mealName", mealName);
-            return query.uniqueResult();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Integer> criteriaQuery = criteriaBuilder.createQuery(Integer.class);
+            Root<MealOption> root = criteriaQuery.from(MealOption.class);
+
+            criteriaQuery.select(root.get("idOption"))
+                    .where(criteriaBuilder.equal(root.get("name"), mealName));
+
+            return session.createQuery(criteriaQuery).uniqueResult();
         } catch (NoResultException e) {
             log.warn("No meal found with name: {}", mealName, e);
             return null;
-        } catch (HibernateException  e) {
+        } catch (HibernateException e) {
             log.error("An error occurred while finding meal ID by name: {}", mealName, e);
             return null;
         }
     }
+
 
     //Метод для пошуку айди напою по назві
     public Integer findDrinkIdByName(String drinkName) {
@@ -479,10 +480,14 @@ public class HibernateMethods{
 
     //Метод для збереження меню для користувача
     public void saveUserSelectedMenu(long phoneNumber,
-                                     int breakfastId, int lunchId, int dinnerId,
-                                     int breakfastDrinkId, int lunchDrinkId,
-                                     int dinnerDrinkId, double gramsForBreakfast,
-                                     double gramsForDinner, double gramsForLunch){
+                                     int breakfastId, int snackId, int snackSecondId,
+                                     int lunchId, int dinnerId, Integer additionalDishId,
+                                     Integer dinnerAdditionalDishId, int breakfastDrinkId,
+                                     int lunchDrinkId, int dinnerDrinkId,
+                                     double gramsForBreakfast, double gramsForDinner,
+                                     double gramsForLunch, Double additionalDishGrams,
+                                     Double dinnerAdditionalDishGrams,
+                                     double snackFirstGrams,  double snackSecondGrams){
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction tx = null;
@@ -503,8 +508,23 @@ public class HibernateMethods{
                             .gramsForBreakfastSelectedMenu(gramsForBreakfast)
                             .gramsForLunchSelectedMenu(gramsForLunch)
                             .gramsForDinnerSelectedMenu(gramsForDinner)
+                            .snackDishId(session.get(MealOption.class, snackId))
+                            .gramsForSnackFirstDishGrams(snackFirstGrams)
+                            .snackSecondDishId(session.get(MealOption.class, snackSecondId))
+                            .gramsForSnackSecondDishGrams(snackSecondGrams)
                             .build();
+                    // Проверка, не равно ли additionalDishId нулю (или null)
+                  if (additionalDishId != null) {
+                        userSelectedMenu.setAdditionalDishId(session.get(MealOption.class, additionalDishId));
+                        userSelectedMenu.setLunchAdditionalDishGrams(additionalDishGrams);
+                  }
+
+                    if (dinnerAdditionalDishId != null) {
+                        userSelectedMenu.setAdditionalDinnerDishId(session.get(MealOption.class, dinnerAdditionalDishId));
+                        userSelectedMenu.setDinnerAdditionalDishGrams(dinnerAdditionalDishGrams);
+                    }
                     session.save(userSelectedMenu);
+
                     tx.commit();
                 } else {
                     log.warn("User with number phone {} did not find", phoneNumber);
@@ -608,6 +628,35 @@ public class HibernateMethods{
         return lastMenu;
     }
 
+    public List<UserSelectedMenu> getAllUserMenus(Long phoneNumber, int numberOfDays) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        List<UserSelectedMenu> userMenus = new ArrayList<>();
+        try {
+            tx = session.beginTransaction();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<UserSelectedMenu> criteria = builder.createQuery(UserSelectedMenu.class);
+            Root<UserSelectedMenu> root = criteria.from(UserSelectedMenu.class);
+            criteria.select(root);
+            criteria.where(builder.equal(root.get("user").get("phoneNumber"), phoneNumber));
+            criteria.orderBy(builder.desc(root.get("idSelectedMenu"))); // сортировка по убыванию idSelectedMenu
+            Query<UserSelectedMenu> query = session.createQuery(criteria);
+            query.setMaxResults(numberOfDays); // ограничение количества результатов
+            userMenus = query.getResultList();
+            Collections.reverse(userMenus); // переворачиваем список, чтобы меню было в обратном порядке
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            log.error("An error occurred while getting user menus for phone number {}", phoneNumber, e);
+        } finally {
+            session.close();
+        }
+        return userMenus;
+    }
+
+
     //Метод для отримання назви по айди
     public String getMealOptionNameById(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -649,4 +698,74 @@ public class HibernateMethods{
         }
         return drinkName;
     }
+
+    public MealOption getMealOptionById(Integer id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        MealOption mealOption = null;
+        try {
+            tx = session.beginTransaction();
+            mealOption = session.get(MealOption.class, id);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return mealOption;
+    }
+
+    public Integer findAdditionalDishIdByMainDish(MealOption mainDish) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Query<Integer> query = session.createQuery(
+                    "SELECT pairing.additionalDish.idOption " +
+                            "FROM MainDishPairing pairing " +
+                            "WHERE pairing.mainDish = :mainDish", Integer.class);
+            query.setParameter("mainDish", mainDish);
+            return query.uniqueResult();
+        } catch (NoResultException e) {
+            log.warn("No additional dish found for main dish: {}", mainDish.getName(), e);
+            return null;
+        } catch (HibernateException e) {
+            log.error("An error occurred while finding additional dish ID by main dish: {}", mainDish.getName(), e);
+            return null;
+        }
+    }
+
+    public void deleteUserMenus(Long phoneNumber, int numberOfMenusToDelete) {
+        // Открытие сессии
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        try {
+            // Получение всех меню пользователя по номеру телефона
+            Query<UserSelectedMenu> query = session.createQuery("FROM UserSelectedMenu WHERE user.phoneNumber = :phoneNumber", UserSelectedMenu.class);
+            query.setParameter("phoneNumber", phoneNumber);
+            List<UserSelectedMenu> userMenus = query.getResultList();
+
+            // Сортировка меню в порядке убывания
+            userMenus.sort((menu1, menu2) -> menu2.getIdSelectedMenu().compareTo(menu1.getIdSelectedMenu()));
+
+            // Удаление указанного количества меню
+            int count = 0;
+            for (UserSelectedMenu menu : userMenus) {
+                session.delete(menu);
+                count++;
+                if (count >= numberOfMenusToDelete) {
+                    break;
+                }
+            }
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            // Закрытие сессии
+            session.close();
+        }
+    }
+
 }

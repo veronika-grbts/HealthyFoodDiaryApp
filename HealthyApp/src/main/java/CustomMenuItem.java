@@ -4,11 +4,14 @@ public class CustomMenuItem extends UserSelectedMenu {
     private String mealType;
     private String name;
     private double quantity;
+    private boolean isDayHeader;
+    private int day; // Поле для хранения номера дня
 
-    public CustomMenuItem(String mealType, String name, Double quantity) {
+    public CustomMenuItem(String mealType, String name, double quantity) {
         this.mealType = mealType;
         this.name = name;
         this.quantity = quantity;
+
     }
 
     public String getMealType() {
@@ -25,5 +28,17 @@ public class CustomMenuItem extends UserSelectedMenu {
 
     public double getQuantity() {
         return quantity;
+    }
+
+    public boolean isLastMenuOfDay() {
+        return "Напій для вічері".equals(mealType);
+    }
+
+    public boolean isDayHeader() {
+        return isDayHeader;
+    }
+
+    public void setDayHeader(boolean dayHeader) {
+        isDayHeader = dayHeader;
     }
 }

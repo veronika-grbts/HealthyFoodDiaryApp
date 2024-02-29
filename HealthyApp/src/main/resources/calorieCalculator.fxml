@@ -42,7 +42,7 @@
             <DropShadow color="#000000a6" />
          </effect>
       </Pane>
-      <VBox layoutY="-3.0" prefHeight="737.0" prefWidth="283.0" style="-fx-background-color: #452f42;">
+      <VBox layoutY="-3.0" prefHeight="737.0" prefWidth="283.0" style="-fx-background-color: #452f42;" AnchorPane.topAnchor="0.0">
          <children>
             <Pane prefHeight="130.0" prefWidth="332.0">
                <children>

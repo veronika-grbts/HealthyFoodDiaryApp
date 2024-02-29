@@ -50,6 +50,11 @@
             <version>14</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.24</version> <!-- Версия может быть актуальной -->
+        </dependency>
     </dependencies>
 
     <build>

@@ -42,7 +42,7 @@
             <DropShadow color="#000000a6" />
          </effect>
       </Pane>
-      <VBox layoutY="-3.0" prefHeight="737.0" prefWidth="283.0" style="-fx-background-color: #452f42;">
+      <VBox layoutY="-1.0" prefHeight="737.0" prefWidth="283.0" style="-fx-background-color: #452f42;" AnchorPane.topAnchor="0.0">
          <children>
             <Pane prefHeight="130.0" prefWidth="332.0">
                <children>
@@ -141,7 +141,7 @@
                         <Glow />
                      </effect>
                   </Button>
-                  <CheckBox layoutX="39.0" layoutY="84.0" mnemonicParsing="false" text="Створити PDF версію файла">
+                  <CheckBox fx:id="checkBoxCreatedPdf" layoutX="39.0" layoutY="84.0" mnemonicParsing="false" text="Створити PDF версію файла">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -152,11 +152,11 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="285.0" prefWidth="1000.0">
                      <children>
-                        <TableView fx:id="tableProduct" layoutX="-2.0" layoutY="-10.0" prefHeight="292.0" prefWidth="1033.0" stylesheets="@app/option5.css">
+                        <TableView fx:id="tableProduct" layoutX="-2.0" layoutY="-3.0" prefHeight="292.0" prefWidth="1012.0" stylesheets="@app/option5.css">
                            <columns>
                               <TableColumn fx:id="typeMealColumn" editable="false" minWidth="5.0" prefWidth="180.0" sortable="false" text="Прийом їжі" />
-                              <TableColumn fx:id="nameProductColumn" editable="false" prefWidth="516.0" sortable="false" text="Назва продукту" />
-                              <TableColumn fx:id="quantityColumn" editable="false" minWidth="0.0" prefWidth="155.0" sortable="false" text="кількість" />
+                              <TableColumn fx:id="nameProductColumn" editable="false" prefWidth="572.0" sortable="false" text="Назва продукту" />
+                              <TableColumn fx:id="quantityColumn" editable="false" minWidth="0.0" prefWidth="99.0" sortable="false" text="кількість" />
                            </columns>
                         </TableView>
                      </children>
