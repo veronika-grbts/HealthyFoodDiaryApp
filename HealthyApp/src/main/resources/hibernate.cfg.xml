@@ -14,17 +14,17 @@
     <property name="format_sql">true</property>
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
 
-    <mapping class="entity.User"/>
-    <mapping class="entity.UserAllergy"/>
-    <mapping class="entity.Products"/>
-    <mapping class="entity.UserSelectedProduct"/>
-    <mapping class="entity.MealOption"/>
-    <mapping class="entity.Ingredients"/>
-    <mapping class="entity.Drink"/>
-    <mapping class="entity.UserSelectedMenu"/>
-    <mapping class="entity.MealIngredients"/>
-    <mapping class="entity.MealIngredientsDrink"/>
-    <mapping class="entity.MainDishPairing"/>
+    <mapping class="project.entity.User"/>
+    <mapping class="project.entity.UserAllergy"/>
+    <mapping class="project.entity.Products"/>
+    <mapping class="project.entity.UserSelectedProduct"/>
+    <mapping class="project.entity.MealOption"/>
+    <mapping class="project.entity.Ingredients"/>
+    <mapping class="project.entity.Drink"/>
+    <mapping class="project.entity.UserSelectedMenu"/>
+    <mapping class="project.entity.MealIngredients"/>
+    <mapping class="project.entity.MealIngredientsDrink"/>
+    <mapping class="project.entity.MainDishPairing"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
 

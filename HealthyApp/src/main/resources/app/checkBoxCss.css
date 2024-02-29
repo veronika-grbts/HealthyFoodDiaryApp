@@ -1,0 +1,25 @@
+.custom-checkbox .box {
+    -fx-background-color:  rgba(255, 255, 255, 0.5); /* Цвет фона */
+    -fx-border-color: #64686b; /* Цвет границ */
+}
+
+.custom-checkbox .box:selected {
+    -fx-background-color: #617687; /* Цвет фона при выборе */
+    -fx-border-color: #f1eceb; /* Цвет границы при выборе */
+}
+
+.custom-checkbox .box:hover {
+    -fx-background-color: #f1eceb; /* Цвет фона при наведении */
+}
+
+.custom-checkbox .mark {
+    -fx-background-color: transparent; /* Цвет галочки */
+    -fx-background-insets: 0; /* Внутренние отступы */
+}
+
+.custom-checkbox:selected .mark {
+    -fx-background-color:  #452f42; /* Цвет галочки при выборе */
+}
+.rounded-checkbox {
+    -fx-background-radius: 5; /* Установка радиуса закругления углов */
+}
