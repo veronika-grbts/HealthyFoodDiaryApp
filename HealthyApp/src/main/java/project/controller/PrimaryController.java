@@ -2,6 +2,7 @@ package project.controller;
 
 import java.io.IOException;
 
+import project.method.NavigationMenu;
 import project.singleton.ApplicationContext;
 import project.entity.User;
 import javafx.fxml.FXML;
@@ -57,13 +58,7 @@ public class PrimaryController {
             }
         });
 
-        signUpBtn.setOnAction(event -> {
-            try {
-                HibbernateRunner.setRoot("signUp");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        signUpBtn.setOnAction(event -> NavigationMenu.navigateToPage("signUp"));
     }
 
     private User getUserInfo(long phoneNumber) {

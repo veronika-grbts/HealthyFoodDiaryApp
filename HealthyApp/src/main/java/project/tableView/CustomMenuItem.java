@@ -1,5 +1,4 @@
 package project.tableView;
-
 import project.entity.UserSelectedMenu;
 
 public class CustomMenuItem extends UserSelectedMenu {
@@ -7,7 +6,6 @@ public class CustomMenuItem extends UserSelectedMenu {
     private String name;
     private double quantity;
     private boolean isDayHeader;
-    private int day; // Поле для хранения номера дня
 
     public CustomMenuItem(String mealType, String name, double quantity) {
         this.mealType = mealType;

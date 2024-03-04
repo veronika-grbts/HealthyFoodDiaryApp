@@ -28,13 +28,14 @@ public class CalorieCalculator {
         double bmr;
 
         if (isMale) {
-            bmr = MALE_CONSTANT_A + (MALE_CONSTANT_B * weight) + (MALE_CONSTANT_C * height) - (MALE_CONSTANT_D * age);
+            bmr = MALE_CONSTANT_A + (MALE_CONSTANT_B * weight) +
+                    (MALE_CONSTANT_C * height) - (MALE_CONSTANT_D * age);
         } else {
-            bmr = FEMALE_CONSTANT_A + (FEMALE_CONSTANT_B * weight) + (FEMALE_CONSTANT_C * height) - (FEMALE_CONSTANT_D * age);
+            bmr = FEMALE_CONSTANT_A + (FEMALE_CONSTANT_B * weight) +
+                    (FEMALE_CONSTANT_C * height) - (FEMALE_CONSTANT_D * age);
         }
 
         double calories = bmr * getActivityMultiplier(activityLevel);
-
         return Math.round(calories * 10.0) / 10.0;
     }
 
@@ -91,15 +92,5 @@ public class CalorieCalculator {
     //Метод для розрахунку каларажу для вечері
     public static double numberOfGramsForSnack(double totalCalories){
         return Math.round((totalCalories * FIRST_SNACK_PERCENTAGE));
-    }
-
-    //Метод розрахунку калорій з урахуванням бажаного зниження ваги
-    public static double calculateCaloriesLosingWeight(double totalCalorie) {
-        double result = totalCalorie - 350;
-       if (result < 1200) {
-            return 1200;
-        } else {
-            return result;
-        }
     }
 }

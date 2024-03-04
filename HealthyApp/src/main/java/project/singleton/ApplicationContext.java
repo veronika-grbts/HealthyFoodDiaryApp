@@ -1,17 +1,15 @@
 package project.singleton;
-
 import project.entity.User;
 
 public class ApplicationContext {
 
-    private static ApplicationContext instance;
+    private static volatile ApplicationContext instance;
     private User currentUser;
 
     private ApplicationContext() {
-
     }
 
-    public static ApplicationContext getInstance() {
+    public static synchronized ApplicationContext getInstance() {
         if (instance == null) {
             instance = new ApplicationContext();
         }
@@ -26,3 +24,4 @@ public class ApplicationContext {
         this.currentUser = currentUser;
     }
 }
+

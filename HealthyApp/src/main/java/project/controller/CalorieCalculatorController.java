@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
+import javafx.scene.control.*;
+import project.method.NavigationMenu;
 import project.singleton.ApplicationContext;
 import project.entity.Products;
 import project.entity.User;
@@ -13,11 +15,6 @@ import project.entity.UserSelectedProduct;
 import javafx.animation.RotateTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -48,6 +45,15 @@ public class CalorieCalculatorController {
 
     @FXML
     private Button changePageBtn;
+
+    @FXML
+    private SplitMenuButton loseWeightMenuButton;
+
+    @FXML
+    private MenuItem forecastMenuItem;
+
+    @FXML
+    private MenuItem statisticsMenuItem;
 
     @FXML
     private TextField fatField;
@@ -137,9 +143,11 @@ public class CalorieCalculatorController {
     @FXML
     void initialize() {
         User user = getUserFromApplicationContext();
-        updateCaloriesFields();
+        updateCaloriesFields(user);
 
-        List<UserSelectedProduct> userSelectedProducts = hibernateMethods.getUserSelectedProductsForNumberPhone(user.getPhoneNumber());
+        List<UserSelectedProduct> userSelectedProducts = hibernateMethods.getUserSelectedProductsForNumberPhone(
+                user.getPhoneNumber()
+        );
         if (userSelectedProducts != null) {
             tableProduct.getItems().addAll(userSelectedProducts);
         }
@@ -170,7 +178,7 @@ public class CalorieCalculatorController {
                     if (user != null) {
                         addProductAndUpdateUserValues(user, product, grams);
                         updateTableContent();
-                        updateCaloriesFields(); // Обновлення полів
+                        updateCaloriesFields(user); // Обновлення полів
                     } else {
                        log.warn("the selected user was not found");
                     }
@@ -184,42 +192,16 @@ public class CalorieCalculatorController {
             hibernateMethods.DropProductUser(user.getPhoneNumber());
             rotateImage();
             updateTableContent();
-            updateCaloriesFields();
+            updateCaloriesFields(user);
 
         });
         plusProduct.setOnMouseClicked(this::Handle);
 
-        calculatorPageBtn.setOnAction(event -> {
-            try {
-                HibbernateRunner.setRoot("calorieCalculator");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        mainPageBtn.setOnAction(event -> {
-            try {
-                HibbernateRunner.setRoot("mainpage");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        createdMenuPageBtn.setOnAction(event -> {
-            try {
-                HibbernateRunner.setRoot("createdMenu");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        changePageBtn.setOnAction(event -> {
-            try {
-                HibbernateRunner.setRoot("settings");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        mainPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("mainpage"));
+        calculatorPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("calorieCalculator"));
+        createdMenuPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("createdMenu"));
+        changePageBtn.setOnAction(event -> NavigationMenu.navigateToPage("settings"));
+        loseWeightMenuButton.setOnAction(event -> NavigationMenu.navigateToPage("loseWeight"));
     }
     private User getUserFromApplicationContext() {
         return ApplicationContext.getInstance().getCurrentUser();
@@ -233,34 +215,37 @@ public class CalorieCalculatorController {
     private void updateTableContent() {
         tableProduct.getItems().clear();
         User user = getUserFromApplicationContext();
-        List<UserSelectedProduct> userSelectedProducts = hibernateMethods.getUserSelectedProductsForNumberPhone(user.getPhoneNumber());
+        List<UserSelectedProduct> userSelectedProducts = hibernateMethods.getUserSelectedProductsForNumberPhone(
+                user.getPhoneNumber()
+        );
         if (userSelectedProducts != null) {
             tableProduct.getItems().addAll(userSelectedProducts);
         }
     }
 
-    private void updateCaloriesFields() {
-        User user = getUserFromApplicationContext();
+    private void updateCaloriesFields(User user) {
+        double totalCaloriesFromProducts = 0;
+        double totalFatFromProducts = 0;
+        double totalProteinFromProducts = 0;
+        double totalCarbsFromProducts= 0;
 
-        double totalCaloriesFromProducts = hibernateMethods.getTotalCaloriesForUser(user.getPhoneNumber());
-        double totalFatFromProducts = hibernateMethods.getTotalFatForUser(user.getPhoneNumber());
-        double totalProteinFromProducts = hibernateMethods.getTotalProteinForUser(user.getPhoneNumber());
-        double totalCarbsFromProducts = hibernateMethods.getTotalCarbsForUser(user.getPhoneNumber());
+           // hibernateMethods.clearSessionCache();
+            totalCaloriesFromProducts = hibernateMethods.getTotalCaloriesForUser(user.getPhoneNumber());
+            totalFatFromProducts = hibernateMethods.getTotalFatForUser(user.getPhoneNumber());
+            totalProteinFromProducts = hibernateMethods.getTotalProteinForUser(user.getPhoneNumber());
+            totalCarbsFromProducts = hibernateMethods.getTotalCarbsForUser(user.getPhoneNumber());
 
         if (totalCaloriesFromProducts > 0) {
             caloriesField.setText(String.format("%.1f", totalCaloriesFromProducts));
             fatField.setText(String.format("%.1f", totalFatFromProducts));
             proteinField.setText(String.format("%.1f", totalProteinFromProducts));
             carbsField.setText(String.format("%.1f", totalCarbsFromProducts));
-
-        }else {
-
+        }else{
             caloriesField.setText(String.format("%.1f", user.getTotalCaloricUser()));
             fatField.setText(String.format("%.1f", user.getTotalFatUser()));
             proteinField.setText(String.format("%.1f", user.getTotalProteinUser()));
             carbsField.setText(String.format("%.1f", user.getTotalCarbsUser()));
         }
-
     }
 
     private void addProductAndUpdateUserValues(User users, Products product, double grams) {
@@ -269,7 +254,8 @@ public class CalorieCalculatorController {
         double proteinToAdd = (product.getProteinProducts() / 100) * grams;
         double carbsToAdd = (product.getCarbsProducts() / 100) * grams;
 
-        List<UserSelectedProduct> userSelectedProducts = hibernateMethods.getUserSelectedProductsForNumberPhone(users.getPhoneNumber());
+        List<UserSelectedProduct> userSelectedProducts = hibernateMethods.getUserSelectedProductsForNumberPhone(
+                users.getPhoneNumber());
 
         if (userSelectedProducts != null && !userSelectedProducts.isEmpty()) {
 
@@ -286,19 +272,18 @@ public class CalorieCalculatorController {
             remainingFat -= fatToAdd;
             remainingProtein -= proteinToAdd;
             remainingCarbs -= carbsToAdd;
-
-
-            hibernateMethods.addUserSelectedProduct(users.getPhoneNumber(), product.getProductId(), grams, remainingCalories, remainingFat, remainingProtein, remainingCarbs);
+            hibernateMethods.addUserSelectedProduct(users.getPhoneNumber(),
+                    product.getProductId(), grams, remainingCalories,
+                    remainingFat, remainingProtein, remainingCarbs);
         } else {
             double remainingCalories = users.getTotalCaloricUser() - caloriesToAdd;
             double remainingFat = users.getTotalFatUser() - fatToAdd;
             double remainingProtein = users.getTotalProteinUser() - proteinToAdd;
             double remainingCarbs = users.getTotalCarbsUser() - carbsToAdd;
 
-            hibernateMethods.addUserSelectedProduct(users.getPhoneNumber(), product.getProductId(), grams, remainingCalories, remainingFat, remainingProtein, remainingCarbs);
+            hibernateMethods.addUserSelectedProduct(users.getPhoneNumber(),
+                    product.getProductId(), grams, remainingCalories,
+                    remainingFat, remainingProtein, remainingCarbs);
         }
     }
-
-
-
 }

@@ -1,12 +1,10 @@
 package project.entity;
 
-import io.hypersistence.utils.hibernate.type.basic.PostgreSQLEnumType;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 
 @Data
@@ -14,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "MainDishPairing") // указываем имя таблицы в базе данных
+@Table(name = "MainDishPairing")
 public class MainDishPairing {
 
     @Id
@@ -23,11 +21,11 @@ public class MainDishPairing {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "main_dish_id") // указываем имя столбца, который ссылается на основное блюдо
+    @JoinColumn(name = "main_dish_id")
     private MealOption mainDish;
 
     @ManyToOne
-    @JoinColumn(name = "additional_dish_id") // указываем имя столбца, который ссылается на дополнительное блюдо
+    @JoinColumn(name = "additional_dish_id")
     private MealOption additionalDish;
 
 }

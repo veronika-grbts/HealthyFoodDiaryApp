@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
+import project.method.LoseWeightCalculator;
 import project.singleton.ApplicationContext;
 import project.method.CalorieCalculator;
 import project.entity.ActivityLevel;
@@ -91,12 +92,10 @@ public class SignUpController {
 
     @FXML
     void Handle(MouseEvent event) {
-
+        double x = 14; // координа Х для ComboBox
+        double y = 100; // координа У для ComboBox
+        double deltaY = 40; // отсутп
         ComboBox<String> newComboBox = new ComboBox<>();
-
-        double x = 14;
-        double y = 100;
-        double deltaY = 40;
 
         // Определяем координаты для нового ComboBox
         int numberOfExistingComboBoxes = signUpPane3.getChildren().stream()
@@ -105,14 +104,12 @@ public class SignUpController {
                 .sum();
 
         y += numberOfExistingComboBoxes * deltaY; // Добавляем отступ в зависимости от количества существующих ComboBox
-
         newComboBox.setLayoutX(x);
         newComboBox.setLayoutY(y);
         newComboBox.setPrefWidth(300);
         newComboBox.setPrefHeight(30);
 
         newComboBox.setEditable(true);
-
         List<Ingredients> allIngredients = hibernateMethods.getAllIngredients();
         if (allIngredients != null) {
             for (Ingredients ingredient : allIngredients) {
@@ -126,7 +123,9 @@ public class SignUpController {
                 String selectedProduct = newComboBox.getValue();
                 Ingredients ingredient = hibernateMethods.findIngredientByName(selectedProduct);
                 if (ingredient != null) {
-                    hibernateMethods.addUserAllergyForUser(Long.parseLong(sighUpPhone.getText()), ingredient.getIdIngredients());
+                    hibernateMethods.addUserAllergyForUser(
+                            Long.parseLong(sighUpPhone.getText()),
+                            ingredient.getIdIngredients());
                 } else {
                     log.warn("the selected ingredient  was not found");
                 }
@@ -141,7 +140,9 @@ public class SignUpController {
 
     @FXML
     void initialize() {
-        signUpActivityLevel.getItems().addAll(ActivityLevel.High, ActivityLevel.Medium, ActivityLevel.Low);
+        signUpActivityLevel.getItems().addAll(ActivityLevel.High,
+                ActivityLevel.Medium, ActivityLevel.Low);
+
         signUpGender.getItems().addAll("чоловік", "жінка");
 
         nextBtn1.setOnAction(event -> {
@@ -168,20 +169,14 @@ public class SignUpController {
             boolean hasAllergy = checkBoxAllergy.isSelected();
             boolean hasCause = checkBoxCause.isSelected();
 
-            double calories = CalorieCalculator.calculateCalories(weight, height, age, gender, activityLevel);
+            double calories = CalorieCalculator.calculateCalories(weight, height,
+                    age, gender, activityLevel);
             double protein = CalorieCalculator.calculateProtein(calories);
             double fat = CalorieCalculator.calculateFat(calories);
             double carbs = CalorieCalculator.calculateCarbs(calories);
-
-            if (hasCause){
-                double caloriesWithLosingWeight = CalorieCalculator.calculateCaloriesLosingWeight(calories);
-                hibernateMethods.createUser(Long.parseLong(phone), name, age, weight, height, gender, activityLevel, hasAllergy, hasCause, caloriesWithLosingWeight, protein, fat, carbs);
-
-            }
-            else {
-                hibernateMethods.createUser(Long.parseLong(phone), name, age, weight, height, gender, activityLevel, hasAllergy, hasCause, calories, protein, fat, carbs);
-            }
-
+            hibernateMethods.createUser(Long.parseLong(phone), name, age, weight,
+                    height, gender, activityLevel, hasAllergy, hasCause,
+                    calories, protein, fat, carbs);
 
             if (hasAllergy) {
                 for (Node node : signUpPane3.getChildren()) {
@@ -191,7 +186,8 @@ public class SignUpController {
                         if (selectedProduct != null && !selectedProduct.isEmpty()) {
                             Ingredients ingredient = hibernateMethods.findIngredientByName(selectedProduct);
                             if (ingredient != null) {
-                                hibernateMethods.addUserAllergyForUser(Long.parseLong(phone), ingredient.getIdIngredients());
+                                hibernateMethods.addUserAllergyForUser(Long.parseLong(phone),
+                                        ingredient.getIdIngredients());
 
                             } else {
                                 log.warn("the selected ingredient  was not found");
@@ -203,6 +199,55 @@ public class SignUpController {
 
             User newUser = hibernateMethods.getUserInfo(Long.parseLong(phone));
             ApplicationContext.getInstance().setCurrentUser(newUser);
+            if (newUser.isCauseUser()){
+                double targetWeight = LoseWeightCalculator.calculateBestWeight(
+                        newUser.getHeightUser(),
+                        newUser.isGenderUser()
+                );
+                double targetCaloricDeficit = LoseWeightCalculator.calculatorDeficitCaloric(
+                        newUser.getWeightUser(),
+                        newUser.getHeightUser(),
+                        newUser.getActivityLevel(),
+                        newUser.getAgeUser(),
+                        newUser.isGenderUser()
+                );
+                short estimatedCompletionTime = LoseWeightCalculator.estimateTimeToReachGoal(
+                        newUser.getWeightUser(),
+                        targetWeight,
+                        targetCaloricDeficit
+                );
+                double caloriesWithLosingWeight = LoseWeightCalculator.caloriesDayWithDeficit(
+                        newUser.getWeightUser(),
+                        newUser.getHeightUser(),
+                        newUser.getActivityLevel(),
+                        newUser.getAgeUser(),
+                        newUser.isGenderUser()
+                );
+
+                if((targetWeight < weight) && (18.5 < LoseWeightCalculator.calculateBMI(weight, height))){
+                    //изменения калорий, и белков и жиров и углеводов;
+                    double proteinWithLosingWeight = CalorieCalculator.calculateProtein(caloriesWithLosingWeight);
+                    double fatWithLosingWeight = CalorieCalculator.calculateFat(caloriesWithLosingWeight);
+                    double carbsWithLosingWeight = CalorieCalculator.calculateCarbs(caloriesWithLosingWeight);
+
+                    hibernateMethods.saveWeightLossGoal(
+                            newUser, newUser.getWeightUser(), targetWeight,
+                            targetCaloricDeficit, estimatedCompletionTime, caloriesWithLosingWeight
+                    );
+
+                    hibernateMethods.updateUserDataByPhoneNumber(
+                            newUser.getPhoneNumber(), caloriesWithLosingWeight,
+                            proteinWithLosingWeight, fatWithLosingWeight, carbsWithLosingWeight
+                    );
+
+                    ApplicationContext.getInstance().setCurrentUser(
+                            hibernateMethods.getUserByPhoneNumber(newUser.getPhoneNumber())
+                    ); }else {
+                    hibernateMethods.updateUserCause(newUser.getPhoneNumber(), false);
+                    ApplicationContext.getInstance()
+                            .setCurrentUser(hibernateMethods.getUserByPhoneNumber(newUser.getPhoneNumber()));
+                }
+            }
             try {
                 HibbernateRunner.setRoot("mainpage");
             } catch (IOException e) {
@@ -210,11 +255,9 @@ public class SignUpController {
             }
         });
     }
-
     private void filterComboBox(ComboBox<String> comboBox, String filter) {
         if (filter == null || filter.isEmpty()) {
-            // Если фильтр пустой, отображаем все элементы
-            comboBox.getItems().clear(); // очищаем ComboBox перед добавлением элементов
+            comboBox.getItems().clear();
             List<Ingredients> allIngredients = hibernateMethods.getAllIngredients();
             if (allIngredients != null) {
                 for (Ingredients ingredient : allIngredients) {
@@ -223,13 +266,11 @@ public class SignUpController {
             }
             comboBox.hide();
         } else {
-            // Создаем фильтр, который будет искать элементы, содержащие введенные символы
             Predicate<String> predicate = item -> item.toLowerCase().contains(filter.toLowerCase());
-            // Отфильтровываем элементы и отображаем только соответствующие
-            List<String> filteredItems = comboBox.getItems().stream().filter(predicate).collect(Collectors.toList());
+            List<String> filteredItems = comboBox.getItems().stream()
+                    .filter(predicate).collect(Collectors.toList());
             comboBox.getItems().setAll(filteredItems);
             comboBox.show();
         }
     }
-
 }

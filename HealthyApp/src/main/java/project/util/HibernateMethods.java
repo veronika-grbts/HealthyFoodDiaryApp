@@ -1,15 +1,14 @@
 package project.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.*;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.*;
 import project.entity.*;
-
+import project.method.CalorieCalculator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,10 +35,12 @@ public class HibernateMethods{
 
                 log.info("Allergy successfully added for user with phone number {}", phoneNumber);
             } else {
-                log.warn("User with phone number {} or ingredient with ID {} not found", phoneNumber, ingredientId);
+                log.warn("User with phone number {} or ingredient with ID {} not found",
+                        phoneNumber, ingredientId);
             }
         } catch (Exception e) {
-            log.error("Error while adding allergy for user with phone number {}", phoneNumber, e);
+            log.error("Error while adding allergy for user with phone number {}",
+                    phoneNumber, e);
         }
     }
 
@@ -47,16 +48,24 @@ public class HibernateMethods{
     public Ingredients findIngredientByName(String ingredientName) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            Query<Ingredients> query = session.createQuery("FROM Ingredients WHERE nameIngredients = :name", Ingredients.class);
-            query.setParameter("name", ingredientName);
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Ingredients> criteriaQuery = builder.createQuery(Ingredients.class);
+            Root<Ingredients> root = criteriaQuery.from(Ingredients.class);
+            criteriaQuery.select(root)
+                    .where(builder.equal(root.get("nameIngredients"), ingredientName));
+
+            Query<Ingredients> query = session.createQuery(criteriaQuery);
             Ingredients ingredient = query.uniqueResult();
+
             session.getTransaction().commit();
             return ingredient;
-        }catch (NoResultException e) {
+        } catch (NoResultException e) {
             log.warn("No ingredient found with name: {}", ingredientName, e);
             return null;
-        }  catch (HibernateException e) {
-            log.error("An error occurred while finding ingredient by name: {}", ingredientName, e);
+        } catch (HibernateException e) {
+            log.error("An error occurred while finding ingredient by name: {}",
+                    ingredientName, e);
             return null;
         }
     }
@@ -65,31 +74,38 @@ public class HibernateMethods{
     public Products findProductByName(String productName) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            Query<Products> query = session.createQuery("FROM Products WHERE nameProduct = :name", Products.class);
-            query.setParameter("name", productName);
-            Products products = query.uniqueResult();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Products> criteriaQuery = builder.createQuery(Products.class);
+            Root<Products> root = criteriaQuery.from(Products.class);
+            criteriaQuery.select(root)
+                    .where(builder.equal(root.get("nameProduct"), productName));
+
+            Query<Products> query = session.createQuery(criteriaQuery);
+            Products product = query.uniqueResult();
             session.getTransaction().commit();
-            return products;
-        }catch (NoResultException e) {
+            return product;
+        } catch (NoResultException e) {
             log.warn("No product found with name: {}", productName, e);
             return null;
         } catch (HibernateException e) {
-            log.error("An error occurred while finding product by name: {}", productName, e);
+            log.error("An error occurred while finding product by name: {}",
+                    productName, e);
             return null;
         }
     }
 
     //Додавання продукту в таблицю UserSelectedProduct
-    public void addUserSelectedProduct(long phoneNumber, int productId, double grams,
-                                       double remainingCalories, double remainingFat,
-                                       double remainingProtein, double remainingCarbs) {
+    public void addUserSelectedProduct(long phoneNumber, int productId,
+                                       double grams, double remainingCalories,
+                                       double remainingFat, double remainingProtein,
+                                       double remainingCarbs) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-
             User user = session.get(User.class, phoneNumber);
             Products products = session.get(Products.class, productId);
 
-            if (user != null && products != null) {
+            if ((user != null) && (products != null)) {
                 UserSelectedProduct userSelectedProduct = UserSelectedProduct.builder()
                         .user(user)
                         .products(products)
@@ -99,16 +115,18 @@ public class HibernateMethods{
                         .carbsUserSelectedProduct(remainingCarbs)
                         .caloriesUserSelectedProduct(remainingCalories)
                         .build();
-
                 session.save(userSelectedProduct);
                 transaction.commit();
 
-                log.info("Product successfully added for user with phone number {}", phoneNumber);
+                log.info("Product successfully added for user with phone number {}",
+                        phoneNumber);
             } else {
-                log.warn("User with phone number {} or product with id {} not found", phoneNumber, productId);
+                log.warn("User with phone number {} or product with id {} not found",
+                        phoneNumber, productId);
             }
         } catch (HibernateException e) {
-            log.error("An error occurred while adding product for user with phone number {}", phoneNumber, e);
+            log.error("An error occurred while adding product for user with phone number {}",
+                    phoneNumber, e);
         }
     }
 
@@ -140,10 +158,12 @@ public class HibernateMethods{
             session.save(newUser);
             transaction.commit();
 
-            log.info("User successfully created with phone number {}", phoneNumber);
+            log.info("User successfully created with phone number {}",
+                    phoneNumber);
 
         } catch (HibernateException e) {
-            log.error("An error occurred while creating user with phone number {}", phoneNumber, e);
+            log.error("An error occurred while creating user with phone number {}",
+                    phoneNumber, e);
         }
     }
 
@@ -156,10 +176,10 @@ public class HibernateMethods{
             CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
             Root<User> root = criteriaQuery.from(User.class);
 
-            Predicate phonePredicate = builder.equal(root.get("phoneNumber"), phoneNumber);
-          //  Predicate namePredicate = builder.equal(root.get("nameUser"), name);
-            Predicate finalPredicate = builder.or(phonePredicate);
+            Predicate phonePredicate = builder.equal(
+                    root.get("phoneNumber"), phoneNumber);
 
+            Predicate finalPredicate = builder.or(phonePredicate);
             criteriaQuery.select(root).where(finalPredicate);
 
             Query<User> query = session.createQuery(criteriaQuery);
@@ -169,7 +189,8 @@ public class HibernateMethods{
                 log.info("User information found: {}", user);
                 return user;
             } else {
-                log.warn("User not found with provided phone number {} or name {}", phoneNumber);
+                log.warn("User not found with provided phone number {} or name {}",
+                        phoneNumber);
                 return null;
             }
         } catch (HibernateException e) {
@@ -182,7 +203,9 @@ public class HibernateMethods{
     public List<Ingredients> getAllIngredients() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            Query<Ingredients> query = session.createQuery("FROM Ingredients", Ingredients.class);
+            Query<Ingredients> query = session.createQuery(
+                    "FROM Ingredients", Ingredients.class);
+
             List<Ingredients> ingredientsList = query.list();
             session.getTransaction().commit();
             return ingredientsList;
@@ -196,7 +219,8 @@ public class HibernateMethods{
     public List<Products> getAllProduct() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            Query<Products> query = session.createQuery("FROM Products", Products.class);
+            Query<Products> query = session.createQuery(
+                    "FROM Products", Products.class);
             List<Products> productList = query.list();
             session.getTransaction().commit();
             return productList;
@@ -209,12 +233,14 @@ public class HibernateMethods{
     public List<Products> getUserSelectedProduct(long phoneNumber) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            Query<Products> query = session.createQuery("FROM Products ", Products.class);
+            Query<Products> query = session.createQuery(
+                    "FROM Products ", Products.class);
             List<Products> productList = query.list();
             session.getTransaction().commit();
             return productList;
         } catch (HibernateException e) {
-            log.error("An error occurred while getting user selected products for user with phone number {}", phoneNumber, e);
+            log.error("An error occurred while getting user selected products for user with phone number {}",
+                    phoneNumber, e);
             return null;
         }
     }
@@ -239,17 +265,23 @@ public class HibernateMethods{
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<UserSelectedProduct> criteriaQuery = criteriaBuilder.createQuery(UserSelectedProduct.class);
+            CriteriaQuery<UserSelectedProduct> criteriaQuery = criteriaBuilder.createQuery(
+                    UserSelectedProduct.class
+            );
             Root<UserSelectedProduct> root = criteriaQuery.from(UserSelectedProduct.class);
-
-            Predicate predicate = criteriaBuilder.equal(root.get("user").get("phoneNumber"), phoneNumber);
+            Predicate predicate = criteriaBuilder.equal(
+                    root.get("user").get("phoneNumber"),
+                    phoneNumber
+            );
             criteriaQuery.where(predicate);
+            List<UserSelectedProduct> userSelectedProducts = session.createQuery(
+                    criteriaQuery).getResultList();
 
-            List<UserSelectedProduct> userSelectedProducts = session.createQuery(criteriaQuery).getResultList();
             session.getTransaction().commit();
             return userSelectedProducts;
         } catch (HibernateException e) {
-            log.error("An error occurred while getting user selected products for user with phone number {}", phoneNumber, e);
+            log.error("An error occurred while getting user selected products for user with phone number {}",
+                    phoneNumber, e);
             return null;
         }
     }
@@ -260,15 +292,20 @@ public class HibernateMethods{
             session.beginTransaction();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
 
-            CriteriaDelete<UserSelectedProduct> criteriaDelete = criteriaBuilder.createCriteriaDelete(UserSelectedProduct.class);
-            Root<UserSelectedProduct> root = criteriaDelete.from(UserSelectedProduct.class);
+            CriteriaDelete<UserSelectedProduct> criteriaDelete = criteriaBuilder
+                    .createCriteriaDelete(UserSelectedProduct.class);
 
-            criteriaDelete.where(criteriaBuilder.equal(root.get("user").get("phoneNumber"), phoneNumber));
+            Root<UserSelectedProduct> root = criteriaDelete
+                    .from(UserSelectedProduct.class);
+
+            criteriaDelete.where(criteriaBuilder.equal(root.get("user")
+                    .get("phoneNumber"), phoneNumber));
             session.createQuery(criteriaDelete).executeUpdate();
 
             session.getTransaction().commit();
         }catch (HibernateException e) {
-            log.error("An error occurred while dropping products for user with phone number {}", phoneNumber, e);
+            log.error("An error occurred while dropping products for user with phone number {}",
+                    phoneNumber, e);
         }
     }
 
@@ -279,23 +316,23 @@ public class HibernateMethods{
             CriteriaQuery<Double> criteriaQuery = criteriaBuilder.createQuery(Double.class);
             Root<UserSelectedProduct> root = criteriaQuery.from(UserSelectedProduct.class);
 
-            Predicate predicate = criteriaBuilder.equal(root.get("user").get("phoneNumber"), phoneNumber);
+            Predicate predicate = criteriaBuilder.equal(root.get("user")
+                    .get("phoneNumber"), phoneNumber);
 
-            // Сортируем результаты по убыванию и выбираем только первый элемент
+            //Сортуємо результати по спаданню та вибираємо тільки перший елемент
             criteriaQuery.select(root.get("caloriesUserSelectedProduct")).where(predicate)
                     .orderBy(criteriaBuilder.desc(root.get("idUserSelectedProduct")));
             Query<Double> query = session.createQuery(criteriaQuery).setMaxResults(1);
-
             Double totalCalories = query.uniqueResult();
 
-            // Если для пользователя нет продуктов в таблице UserSelectedProduct, вернуть 0
             if (totalCalories != null) {
                 return totalCalories;
-            } else {
+            }else {
                 return 0;
             }
         } catch (HibernateException e) {
-            log.error("An error occurred while getting total calories for user with phone number {}", phoneNumber, e);
+            log.error("An error occurred while getting total calories for user with phone number {}",
+                    phoneNumber, e);
             return 0;
         }
     }
@@ -307,24 +344,22 @@ public class HibernateMethods{
             CriteriaQuery<Double> criteriaQuery = criteriaBuilder.createQuery(Double.class);
             Root<UserSelectedProduct> root = criteriaQuery.from(UserSelectedProduct.class);
 
-            // Добавляем условие для выборки продуктов конкретного пользователя
-            Predicate predicate = criteriaBuilder.equal(root.get("user").get("phoneNumber"), phoneNumber);
+            Predicate predicate = criteriaBuilder.equal(root.get("user")
+                    .get("phoneNumber"), phoneNumber);
 
-            // Сортируем результаты по убыванию и выбираем только первый элемент
             criteriaQuery.select(root.get("fatUserSelectedProduct")).where(predicate)
                     .orderBy(criteriaBuilder.desc(root.get("idUserSelectedProduct")));
             Query<Double> query = session.createQuery(criteriaQuery).setMaxResults(1);
-
             Double totalFat = query.uniqueResult();
 
-            // Если для пользователя нет продуктов в таблице UserSelectedProduct, вернуть 0
             if (totalFat != null) {
                 return totalFat;
             } else {
                 return 0;
             }
         } catch (HibernateException e) {
-            log.error("An error occurred while getting total fat for user with phone number {}", phoneNumber, e);
+            log.error("An error occurred while getting total fat for user with phone number {}",
+                    phoneNumber, e);
             return 0;
         }
     }
@@ -336,24 +371,23 @@ public class HibernateMethods{
             CriteriaQuery<Double> criteriaQuery = criteriaBuilder.createQuery(Double.class);
             Root<UserSelectedProduct> root = criteriaQuery.from(UserSelectedProduct.class);
 
-            // Добавляем условие для выборки продуктов конкретного пользователя
-            Predicate predicate = criteriaBuilder.equal(root.get("user").get("phoneNumber"), phoneNumber);
+            Predicate predicate = criteriaBuilder.equal(root.get("user")
+                    .get("phoneNumber"), phoneNumber);
 
-            // Сортируем результаты по убыванию и выбираем только первый элемент
             criteriaQuery.select(root.get("proteinUserSelectedProduct")).where(predicate)
                     .orderBy(criteriaBuilder.desc(root.get("idUserSelectedProduct")));
             Query<Double> query = session.createQuery(criteriaQuery).setMaxResults(1);
 
             Double totalProtein = query.uniqueResult();
 
-            // Если для пользователя нет продуктов в таблице UserSelectedProduct, вернуть 0
             if (totalProtein != null) {
                 return totalProtein;
             } else {
                 return 0;
             }
         } catch (HibernateException e) {
-            log.error("An error occurred while getting total protein for user with phone number {}", phoneNumber, e);
+            log.error("An error occurred while getting total protein for user with phone number {}",
+                    phoneNumber, e);
             return 0;
         }
     }
@@ -365,24 +399,23 @@ public class HibernateMethods{
             CriteriaQuery<Double> criteriaQuery = criteriaBuilder.createQuery(Double.class);
             Root<UserSelectedProduct> root = criteriaQuery.from(UserSelectedProduct.class);
 
-            // Добавляем условие для выборки продуктов конкретного пользователя
-            Predicate predicate = criteriaBuilder.equal(root.get("user").get("phoneNumber"), phoneNumber);
+            Predicate predicate = criteriaBuilder.equal(root.get("user")
+                    .get("phoneNumber"), phoneNumber);
 
-            // Сортируем результаты по убыванию и выбираем только первый элемент
             criteriaQuery.select(root.get("carbsUserSelectedProduct")).where(predicate)
                     .orderBy(criteriaBuilder.desc(root.get("idUserSelectedProduct")));
             Query<Double> query = session.createQuery(criteriaQuery).setMaxResults(1);
 
             Double totalCarbs = query.uniqueResult();
 
-            // Если для пользователя нет продуктов в таблице UserSelectedProduct, вернуть 0
             if (totalCarbs != null) {
                 return totalCarbs;
             } else {
                 return 0;
             }
         } catch (HibernateException e) {
-            log.error("An error occurred while getting total carbs for user with phone number {}", phoneNumber, e);
+            log.error("An error occurred while getting total carbs for user with phone number {}",
+                    phoneNumber, e);
             return 0;
         }
     }
@@ -393,16 +426,16 @@ public class HibernateMethods{
                                double carbsProduct) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            // Проверяем существующие продукты с таким же именем
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Products> criteriaQuery = criteriaBuilder.createQuery(Products.class);
             Root<Products> root = criteriaQuery.from(Products.class);
-            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("nameProduct"), nameProduct));
+            criteriaQuery.select(root).where(criteriaBuilder.equal(
+                    root.get("nameProduct"), nameProduct)
+            );
             Query<Products> query = session.createQuery(criteriaQuery);
             List<Products> existingProducts = query.getResultList();
 
             if (existingProducts.isEmpty()) {
-                // Создаем новый продукт без указания product_id
                 Products product = Products.builder()
                         .nameProduct(nameProduct)
                         .caloriesProducts(calorieProduct)
@@ -415,11 +448,13 @@ public class HibernateMethods{
                 session.getTransaction().commit();
                 log.info("Product with {} name was created", nameProduct);
             } else {
-                log.warn("Product with the same name {} has already been created", nameProduct);
+                log.warn("Product with the same name {} has already been created",
+                        nameProduct);
             }
 
         } catch (HibernateException e) {
-            log.error("An error occurred while adding new product with name {}", nameProduct, e);
+            log.error("An error occurred while adding new product with name {}",
+                    nameProduct, e);
         }
     }
 
@@ -438,7 +473,8 @@ public class HibernateMethods{
             log.warn("No meal found with name: {}", mealName, e);
             return null;
         } catch (HibernateException e) {
-            log.error("An error occurred while finding meal ID by name: {}", mealName, e);
+            log.error("An error occurred while finding meal ID by name: {}",
+                    mealName, e);
             return null;
         }
     }
@@ -448,15 +484,24 @@ public class HibernateMethods{
     public Integer findDrinkIdByName(String drinkName) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            Query<Integer> query = session.createQuery(
-                    "SELECT d.idDrink FROM Drink d WHERE d.nameDrink = :drinkName", Integer.class);
-            query.setParameter("drinkName", drinkName);
-            return query.uniqueResult();
-        } catch (NoResultException e) {
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Integer> criteriaQuery = builder.createQuery(Integer.class);
+            Root<Drink> root = criteriaQuery.from(Drink.class);
+            criteriaQuery.select(root.get("idDrink"))
+                    .where(builder.equal(root.get("nameDrink"), drinkName));
+
+            Query<Integer> query = session.createQuery(criteriaQuery);
+            Integer drinkId = query.uniqueResult();
+
+            session.getTransaction().commit();
+            return drinkId;
+        }catch (NoResultException e) {
             log.warn("No drink found with name: {}", drinkName, e);
             return null;
-        } catch (HibernateException  e) {
-            log.error("An error occurred while finding drink ID by name: {}", drinkName, e);
+        }catch (HibernateException e) {
+            log.error("An error occurred while finding drink ID by name: {}",
+                    drinkName, e);
             return null;
         }
     }
@@ -473,7 +518,8 @@ public class HibernateMethods{
             Query<MealOption> query = session.createQuery(criteria);
             return query.getResultList();
         } catch (HibernateException e) {
-            log.error("An error occurred while getting meal options by type: {}", mealType, e);
+            log.error("An error occurred while getting meal options by type: {}",
+                    mealType, e);
             return null;
         }
     }
@@ -513,14 +559,17 @@ public class HibernateMethods{
                             .snackSecondDishId(session.get(MealOption.class, snackSecondId))
                             .gramsForSnackSecondDishGrams(snackSecondGrams)
                             .build();
-                    // Проверка, не равно ли additionalDishId нулю (или null)
                   if (additionalDishId != null) {
-                        userSelectedMenu.setAdditionalDishId(session.get(MealOption.class, additionalDishId));
+                        userSelectedMenu.setAdditionalDishId(
+                                session.get(MealOption.class, additionalDishId)
+                        );
                         userSelectedMenu.setLunchAdditionalDishGrams(additionalDishGrams);
                   }
 
                     if (dinnerAdditionalDishId != null) {
-                        userSelectedMenu.setAdditionalDinnerDishId(session.get(MealOption.class, dinnerAdditionalDishId));
+                        userSelectedMenu.setAdditionalDinnerDishId(
+                                session.get(MealOption.class, dinnerAdditionalDishId)
+                        );
                         userSelectedMenu.setDinnerAdditionalDishGrams(dinnerAdditionalDishGrams);
                     }
                     session.save(userSelectedMenu);
@@ -530,7 +579,8 @@ public class HibernateMethods{
                     log.warn("User with number phone {} did not find", phoneNumber);
                 }
             } catch (HibernateException e) {
-                log.error("An error occurred while saving user selected menu for user with phone number {}", phoneNumber, e);
+                log.error("An error occurred while saving user selected menu for user with phone number {}",
+                        phoneNumber, e);
             }
         }
     }
@@ -539,26 +589,46 @@ public class HibernateMethods{
     public List<UserAllergy> getUserAllergies(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            String hql = "FROM UserAllergy WHERE user = :user";
-            Query<UserAllergy> query = session.createQuery(hql, UserAllergy.class);
-            query.setParameter("user", user);
-            return query.list();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<UserAllergy> criteriaQuery = builder
+                    .createQuery(UserAllergy.class);
+            Root<UserAllergy> root = criteriaQuery.from(UserAllergy.class);
+            criteriaQuery.select(root).where(builder.equal(root.get("user"),
+                    user));
+
+            Query<UserAllergy> query = session.createQuery(criteriaQuery);
+            List<UserAllergy> userAllergies = query.list();
+
+            session.getTransaction().commit();
+            return userAllergies;
         }  catch (HibernateException e) {
-            log.error("An error occurred while getting user allergies for user {}", user, e);
+            log.error("An error occurred while getting user allergies for user {}",
+                    user, e);
             return null;
         }
     }
-
     // Метод для отримання інгрідієнтів для блюда
     public List<Ingredients> getIngredientsByMealOption(MealOption mealOption) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            String hql = "SELECT mi.ingredients FROM MealIngredients mi WHERE mi.mealOption = :mealOption";
-            Query<Ingredients> query = session.createQuery(hql, Ingredients.class);
-            query.setParameter("mealOption", mealOption);
-            return query.list();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Ingredients> criteriaQuery = builder.createQuery(Ingredients.class);
+            Root<MealIngredients> root = criteriaQuery.from(MealIngredients.class);
+
+            Join<MealIngredients, Ingredients> joinIngredients = root.join("ingredients");
+            criteriaQuery.select(joinIngredients)
+                    .where(builder.equal(root.get("mealOption"), mealOption));
+
+            Query<Ingredients> query = session.createQuery(criteriaQuery);
+            List<Ingredients> ingredientsList = query.list();
+
+            session.getTransaction().commit();
+            return ingredientsList;
         } catch (HibernateException e) {
-            log.error("An error occurred while getting ingredients for meal option: {}", mealOption, e);
+            log.error("An error occurred while getting ingredients for meal option: {}",
+                    mealOption, e);
             return null;
         }
     }
@@ -567,38 +637,24 @@ public class HibernateMethods{
     public List<Ingredients> getIngredientsByDrink(Drink drink) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            String hql = "SELECT mdi.ingredients FROM MealIngredientsDrink mdi WHERE mdi.drink = :drink";
-            Query<Ingredients> query = session.createQuery(hql, Ingredients.class);
-            query.setParameter("drink", drink);
-            return query.list();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Ingredients> criteriaQuery = builder.createQuery(Ingredients.class);
+            Root<MealIngredientsDrink> root = criteriaQuery.from(MealIngredientsDrink.class);
+
+            Join<MealIngredientsDrink, Ingredients> joinIngredients = root.join("ingredients");
+            criteriaQuery.select(joinIngredients).where(builder.equal(root.get("drink"), drink));
+
+            Query<Ingredients> query = session.createQuery(criteriaQuery);
+            List<Ingredients> ingredientsList = query.list();
+
+            session.getTransaction().commit();
+            return ingredientsList;
         } catch (HibernateException e) {
             log.error("An error occurred while getting ingredients for drink: {}", drink, e);
             return null;
         }
     }
-
-
-    /*public Set<Ingredients> getAllergicIngredientsForUser(User user) {
-        Set<Ingredients> allergicIngredients = new HashSet<>();
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
-
-            // Получаем список аллергий пользователя
-            List<UserAllergy> allergies = session.createQuery(
-                    "SELECT ua FROM UserAllergy ua WHERE ua.user = :user", UserAllergy.class)
-                    .setParameter("user", user)
-                    .list();
-            // Добавляем ингредиенты из аллергий пользователя в список
-            for (UserAllergy allergy : allergies) {
-                allergicIngredients.add(allergy.getIngredients());
-            }
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return allergicIngredients;
-    }
-*/
 
     //Метод для отримання останього меню користувача
     public UserSelectedMenu getLastUserMenu(Long phoneNumber) {
@@ -611,7 +667,8 @@ public class HibernateMethods{
             CriteriaQuery<UserSelectedMenu> criteria = builder.createQuery(UserSelectedMenu.class);
             Root<UserSelectedMenu> root = criteria.from(UserSelectedMenu.class);
             criteria.select(root);
-            criteria.where(builder.equal(root.get("user").get("phoneNumber"), phoneNumber));
+            criteria.where(builder.equal(root.get("user")
+                    .get("phoneNumber"), phoneNumber));
             criteria.orderBy(builder.desc(root.get("idSelectedMenu")));
             Query<UserSelectedMenu> query = session.createQuery(criteria);
             query.setMaxResults(1);
@@ -621,7 +678,8 @@ public class HibernateMethods{
             if (tx != null) {
                 tx.rollback();
             }
-            log.error("An error occurred while getting last user menu for phone number {}", phoneNumber, e);
+            log.error("An error occurred while getting last user menu for phone number {}",
+                    phoneNumber, e);
         } finally {
             session.close();
         }
@@ -635,10 +693,13 @@ public class HibernateMethods{
         try {
             tx = session.beginTransaction();
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<UserSelectedMenu> criteria = builder.createQuery(UserSelectedMenu.class);
+            CriteriaQuery<UserSelectedMenu> criteria = builder
+                    .createQuery(UserSelectedMenu.class);
+
             Root<UserSelectedMenu> root = criteria.from(UserSelectedMenu.class);
             criteria.select(root);
-            criteria.where(builder.equal(root.get("user").get("phoneNumber"), phoneNumber));
+            criteria.where(builder.equal(root.get("user")
+                    .get("phoneNumber"), phoneNumber));
             criteria.orderBy(builder.desc(root.get("idSelectedMenu"))); // сортировка по убыванию idSelectedMenu
             Query<UserSelectedMenu> query = session.createQuery(criteria);
             query.setMaxResults(numberOfDays); // ограничение количества результатов
@@ -671,14 +732,15 @@ public class HibernateMethods{
             if (tx != null) {
                 tx.rollback();
             }
-            log.error("An error occurred while getting meal option name for id {}", id, e);
-        } finally {
+            log.error("An error occurred while getting meal option name for id {}",
+                    id, e);
+        }finally {
             session.close();
         }
         return mealOptionName;
     }
 
-    //Метод для отримання назви по айди
+    //Методи для отримання назви страви та напитка по айди
     public String getDrinkNameById(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
@@ -692,7 +754,8 @@ public class HibernateMethods{
             if (tx != null) {
                 tx.rollback();
             }
-            log.error("An error occurred while getting drink name for id {}", id, e);
+            log.error("An error occurred while getting drink name for id {}",
+                    id, e);
         } finally {
             session.close();
         }
@@ -781,6 +844,7 @@ public class HibernateMethods{
         }
     }
 
+    //метод для получения листа с алергиями пользывателя
     public List<String> getUserAllergiesText(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
@@ -794,16 +858,18 @@ public class HibernateMethods{
         }
     }
 
+    //метод для удаления алергии у пользователя
     public void deleteUserAllergy(User user, String allergyName) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
 
-            // Получаем идентификатор ингредиента по его имени
+            // Получаем айди ингредиента по его имени
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Integer> criteriaQuery = builder.createQuery(Integer.class);
             Root<Ingredients> root = criteriaQuery.from(Ingredients.class);
 
-            criteriaQuery.select(root.get("idIngredients")).where(builder.equal(root.get("nameIngredients"), allergyName));
+            criteriaQuery.select(root.get("idIngredients"))
+                    .where(builder.equal(root.get("nameIngredients"), allergyName));
             Query<Integer> query = session.createQuery(criteriaQuery);
             Integer ingredientId = query.uniqueResult();
 
@@ -813,7 +879,9 @@ public class HibernateMethods{
                 Root<UserAllergy> userAllergyRoot = criteriaDelete.from(UserAllergy.class);
 
                 Predicate userPredicate = builder.equal(userAllergyRoot.get("user"), user);
-                Predicate ingredientPredicate = builder.equal(userAllergyRoot.get("ingredients").get("idIngredients"), ingredientId);
+                Predicate ingredientPredicate = builder
+                        .equal(userAllergyRoot.get("ingredients")
+                                .get("idIngredients"), ingredientId);
 
                 criteriaDelete.where(builder.and(userPredicate, ingredientPredicate));
 
@@ -832,42 +900,257 @@ public class HibernateMethods{
             log.error("An error occurred while deleting allergy", e);
         }
     }
-    public void deleteUser(User user) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-            session.delete(user);
-            transaction.commit();
-        }
-        catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-    }
 
+    //метод для удаления юзера и его связи
     public void deleteUserAndRelatedSelectedMenus(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
 
-            String sql = "DELETE FROM UserSelectedMenu WHERE phone_number = :phoneNumber";
-            Query query = session.createSQLQuery(sql);
-            query.setParameter("phoneNumber", user.getPhoneNumber());
-            int rowsAffected = query.executeUpdate();
+            // Удаляем связанные выбранные меню пользователя
+            CriteriaDelete<UserSelectedMenu> deleteMenuCriteria = builder
+                    .createCriteriaDelete(UserSelectedMenu.class);
+            Root<UserSelectedMenu> rootMenu = deleteMenuCriteria.from(UserSelectedMenu.class);
+            deleteMenuCriteria.where(builder.equal(rootMenu.get("user"), user));
+            int menuRowsAffected = session.createQuery(deleteMenuCriteria).executeUpdate();
 
+            // Удаляем самого пользователя
             session.delete(user);
-
             tx.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
     }
 
+    //метод для сохранения цели похудения
+    public static void saveWeightLossGoal(User user, double currentWeight,
+                                          double targetWeight, double targetCaloricDeficit,
+                                          short estimatedCompletionTime,
+                                          double caloriesWithLosingWeight) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+
+            WeightLossGoals weightLossGoal = new WeightLossGoals();
+            weightLossGoal.setUser(user);
+            weightLossGoal.setCurrentWeightUserLossGoals(currentWeight);
+            weightLossGoal.setTargetWeightUserLossGoals(targetWeight);
+            weightLossGoal.setTargetCaloricDeficitUserLossGoals(targetCaloricDeficit);
+            weightLossGoal.setEstimatedCompletionTimeLossGoals(estimatedCompletionTime);
+            weightLossGoal.setCaloriesDayWithDeficitLossGoals(caloriesWithLosingWeight);
+
+            session.save(weightLossGoal);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    //метод для получения лучшего веса для пользователя
+    public double getTargetWeightByPhoneNumber(long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Double> criteriaQuery = builder.createQuery(Double.class);
+            Root<WeightLossGoals> root = criteriaQuery.from(WeightLossGoals.class);
+
+            criteriaQuery.select(root.get("targetWeightUserLossGoals"))
+                    .where(builder.equal(root.get("user").get("phoneNumber"),
+                            phoneNumber));
+
+            Query<Double> query = session.createQuery(criteriaQuery);
+            Double targetWeight = query.uniqueResult();
+
+            if (targetWeight != null) {
+                log.info("Target weight found for phone number {}: {}",
+                        phoneNumber, targetWeight);
+            } else {
+                log.warn("Target weight not found for phone number {}", phoneNumber);
+            }
+
+            return targetWeight != null ? targetWeight : 0.0; // Возвращаем целевой вес или 0.0, если он не найден
+        } catch (HibernateException e) {
+            log.error("An error occurred while getting target weight by phone number", e);
+            return 0.0;
+        }
+    }
+
+    //метод для получения калорий с учетом дефецита(когда пользователь худеет)
+    public double getCalociesDayWithDeficitByPhoneNumber(long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Double> criteriaQuery = builder.createQuery(Double.class);
+            Root<WeightLossGoals> root = criteriaQuery.from(WeightLossGoals.class);
+
+            criteriaQuery.select(root.get("caloriesDayWithDeficitLossGoals"))
+                    .where(builder.equal(root.get("user").get("phoneNumber"), phoneNumber));
+
+            Query<Double> query = session.createQuery(criteriaQuery);
+            Double targetWeight = query.uniqueResult();
+
+            if (targetWeight != null) {
+                log.info("calories with deficit found for phone number {}: {}",
+                        phoneNumber, targetWeight);
+            } else {
+                log.warn("calories with deficit not found for phone number {}",
+                        phoneNumber);
+            }
+
+            return targetWeight != null ? targetWeight : 0.0; // Возвращаем целевой вес или 0.0, если он не найден
+        } catch (HibernateException e) {
+            log.error("An error occurred while getting calories with deficit by phone number", e);
+            return 0.0;
+        }
+    }
+
+    //метод для изменения найлучшего веса для пользоателя
+    public void updateTargetWeightByPhoneNumber(long phoneNumber, double newTargetWeight) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaUpdate<WeightLossGoals> criteriaUpdate = builder
+                    .createCriteriaUpdate(WeightLossGoals.class);
+            Root<WeightLossGoals> root = criteriaUpdate.from(WeightLossGoals.class);
+
+            criteriaUpdate.set(root.get("targetWeightUserLossGoals"), newTargetWeight)
+                    .where(builder.equal(root.get("user").get("phoneNumber"), phoneNumber));
+
+            session.createQuery(criteriaUpdate).executeUpdate();
+
+            session.getTransaction().commit();
+            log.info("Target weight updated successfully for phone number {}: {}",
+                    phoneNumber, newTargetWeight);
+        } catch (HibernateException e) {
+            log.error("An error occurred while updating target weight by phone number", e);
+        }
+    }
+
+
+    public Double getCurrentWeightByPhoneNumber(long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Double> criteriaQuery = builder.createQuery(Double.class);
+            Root<WeightLossProgress> root = criteriaQuery.from(WeightLossProgress.class);
+            Join<WeightLossProgress, WeightLossGoals> joinGoal = root.join("goal");
+            Join<WeightLossGoals, User> joinUser = joinGoal.join("user");
+
+            criteriaQuery.select(root.get("currentWeight"))
+                    .where(builder.equal(joinUser.get("phoneNumber"), phoneNumber))
+                    .orderBy(builder.desc(root.get("date")));
+
+            Query<Double> query = session.createQuery(criteriaQuery);
+            query.setMaxResults(1);
+
+            Double currentWeight = query.uniqueResult();
+            return currentWeight;
+        } catch (Exception e) {
+            // Обработка ошибок
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Double getCaloricIntakeByPhoneNumber(long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Double> criteriaQuery = builder.createQuery(Double.class);
+            Root<WeightLossProgress> root = criteriaQuery.from(WeightLossProgress.class);
+            Join<WeightLossProgress, WeightLossGoals> joinGoal = root.join("goal");
+            Join<WeightLossGoals, User> joinUser = joinGoal.join("user");
+
+            criteriaQuery.select(root.get("caloricIntake"))
+                    .where(builder.equal(joinUser.get("phoneNumber"), phoneNumber))
+                    .orderBy(builder.desc(root.get("date")));
+
+            Query<Double> query = session.createQuery(criteriaQuery);
+            query.setMaxResults(1);
+
+            Double currentWeight = query.uniqueResult();
+            return currentWeight;
+        } catch (Exception e) {
+            // Обработка ошибок
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void updateUserCause(long phoneNumber, boolean newCauseValue) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            Criteria criteria = session.createCriteria(User.class);
+            criteria.add(Restrictions.eq("phoneNumber", phoneNumber));
+
+            User user = (User) criteria.uniqueResult();
+
+            if (user != null) {
+                user.setCauseUser(newCauseValue);
+                session.update(user);
+                transaction.commit();
+                System.out.println("User cause updated successfully.");
+            } else {
+               log.info("User not found with phone number: {}", phoneNumber);
+            }
+        } catch (Exception e) {
+           log.error("An error occurred while updating user cause: {}" , e.getMessage());
+        }
+    }
+
+    public  void updateUserDataByPhoneNumber(Long phoneNumber, double totalCaloricUser,
+                                             double totalProteinUser,
+                                             double totalFatUser, double totalCarbsUser) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaUpdate<User> criteriaUpdate = builder.createCriteriaUpdate(User.class);
+            Root<User> root = criteriaUpdate.from(User.class);
+
+            criteriaUpdate.set(root.get("totalCaloricUser"), totalCaloricUser);
+            criteriaUpdate.set(root.get("totalProteinUser"), totalProteinUser);
+            criteriaUpdate.set(root.get("totalFatUser"), totalFatUser);
+            criteriaUpdate.set(root.get("totalCarbsUser"), totalCarbsUser);
+
+            criteriaUpdate.where(builder.equal(root.get("phoneNumber"), phoneNumber));
+
+            int updatedEntities = session.createQuery(criteriaUpdate).executeUpdate();
+            transaction.commit();
+
+             if(updatedEntities == 0) {
+                log.warn("User was not find with phone number {}", phoneNumber);
+            }
+        }catch (Exception e) {
+            log.error("An error occurred while updating user fat, protein, carbs : {}", e.getMessage());
+        }
+    }
+
+    public User getUserByPhoneNumber(long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+            Root<User> root = criteriaQuery.from(User.class);
+
+            Predicate predicate = criteriaBuilder
+                    .equal(root.get("phoneNumber"), phoneNumber);
+
+            criteriaQuery.select(root).where(predicate);
+            Query<User> query = session.createQuery(criteriaQuery);
+
+            return query.uniqueResult();
+        } catch (HibernateException e) {
+            log.error("An error occurred while getting user by phone number {}",
+                    phoneNumber, e);
+            return null;
+        }
+    }
 }

@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitMenuButton;
 import project.entity.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import project.controller.HibbernateRunner;
+import project.method.NavigationMenu;
 
 public class MainPageController {
 
@@ -29,6 +32,16 @@ public class MainPageController {
 
     @FXML
     private Button changePageBtn;
+
+    @FXML
+    private SplitMenuButton loseWeightMenuButton;
+
+    @FXML
+    private MenuItem forecastMenuItem;
+
+    @FXML
+    private MenuItem statisticsMenuItem;
+
 
     @FXML
     private TextField name_id;
@@ -62,30 +75,11 @@ public class MainPageController {
     }
     @FXML
     void initialize() {
-        calculatorPageBtn.setOnAction(event -> {
-            try {
-                HibbernateRunner.setRoot("calorieCalculator");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        createdMenuPageBtn.setOnAction(event -> {
-            try {
-                HibbernateRunner.setRoot("createdMenu");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        changePageBtn.setOnAction(event -> {
-            try {
-                HibbernateRunner.setRoot("settings");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
+        mainPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("mainpage"));
+        calculatorPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("calorieCalculator"));
+        createdMenuPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("createdMenu"));
+        changePageBtn.setOnAction(event -> NavigationMenu.navigateToPage("settings"));
+        loseWeightMenuButton.setOnAction(event -> NavigationMenu.navigateToPage("loseWeight"));
     }
 }
 

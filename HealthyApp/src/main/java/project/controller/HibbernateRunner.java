@@ -27,9 +27,7 @@ public class HibbernateRunner extends Application {
         stage.show();
     }
 
-
-
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         String path = "/controller/" + fxml + ".fxml";
         URL resourceUrl = HibbernateRunner.class.getResource(path);
         if (resourceUrl == null) {

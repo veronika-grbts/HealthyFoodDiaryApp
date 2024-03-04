@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import project.method.CalorieCalculator;
+import project.method.NavigationMenu;
 import project.singleton.ApplicationContext;
 import project.entity.ActivityLevel;
 import project.entity.Ingredients;
@@ -46,6 +48,15 @@ public class SettingsController {
 
     @FXML
     private Button changePageBtn;
+
+    @FXML
+    private SplitMenuButton loseWeightMenuButton;
+
+    @FXML
+    private MenuItem forecastMenuItem;
+
+    @FXML
+    private MenuItem statisticsMenuItem;
 
     @FXML
     private TextField nameTextField;
@@ -101,10 +112,9 @@ public class SettingsController {
     @FXML
     void AddAllergy(MouseEvent event) {
             ComboBox<String> newComboBox = new ComboBox<>();
-
-            double x = 14;
-            double y = 100;
-            double deltaY = 40;
+            double x = 14; // координа Х для ComboBox
+            double y = 100;// координа У для ComboBox
+            double deltaY = 40; // отсутп
 
             // Определяем координаты для нового ComboBox
             int numberOfExistingComboBoxes = allergyVbox.getChildren().stream()
@@ -136,7 +146,9 @@ public class SettingsController {
                     String selectedProduct = newComboBox.getValue();
                     Ingredients ingredient = hibernateMethods.findIngredientByName(selectedProduct);
                     if (ingredient != null) {
-                        hibernateMethods.addUserAllergyForUser(Long.parseLong(phoneNumberTextField.getText()), ingredient.getIdIngredients());
+                        hibernateMethods.addUserAllergyForUser(
+                                Long.parseLong(phoneNumberTextField.getText()),
+                                ingredient.getIdIngredients());
                     } else {
                         log.warn("The selected ingredient was not found");
                     }
@@ -168,6 +180,7 @@ public class SettingsController {
                 // Устанавливаем значения ComboBox, CheckBox и RadioButton на основе информации о пользователе
                 activityLevelComboBox.setValue(currentUser.getActivityLevel());
                 allergyCheckBox.setSelected(currentUser.isAllergiesUser());
+                causeCheckBox.setSelected(currentUser.isCauseUser());
                 if (currentUser.isGenderUser()) {
                     manRadioButton.setSelected(true);
                 } else {
@@ -220,6 +233,12 @@ public class SettingsController {
                     e.printStackTrace();
                 }
             });
+
+            mainPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("mainpage"));
+            calculatorPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("calorieCalculator"));
+            createdMenuPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("createdMenu"));
+            changePageBtn.setOnAction(event -> NavigationMenu.navigateToPage("settings"));
+            loseWeightMenuButton.setOnAction(event -> NavigationMenu.navigateToPage("loseWeight"));
         }
 
     private User getUserFromApplicationContext() {
@@ -234,13 +253,32 @@ public class SettingsController {
             currentUser.setNameUser(nameTextField.getText());
             currentUser.setAgeUser(Integer.parseInt(ageTextField.getText()));
             currentUser.setPhoneNumber(Long.parseLong(phoneNumberTextField.getText()));
-            // и так далее для остальных полей
+            currentUser.setHeightUser(Double.parseDouble(heightTextField.getText()));
+            currentUser.setWeightUser(Double.parseDouble(weightTextField.getText()));
+
             currentUser.setActivityLevel(activityLevelComboBox.getValue());
             currentUser.setAllergiesUser(allergyCheckBox.isSelected());
             currentUser.setGenderUser(manRadioButton.isSelected());
 
+            double calories = CalorieCalculator.calculateCalories(
+                    currentUser.getWeightUser(), currentUser.getHeightUser(),
+                    currentUser.getAgeUser(), currentUser.isGenderUser(),
+                    currentUser.getActivityLevel());
+
+            double proteins = CalorieCalculator.calculateProtein(calories);
+            double fats = CalorieCalculator.calculateFat(calories);
+            double carbs = CalorieCalculator.calculateCarbs(calories);
+
+            // Обновляем данные пользователя
+            currentUser.setTotalCaloricUser(calories);
+            currentUser.setTotalProteinUser(proteins);
+            currentUser.setTotalFatUser(fats);
+            currentUser.setTotalCarbsUser(carbs);
+
             // Обновляем информацию о пользователе в базе данных
             hibernateMethods.updateUser(currentUser);
+            ApplicationContext.getInstance().setCurrentUser(
+                    hibernateMethods.getUserByPhoneNumber(currentUser.getPhoneNumber()));
         }
     }
 
@@ -248,7 +286,6 @@ public class SettingsController {
         User currentUser = getUserFromApplicationContext();
         // Удаление аллергии из базы данных
         hibernateMethods.deleteUserAllergy(currentUser, allergyName);
-
         // Удаление аллергии из интерфейса
         for (Node node : allergyVbox.getChildren()) {
             if (node instanceof HBox) {

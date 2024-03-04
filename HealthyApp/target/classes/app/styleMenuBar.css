@@ -1,0 +1,30 @@
+.split-menu-button .arrow-button {
+    -fx-background-color: transparent; /* Делаем фон стрелки прозрачным */
+  
+}
+
+.split-menu-button .arrow-button .arrow {
+    -fx-text-fill: white; /* Белый цвет галочки */
+}
+
+
+.split-menu-button .arrow-button:hover {
+    -fx-background-color: transparent; /* Делаем фон стрелки прозрачным при наведении */
+}
+
+.split-menu-button > .label {
+    -fx-background-color: #452f42; /* Цвет фона для SplitMenuButton */
+    -fx-text-fill: #f4e9e9; /* Цвет текста для SplitMenuButton */
+    -fx-font-size: 18px; /* Размер шрифта для SplitMenuButton */
+}
+
+.split-menu-button .menu-item {
+    -fx-background-color: #452f42; /* Цвет фона для MenuItem */
+    -fx-font-size: 18px; /* Размер шрифта */
+}
+
+.split-menu-button {
+    -fx-background-color: #452f42; /* Цвет фона для SplitMenuButton */
+    -fx-background-insets: 0; /* Устанавливаем внутренние отступы фона */
+    -fx-padding: 0.5em 2.5em; /* Отступы */
+}

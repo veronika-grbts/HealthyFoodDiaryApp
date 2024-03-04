@@ -13,6 +13,8 @@
     <property name="show_sql">true</property>
     <property name="format_sql">true</property>
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+
 
     <mapping class="project.entity.User"/>
     <mapping class="project.entity.UserAllergy"/>
@@ -25,6 +27,8 @@
     <mapping class="project.entity.MealIngredients"/>
     <mapping class="project.entity.MealIngredientsDrink"/>
     <mapping class="project.entity.MainDishPairing"/>
+    <mapping class="project.entity.WeightLossGoals"/>
+    <mapping class="project.entity.WeightLossProgress"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
 

@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
+import project.method.NavigationMenu;
 import project.singleton.ApplicationContext;
 import project.method.CreatedMenu;
 import project.entity.User;
@@ -57,6 +58,15 @@ public class CreatedMenuController {
         private Button changePageBtn;
 
         @FXML
+        private SplitMenuButton loseWeightMenuButton;
+
+        @FXML
+        private MenuItem forecastMenuItem;
+
+        @FXML
+        private MenuItem statisticsMenuItem;
+
+        @FXML
         private ComboBox<String> productsComboBox;
 
         @FXML
@@ -79,25 +89,24 @@ public class CreatedMenuController {
 
     @FXML
     void initialize() {
-        // Установка фабрики ячеек для столбца typeMealColumn
-     //   typeMealColumn.setCellFactory(column -> new SpanningTableCell<>());
+
         configureTable();
         // Отримуємо список варіантів для ComboBox
-        ObservableList<String> comboBoxItems = FXCollections.observableArrayList("Один день", "Три дні", "Тиждень", "Два тижні");
+        ObservableList<String> comboBoxItems = FXCollections.observableArrayList(
+                "Один день",
+                "Три дні",
+                "Тиждень",
+                "Два тижні"
+        );
         productsComboBox.setItems(comboBoxItems);
 
         CreatedMenu createdMenu = new CreatedMenu();
         createdMenutBtn.setOnAction(actionEvent -> {
-            // Получаем выбранное количество дней из комбобокса
             String selectedPeriod = productsComboBox.getValue();
             int numberOfDays = getNumberOfDaysForPeriod(selectedPeriod);
-
-            // Создаем новое меню для каждого дня и добавляем его в таблицу
             for (int i = 0; i < numberOfDays; i++) {
                 createdMenu.createMenu();
             }
-
-            // После создания всех меню заполняем таблицу и создаем PDF
             populateTable();
             configureTable();
             boolean hasCause = checkBoxCreatedPdf.isSelected();
@@ -106,26 +115,17 @@ public class CreatedMenuController {
             }
         });
 
-
-        calculatorPageBtn.setOnAction(event -> {
-            try {
-                HibbernateRunner.setRoot("calorieCalculator");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        mainPageBtn.setOnAction(event -> {
-            try {
-                HibbernateRunner.setRoot("mainpage");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
         updateBtn.setOnAction(event -> {
             handleUpdateButtonClick(event);
             rotateImage();
         });
+
+        mainPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("mainpage"));
+        calculatorPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("calorieCalculator"));
+        createdMenuPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("createdMenu"));
+        changePageBtn.setOnAction(event -> NavigationMenu.navigateToPage("settings"));
+        loseWeightMenuButton.setOnAction(event -> NavigationMenu.navigateToPage("loseWeight"));
+
     }
     private void rotateImage() {
         RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1), updateImage);
@@ -142,11 +142,7 @@ public class CreatedMenuController {
             // Устанавливаем фильтр для файлов PDF
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
             fileChooser.getExtensionFilters().add(extFilter);
-
-            // Получаем основное окно приложения
             Stage stage = (Stage) mainPageBtn.getScene().getWindow();
-
-            // Показываем диалоговое окно сохранения файла
             File file = fileChooser.showSaveDialog(stage);
 
             if (file != null) {
@@ -183,40 +179,37 @@ public class CreatedMenuController {
                         contentStream.setFont(font, 12);
                         contentStream.beginText();
                         contentStream.newLineAtOffset(100, 700);
-                        currentLine = 0; // Сбрасываем счетчик строк
+                        currentLine = 0;
                     }
 
-                    // Если это первое меню для нового дня, выводим номер дня
                     if (isFirstMenuOfDay) {
                         contentStream.showText("День " + day + ":");
-                        contentStream.newLineAtOffset(0, -20); // Сдвигаем на следующую строку
-                        currentLine++; // Увеличиваем счетчик строк
+                        contentStream.newLineAtOffset(0, -20);
+                        currentLine++;
                         isFirstMenuOfDay = false;
                     }
-
-                    // Устанавливаем цвет и стиль для вывода типа еды
-                    contentStream.setNonStrokingColor(Color.BLUE); // устанавливаем цвет текста
-                    contentStream.setFont(font, 12); // устанавливаем шрифт и размер
+                    contentStream.setNonStrokingColor(Color.BLUE);
+                    contentStream.setFont(font, 12);
                     contentStream.showText("Прийом їжі: ");
                     contentStream.showText(item.getMealType());
-                    contentStream.newLineAtOffset(0, -20); // Сдвигаем на следующую строку
-                    currentLine++; // Увеличиваем счетчик строк
+                    contentStream.newLineAtOffset(0, -20);
+                    currentLine++;
 
-                    // Устанавливаем цвет и стиль для вывода названия
-                    contentStream.setNonStrokingColor(Color.BLACK); // устанавливаем цвет текста
-                    contentStream.setFont(font, 12); // устанавливаем шрифт и размер
+
+                    contentStream.setNonStrokingColor(Color.BLACK);
+                    contentStream.setFont(font, 12);
                     contentStream.showText("Назва: ");
                     contentStream.showText(item.getName());
-                    contentStream.newLineAtOffset(0, -20); // Сдвигаем на следующую строку
-                    currentLine++; // Увеличиваем счетчик строк
+                    contentStream.newLineAtOffset(0, -20);
+                    currentLine++;
 
-                    // Устанавливаем цвет и стиль для вывода количества
-                    contentStream.setNonStrokingColor(Color.BLACK); // устанавливаем цвет текста
-                    contentStream.setFont(font, 12); // устанавливаем шрифт и размер
+
+                    contentStream.setNonStrokingColor(Color.BLACK);
+                    contentStream.setFont(font, 12);
                     contentStream.showText("Кількість: ");
                     contentStream.showText(String.valueOf(item.getQuantity() + " г"));
-                    contentStream.newLineAtOffset(0, -20); // Сдвигаем на следующую строку
-                    currentLine++; // Увеличиваем счетчик строк
+                    contentStream.newLineAtOffset(0, -20);
+                    currentLine++;
 
                     // Если это последнее меню для текущего дня, увеличиваем номер дня
                     if (item.isLastMenuOfDay()) {
@@ -332,31 +325,65 @@ public class CreatedMenuController {
             dayHeader.setDayHeader(true);
             rowData.add(dayHeader); // Добавляем заголовок дня в список данных для таблицы
             day++; // Увеличиваем номер дня
-            String breakfastName = hibernateMethods.getMealOptionNameById(menu.getBreakfast().getIdOption());
-            String snackFirstName = hibernateMethods.getMealOptionNameById(menu.getSnackDishId().getIdOption());
-            String lunchName = hibernateMethods.getMealOptionNameById(menu.getLunch().getIdOption());
-            String dinnerName = hibernateMethods.getMealOptionNameById(menu.getDinner().getIdOption());
-            String breakfastDrinkName = hibernateMethods.getDrinkNameById(menu.getBreakfastDrink().getIdDrink());
-            String lunchDrinkName = hibernateMethods.getDrinkNameById(menu.getLunchDrink().getIdDrink());
-            String dinnerDrinkName = hibernateMethods.getDrinkNameById(menu.getDinnerDrink().getIdDrink());
-            String snackSecondName = hibernateMethods.getMealOptionNameById(menu.getSnackSecondDishId().getIdOption());
+            String breakfastName = hibernateMethods.getMealOptionNameById(
+                    menu.getBreakfast().getIdOption()
+            );
+            String snackFirstName = hibernateMethods.getMealOptionNameById(
+                    menu.getSnackDishId().getIdOption()
+            );
+            String lunchName = hibernateMethods.getMealOptionNameById(
+                    menu.getLunch().getIdOption()
+            );
+            String dinnerName = hibernateMethods.getMealOptionNameById(
+                    menu.getDinner().getIdOption()
+            );
+            String breakfastDrinkName = hibernateMethods.getDrinkNameById(
+                    menu.getBreakfastDrink().getIdDrink()
+            );
+            String lunchDrinkName = hibernateMethods.getDrinkNameById(
+                    menu.getLunchDrink().getIdDrink()
+            );
+            String dinnerDrinkName = hibernateMethods.getDrinkNameById(
+                    menu.getDinnerDrink().getIdDrink()
+            );
+            String snackSecondName = hibernateMethods.getMealOptionNameById(
+                    menu.getSnackSecondDishId().getIdOption()
+            );
 
-            rowData.add(new CustomMenuItem("Сніданок", breakfastName, menu.getGramsForBreakfastSelectedMenu()));
-            rowData.add(new CustomMenuItem("Напій для сніданку", breakfastDrinkName, 200.0));
-            rowData.add(new CustomMenuItem("Перший Перекус", snackFirstName, menu.getGramsForSnackFirstDishGrams()));
-            rowData.add(new CustomMenuItem("Обід", lunchName, menu.getGramsForLunchSelectedMenu()));
+            rowData.add(new CustomMenuItem("Сніданок",
+                    breakfastName, menu.getGramsForBreakfastSelectedMenu()));
+
+            rowData.add(new CustomMenuItem("Напій для сніданку",
+                    breakfastDrinkName, 200.0));
+
+            rowData.add(new CustomMenuItem("Перший Перекус",
+                    snackFirstName, menu.getGramsForSnackFirstDishGrams()));
+
+            rowData.add(new CustomMenuItem("Обід",
+                    lunchName, menu.getGramsForLunchSelectedMenu()));
+
             if (menu.getAdditionalDishId() != null) {
-                String additionalDishName = hibernateMethods.getMealOptionNameById(menu.getAdditionalDishId().getIdOption());
+                String additionalDishName = hibernateMethods.getMealOptionNameById(
+                        menu.getAdditionalDishId().getIdOption());
+
                 double additionalDishQuantity = menu.getLunchAdditionalDishGrams();
-                rowData.add(new CustomMenuItem("Друга страва для обіду ", additionalDishName, additionalDishQuantity));
+                rowData.add(new CustomMenuItem("Друга страва для обіду ",
+                        additionalDishName, additionalDishQuantity));
             }
             rowData.add(new CustomMenuItem("Напій для обіду", lunchDrinkName, 200.0));
-            rowData.add(new CustomMenuItem("Другий Перекус", snackSecondName, menu.getGramsForSnackSecondDishGrams()));
-            rowData.add(new CustomMenuItem("Вечеря", dinnerName, menu.getGramsForDinnerSelectedMenu()));
+            rowData.add(new CustomMenuItem("Другий Перекус",
+                    snackSecondName, menu.getGramsForSnackSecondDishGrams()));
+
+            rowData.add(new CustomMenuItem("Вечеря", dinnerName,
+                    menu.getGramsForDinnerSelectedMenu()));
             if (menu.getAdditionalDinnerDishId() != null) {
-                String dinnerAdditionalDishName = hibernateMethods.getMealOptionNameById(menu.getAdditionalDinnerDishId().getIdOption());
+                String dinnerAdditionalDishName = hibernateMethods.getMealOptionNameById(
+                        menu.getAdditionalDinnerDishId().getIdOption()
+                );
+
                 double dinnerAdditionalDishQuantity = menu.getDinnerAdditionalDishGrams();
-                rowData.add(new CustomMenuItem("Друга страва для вечері", dinnerAdditionalDishName, dinnerAdditionalDishQuantity));
+                rowData.add(new CustomMenuItem("Друга страва для вечері",
+                        dinnerAdditionalDishName, dinnerAdditionalDishQuantity));
             }
             rowData.add(new CustomMenuItem("Напій для вічері", dinnerDrinkName, 200.0));
 
@@ -364,10 +391,6 @@ public class CreatedMenuController {
         }
         return rowData;
     }
-
-
-
-
     // Создаем специальную ячейку для объединения
     public class SpanningTableCell<S> extends TableCell<S, String> {
         private final Label label;
