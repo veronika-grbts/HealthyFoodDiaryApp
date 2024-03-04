@@ -785,12 +785,12 @@ false Z
 false Zulu
 false posixrules
 </TimeZones>
-      <StartupTime>1708332071</StartupTime>
+      <StartupTime>1709482136</StartupTime>
     </root>
     <database id="2" parent="1" name="healthyfooddiary">
       <ObjectId>18631</ObjectId>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>2247</IntrospectionStateNumber>
+      <IntrospectionStateNumber>2354</IntrospectionStateNumber>
       <Current>1</Current>
       <Relations>sequence|table|18656|18658|1
 sequence|table|18680|18682|1
@@ -871,7 +871,7 @@ UC/10
 </Acl>
       <StateNumber>562</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>2248</IntrospectionStateNumber>
+      <IntrospectionStateNumber>2355</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <extension id="14" parent="2" name="plpgsql">
@@ -1090,7 +1090,7 @@ Snack</Labels>
     <table id="51" parent="13" name="weightlossgoals">
       <ObjectId>19311</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>2246</StateNumber>
+      <StateNumber>2252</StateNumber>
     </table>
     <table id="52" parent="13" name="weightlossprogress">
       <ObjectId>19324</ObjectId>
@@ -2119,17 +2119,17 @@ Snack</Labels>
       <StateNumber>2239</StateNumber>
       <TypeId>701</TypeId>
     </column>
-    <column id="184" parent="51" name="estimated_completion_time">
-      <Position>6</Position>
-      <DataType>interval|0s</DataType>
-      <StateNumber>2239</StateNumber>
-      <TypeId>1186</TypeId>
-    </column>
-    <column id="185" parent="51" name="calories_day_with_deficit">
+    <column id="184" parent="51" name="calories_day_with_deficit">
       <Position>9</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>2246</StateNumber>
       <TypeId>701</TypeId>
+    </column>
+    <column id="185" parent="51" name="estimated_completion_time">
+      <Position>10</Position>
+      <DataType>smallint|0s</DataType>
+      <StateNumber>2252</StateNumber>
+      <TypeId>21</TypeId>
     </column>
     <index id="186" parent="51" name="WeightLossGoals_pk">
       <ObjectId>19315</ObjectId>

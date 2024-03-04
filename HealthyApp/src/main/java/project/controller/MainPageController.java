@@ -10,7 +10,6 @@ import project.entity.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import project.controller.HibbernateRunner;
 import project.method.NavigationMenu;
 
 public class MainPageController {
@@ -75,12 +74,23 @@ public class MainPageController {
     }
     @FXML
     void initialize() {
-        mainPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("mainpage"));
-        calculatorPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("calorieCalculator"));
-        createdMenuPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("createdMenu"));
-        changePageBtn.setOnAction(event -> NavigationMenu.navigateToPage("settings"));
-        loseWeightMenuButton.setOnAction(event -> NavigationMenu.navigateToPage("loseWeight"));
+        mainPageBtn.setOnAction(event -> {
+            NavigationMenu.navigateToPage("mainpage");
+        });
+        calculatorPageBtn.setOnAction(event -> {
+            NavigationMenu.navigateToPage("calorieCalculator");
+        });
+        createdMenuPageBtn.setOnAction(event -> {
+            NavigationMenu.navigateToPage("createdMenu");
+        });
+        changePageBtn.setOnAction(event -> {
+            NavigationMenu.navigateToPage("settings");
+        });
+        loseWeightMenuButton.setOnAction(event -> {
+            NavigationMenu.navigateToPage("loseWeight");
+        });
     }
+
 }
 
 

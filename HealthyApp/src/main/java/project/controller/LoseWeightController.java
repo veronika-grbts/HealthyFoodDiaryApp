@@ -242,7 +242,7 @@ public class LoseWeightController {
         createdMenuPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("createdMenu"));
         changePageBtn.setOnAction(event -> NavigationMenu.navigateToPage("settings"));
         loseWeightMenuButton.setOnAction(event -> NavigationMenu.navigateToPage("loseWeight"));
-
+        forecastMenuItem.setOnAction(event -> NavigationMenu.navigateToPage("forecast"));
     }
     private User getUserFromApplicationContext() {
         return ApplicationContext.getInstance().getCurrentUser();

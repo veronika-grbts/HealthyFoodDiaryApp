@@ -1,6 +1,6 @@
 package project.method;
 
-import project.controller.HibbernateRunner;
+import project.HibbernateRunner;
 
 import java.io.IOException;
 

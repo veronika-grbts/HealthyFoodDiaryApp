@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -34,5 +36,8 @@ public class WeightLossProgress {
 
     @Column(name = "caloric_intake")
     private Double caloricIntake;
+
+    @Column(name = "deficit_caloric")
+    private Double deficitCaloric;
 
 }

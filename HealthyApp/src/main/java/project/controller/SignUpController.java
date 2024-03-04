@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
+import project.HibbernateRunner;
 import project.method.LoseWeightCalculator;
 import project.singleton.ApplicationContext;
 import project.method.CalorieCalculator;

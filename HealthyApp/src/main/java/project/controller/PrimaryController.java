@@ -2,6 +2,7 @@ package project.controller;
 
 import java.io.IOException;
 
+import project.HibbernateRunner;
 import project.method.NavigationMenu;
 import project.singleton.ApplicationContext;
 import project.entity.User;
@@ -39,7 +40,6 @@ public class PrimaryController {
 
     @FXML
     void initialize() {
-
         signInBtn.setOnAction(event -> {
             try {
                 String phoneNumber = phoneNumberField.getText();
@@ -58,7 +58,9 @@ public class PrimaryController {
             }
         });
 
-        signUpBtn.setOnAction(event -> NavigationMenu.navigateToPage("signUp"));
+        signUpBtn.setOnAction(event -> {
+            NavigationMenu.navigateToPage("signUp");
+        });
     }
 
     private User getUserInfo(long phoneNumber) {

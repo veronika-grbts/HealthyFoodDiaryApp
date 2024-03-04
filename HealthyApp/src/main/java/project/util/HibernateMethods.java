@@ -9,8 +9,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.criteria.*;
 import project.entity.*;
 import project.method.CalorieCalculator;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -981,6 +984,60 @@ public class HibernateMethods{
         }
     }
 
+    public double getNowWeightByPhoneNumber(long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Double> criteriaQuery = builder.createQuery(Double.class);
+            Root<WeightLossGoals> root = criteriaQuery.from(WeightLossGoals.class);
+
+            criteriaQuery.select(root.get("currentWeightUserLossGoals"))
+                    .where(builder.equal(root.get("user").get("phoneNumber"),
+                            phoneNumber));
+
+            Query<Double> query = session.createQuery(criteriaQuery);
+            Double targetWeight = query.uniqueResult();
+
+            if (targetWeight != null) {
+                log.info("Current weight found for phone number {}: {}",
+                        phoneNumber, targetWeight);
+            } else {
+                log.warn("current weight not found for phone number {}", phoneNumber);
+            }
+
+            return targetWeight != null ? targetWeight : 0.0; // Возвращаем целевой вес или 0.0, если он не найден
+        } catch (HibernateException e) {
+            log.error("An error occurred while getting current weight by phone number", e);
+            return 0.0;
+        }
+    }
+
+    public Short getEstimatedCompletionTimeByPhoneNumber(long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Short> criteriaQuery = builder.createQuery(Short.class);
+            Root<WeightLossGoals> root = criteriaQuery.from(WeightLossGoals.class);
+
+            criteriaQuery.select(root.get("estimatedCompletionTimeLossGoals"))
+                    .where(builder.equal(root.get("user").get("phoneNumber"),
+                            phoneNumber));
+
+            Query<Short> query = session.createQuery(criteriaQuery);
+            Short targetWeight = query.uniqueResult();
+
+            if (targetWeight != null) {
+                log.info("estimatedCompletionTimeLossGoals found for phone number {}: {}",
+                        phoneNumber, targetWeight);
+            } else {
+                log.warn("estimatedCompletionTimeLossGoals  not found for phone number {}", phoneNumber);
+            }
+
+            return targetWeight != null ? targetWeight : 0; // Возвращаем целевой вес или 0.0, если он не найден
+        } catch (HibernateException e) {
+            log.error("An error occurred while getting estimatedCompletionTimeLossGoals by phone number", e);
+            return 0;
+        }
+    }
+
     //метод для получения калорий с учетом дефецита(когда пользователь худеет)
     public double getCalociesDayWithDeficitByPhoneNumber(long phoneNumber) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -1153,4 +1210,94 @@ public class HibernateMethods{
             return null;
         }
     }
+
+    public static List<Double> fetchWeightLossProgress(Long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+
+            // Находим goalId по номеру телефона пользователя
+            Query<Integer> goalIdQuery = session.createQuery(
+                    "SELECT goal.idWeightLossGoals FROM WeightLossGoals goal WHERE goal.user.phoneNumber = :phoneNumber", Integer.class);
+            goalIdQuery.setParameter("phoneNumber", phoneNumber);
+            Integer goalId = goalIdQuery.uniqueResult();
+            if (goalId == null) {
+                System.out.println("Пользователь с указанным номером телефона не найден.");
+                return null;
+            }
+
+            // Получаем значения currentWeight для найденного goalId
+            Query<Double> currentWeightQuery = session.createQuery(
+                    "SELECT progress.currentWeight FROM WeightLossProgress progress WHERE progress.goal.idWeightLossGoals = :goalId", Double.class);
+            currentWeightQuery.setParameter("goalId", goalId);
+            List<Double> currentWeightList = currentWeightQuery.list();
+
+            session.getTransaction().commit();
+            return currentWeightList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static List<Date> fetchWeightLossDates(Long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+
+            // Находим goalId по номеру телефона пользователя
+            Query<Integer> goalIdQuery = session.createQuery(
+                    "SELECT goal.idWeightLossGoals FROM WeightLossGoals goal WHERE goal.user.phoneNumber = :phoneNumber", Integer.class);
+            goalIdQuery.setParameter("phoneNumber", phoneNumber);
+            Integer goalId = goalIdQuery.uniqueResult();
+            if (goalId == null) {
+                System.out.println("Пользователь с указанным номером телефона не найден.");
+                return null;
+            }
+
+            // Получаем значения дат для найденного goalId
+            Query<Date> dateQuery = session.createQuery(
+                    "SELECT progress.date FROM WeightLossProgress progress WHERE progress.goal.idWeightLossGoals = :goalId", Date.class);
+            dateQuery.setParameter("goalId", goalId);
+            List<Date> dateList = dateQuery.list();
+
+            session.getTransaction().commit();
+            return dateList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void saveWeightLossProgress(Long phoneNumber, Date date,
+                                       Double currentWeight, Double caloricIntake,
+                                       Double deficitCaloric) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+
+            // Находим goal_id по номеру телефона пользователя
+            Query<Integer> goalIdQuery = session.createQuery(
+                    "SELECT goal.idWeightLossGoals FROM WeightLossGoals goal WHERE goal.user.phoneNumber = :phoneNumber", Integer.class);
+            goalIdQuery.setParameter("phoneNumber", phoneNumber);
+            Integer goalId = goalIdQuery.uniqueResult();
+            if (goalId == null) {
+                System.out.println("Пользователь с указанным номером телефона не найден.");
+                return;
+            }
+
+            // Создаем объект WeightLossProgress и сохраняем его в базу данных
+            WeightLossGoals goal = session.load(WeightLossGoals.class, goalId);
+            WeightLossProgress progress = new WeightLossProgress();
+            progress.setGoal(goal);
+            progress.setDate(date);
+            progress.setCurrentWeight(currentWeight);
+            progress.setCaloricIntake(caloricIntake);
+            progress.setDeficitCaloric(deficitCaloric);
+
+            session.save(progress);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

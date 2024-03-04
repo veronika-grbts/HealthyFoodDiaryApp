@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import project.HibbernateRunner;
 import project.method.CalorieCalculator;
 import project.method.NavigationMenu;
 import project.singleton.ApplicationContext;
@@ -226,6 +227,8 @@ public class SettingsController {
                 if (currentUser != null) {
                     // Удаляем пользователя из базы данных
                     hibernateMethods.deleteUserAndRelatedSelectedMenus(currentUser);
+                    ApplicationContext.getInstance().setCurrentUser(
+                            hibernateMethods.getUserByPhoneNumber(currentUser.getPhoneNumber()));
                 }
                 try {
                     HibbernateRunner.setRoot("primary");
