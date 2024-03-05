@@ -25,7 +25,7 @@ public class Nutrition {
         return carbohydrates;
     }
 
-    // Метод для добавления питательной ценности из другого объекта Nutrition
+
     public void addNutrition(Nutrition other) {
         this.protein += other.getProtein();
         this.fat += other.getFat();

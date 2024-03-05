@@ -1,97 +1,40 @@
 package project.controller;
 
-import java.awt.Color;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.List;
-
-import project.method.NavigationMenu;
-import project.singleton.ApplicationContext;
-import project.method.CreatedMenu;
-import project.entity.User;
-import project.entity.UserSelectedMenu;
-import project.tableView.CustomMenuItem;
-import project.tableView.Period;
 import javafx.animation.RotateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-
 import javafx.util.Duration;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType0Font;
+import project.entity.User;
+import project.entity.UserSelectedMenu;
+import project.filePDF.PDFGenerator;
+import project.method.CreatedMenu;
+import project.method.NavigationMenu;
+import project.singleton.ApplicationContext;
+import project.tableView.Period;
 import project.util.HibernateMethods;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-
+import project.tableView.CustomMenuItem;
+import java.io.IOException;
+import java.util.List;
 
 public class CreatedMenuController {
-    private HibernateMethods hibernateMethods = new HibernateMethods();
+    private final HibernateMethods hibernateMethods;
     private boolean ingredientsColumnCreated = false;
 
-        @FXML
-        private ImageView updateImage;
+    public CreatedMenuController() {
+        this.hibernateMethods = new HibernateMethods();
+    }
 
-        @FXML
-        private Button updateBtn;
+    public void initialize(TableView<CustomMenuItem> tableProduct, ComboBox<String> productsComboBox, CheckBox checkBoxCreatedPdf,
+                           Button updateBtn, ImageView updateImage, Button mainPageBtn, Button calculatorPageBtn,
+                           Button createdMenuPageBtn, Button changePageBtn, SplitMenuButton loseWeightMenuButton, MenuItem forecastMenuItem,
+                           MenuItem statisticsMenuItem, Button createdMenutBtn, TableColumn<UserSelectedMenu, String> typeMealColumn,
+                           TableColumn<UserSelectedMenu, String> nameProductColumn, TableColumn<UserSelectedMenu, Double> quantityColumn) {
 
-        @FXML
-        private Button mainPageBtn;
-
-        @FXML
-        private Button calculatorPageBtn;
-
-        @FXML
-        private Button createdMenuPageBtn;
-
-        @FXML
-        private Button changePageBtn;
-
-        @FXML
-        private SplitMenuButton loseWeightMenuButton;
-
-        @FXML
-        private MenuItem forecastMenuItem;
-
-        @FXML
-        private MenuItem statisticsMenuItem;
-
-        @FXML
-        private ComboBox<String> productsComboBox;
-
-        @FXML
-        private Button createdMenutBtn;
-
-        @FXML
-        private CheckBox checkBoxCreatedPdf;
-
-        @FXML
-        private TableView<CustomMenuItem> tableProduct;
-
-        @FXML
-        private TableColumn<UserSelectedMenu, String> typeMealColumn;
-
-        @FXML
-        private TableColumn<UserSelectedMenu, String> nameProductColumn;
-
-        @FXML
-        private TableColumn<UserSelectedMenu, Double> quantityColumn;
-
-    @FXML
-    void initialize() {
-
-        configureTable();
-        // Отримуємо список варіантів для ComboBox
+        configureTable(tableProduct, typeMealColumn, nameProductColumn, quantityColumn);
         ObservableList<String> comboBoxItems = FXCollections.observableArrayList(
                 "Один день",
                 "Три дні",
@@ -107,137 +50,43 @@ public class CreatedMenuController {
             for (int i = 0; i < numberOfDays; i++) {
                 createdMenu.createMenu();
             }
-            populateTable();
-            configureTable();
+            populateTable(tableProduct, productsComboBox, checkBoxCreatedPdf);
+            configureTable(tableProduct, typeMealColumn, nameProductColumn, quantityColumn);
             boolean hasCause = checkBoxCreatedPdf.isSelected();
             if (hasCause) {
-                createPDF("C:/Users/User/Desktop", "Меню згенероване програмою HealthyDiary");
+                createPDF(tableProduct,"C:/Users/User/Desktop", "Меню згенероване програмою HealthyDiary");
             }
         });
 
         updateBtn.setOnAction(event -> {
-            handleUpdateButtonClick(event);
-            rotateImage();
+            handleUpdateButtonClick(tableProduct, productsComboBox);
+            rotateImage(updateImage);
         });
 
-        mainPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("mainpage"));
-        calculatorPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("calorieCalculator"));
-        createdMenuPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("createdMenu"));
-        changePageBtn.setOnAction(event -> NavigationMenu.navigateToPage("settings"));
-        loseWeightMenuButton.setOnAction(event -> NavigationMenu.navigateToPage("loseWeight"));
-
     }
-    private void rotateImage() {
+
+    private void rotateImage(ImageView updateImage) {
         RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1), updateImage);
         rotateTransition.setByAngle(360);
         rotateTransition.play();
     }
 
-    private void createPDF(String filePath, String fileName) {
+    private void createPDF(TableView<CustomMenuItem> tableProduct, String filePath, String fileName) {
+        ObservableList<CustomMenuItem> itemsForPDF = getItemsForPDF(tableProduct);
         try {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialFileName(fileName);
-            fileChooser.setInitialDirectory(new File(filePath));
-
-            // Устанавливаем фильтр для файлов PDF
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
-            fileChooser.getExtensionFilters().add(extFilter);
-            Stage stage = (Stage) mainPageBtn.getScene().getWindow();
-            File file = fileChooser.showSaveDialog(stage);
-
-            if (file != null) {
-                PDDocument document = new PDDocument();
-                PDPage page = new PDPage();
-                document.addPage(page);
-
-                PDPageContentStream contentStream = new PDPageContentStream(document, page);
-
-                PDFont font = PDType0Font.load(document, new FileInputStream(new File("C:/Windows/Fonts/ARIALUNI.TTF")));
-
-                // Задание размера шрифта и выбор шрифта Arial Unicode MS
-                contentStream.setFont(font, 12);
-                contentStream.beginText();
-                contentStream.newLineAtOffset(100, 700);
-
-                // Записываем данные из списка без заголовков дней в PDF
-                ObservableList<CustomMenuItem> itemsForPDF = getItemsForPDF();
-                contentStream.showText("Сгенероване меню програмою HealthyDiary");
-                contentStream.newLineAtOffset(0, -20); // Сдвигаем на следующую строку
-
-                int day = 1;
-                boolean isFirstMenuOfDay = true;
-                int currentLine = 0; // Счетчик строк на странице
-                for (CustomMenuItem item : itemsForPDF) {
-                    // Проверяем, достигли ли мы предела строк на странице
-                    if (currentLine >= 32) {
-                        // Добавляем новую страницу
-                        contentStream.endText();
-                        contentStream.close();
-                        page = new PDPage();
-                        document.addPage(page);
-                        contentStream = new PDPageContentStream(document, page);
-                        contentStream.setFont(font, 12);
-                        contentStream.beginText();
-                        contentStream.newLineAtOffset(100, 700);
-                        currentLine = 0;
-                    }
-
-                    if (isFirstMenuOfDay) {
-                        contentStream.showText("День " + day + ":");
-                        contentStream.newLineAtOffset(0, -20);
-                        currentLine++;
-                        isFirstMenuOfDay = false;
-                    }
-                    contentStream.setNonStrokingColor(Color.BLUE);
-                    contentStream.setFont(font, 12);
-                    contentStream.showText("Прийом їжі: ");
-                    contentStream.showText(item.getMealType());
-                    contentStream.newLineAtOffset(0, -20);
-                    currentLine++;
-
-
-                    contentStream.setNonStrokingColor(Color.BLACK);
-                    contentStream.setFont(font, 12);
-                    contentStream.showText("Назва: ");
-                    contentStream.showText(item.getName());
-                    contentStream.newLineAtOffset(0, -20);
-                    currentLine++;
-
-
-                    contentStream.setNonStrokingColor(Color.BLACK);
-                    contentStream.setFont(font, 12);
-                    contentStream.showText("Кількість: ");
-                    contentStream.showText(String.valueOf(item.getQuantity() + " г"));
-                    contentStream.newLineAtOffset(0, -20);
-                    currentLine++;
-
-                    // Если это последнее меню для текущего дня, увеличиваем номер дня
-                    if (item.isLastMenuOfDay()) {
-                        day++;
-                        isFirstMenuOfDay = true; // Сбрасываем флаг для следующего дня
-                    }
-                }
-                contentStream.endText();
-                contentStream.close();
-
-
-                // Сохраняем PDF
-                document.save(file);
-                document.close();
-            }
+            PDFGenerator.createPDF(itemsForPDF, filePath, fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private void configureTable(TableView<CustomMenuItem> tableProduct, TableColumn<UserSelectedMenu, String> typeMealColumn,
+                                TableColumn<UserSelectedMenu, String> nameProductColumn, TableColumn<UserSelectedMenu, Double> quantityColumn) {
 
-    private void configureTable() {
-        // Устанавливаем фабрику для значений столбцов
         typeMealColumn.setCellValueFactory(new PropertyValueFactory<>("mealType"));
         nameProductColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
-        // Устанавливаем политику изменения размера столбцов
         tableProduct.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // Добавляем стиль для столбца с ингредиентами
@@ -250,7 +99,7 @@ public class CreatedMenuController {
                     btn.setOnAction(event -> {
                         CustomMenuItem item = getTableView().getItems().get(getIndex());
                         if (item != null) {
-                            // Обработка нажатия кнопки
+                            //  нажатия кнопки
                         }
                     });
                 }
@@ -270,8 +119,6 @@ public class CreatedMenuController {
             tableProduct.getColumns().add(ingredientsColumn);
             ingredientsColumnCreated = true;
         }
-
-        // Добавляем стиль для строки-заголовка дня
         tableProduct.setRowFactory(tv -> new TableRow<>() {
             @Override
             protected void updateItem(CustomMenuItem item, boolean empty) {
@@ -279,14 +126,14 @@ public class CreatedMenuController {
                 if (item != null && !empty && item.isDayHeader()) {
                     setStyle("-fx-background-color: lightgrey;");
                 } else {
-                    setStyle(""); // Сбрасываем стиль для обычных строк
+                    setStyle("");
                 }
             }
         });
 
-        }
+    }
 
-    private ObservableList<CustomMenuItem> getItemsForPDF() {
+    private ObservableList<CustomMenuItem> getItemsForPDF(TableView<CustomMenuItem> tableProduct) {
         ObservableList<CustomMenuItem> itemsForPDF = FXCollections.observableArrayList();
         ObservableList<CustomMenuItem> items = tableProduct.getItems();
         for (CustomMenuItem item : items) {
@@ -297,15 +144,13 @@ public class CreatedMenuController {
         return itemsForPDF;
     }
 
-    private void populateTable() {
+    private void populateTable(TableView<CustomMenuItem> tableProduct, ComboBox<String> productsComboBox, CheckBox checkBoxCreatedPdf) {
         tableProduct.getItems().clear();
         String selectedPeriod = productsComboBox.getValue();
         int numberOfDays = getNumberOfDaysForPeriod(selectedPeriod);
         User user = getUserFromApplicationContext();
-        // Вызываем generateMenuForDay только один раз с учетом количества дней
-        ObservableList<CustomMenuItem> rowData = generateMenuForDay(user, numberOfDays);
 
-        // Добавляем элементы в таблицу, пропуская кнопку "Ингредиенты" для заголовков дней
+        ObservableList<CustomMenuItem> rowData = generateMenuForDay(user, numberOfDays);
         for (CustomMenuItem item : rowData) {
             if (!item.isDayHeader()) {
                 tableProduct.getItems().add(item);
@@ -320,35 +165,27 @@ public class CreatedMenuController {
         int day = 1; // Начальный день
 
         for (UserSelectedMenu menu : userMenus) {
-            // Добавляем строку с информацией о дне и его номере
+
             CustomMenuItem dayHeader = new CustomMenuItem("День " + day, "", user.getTotalCaloricUser());
             dayHeader.setDayHeader(true);
             rowData.add(dayHeader); // Добавляем заголовок дня в список данных для таблицы
-            day++; // Увеличиваем номер дня
+            day++;
             String breakfastName = hibernateMethods.getMealOptionNameById(
-                    menu.getBreakfast().getIdOption()
-            );
+                    menu.getBreakfast().getIdOption());
             String snackFirstName = hibernateMethods.getMealOptionNameById(
-                    menu.getSnackDishId().getIdOption()
-            );
+                    menu.getSnackDishId().getIdOption());
             String lunchName = hibernateMethods.getMealOptionNameById(
-                    menu.getLunch().getIdOption()
-            );
+                    menu.getLunch().getIdOption());
             String dinnerName = hibernateMethods.getMealOptionNameById(
-                    menu.getDinner().getIdOption()
-            );
+                    menu.getDinner().getIdOption());
             String breakfastDrinkName = hibernateMethods.getDrinkNameById(
-                    menu.getBreakfastDrink().getIdDrink()
-            );
+                    menu.getBreakfastDrink().getIdDrink());
             String lunchDrinkName = hibernateMethods.getDrinkNameById(
-                    menu.getLunchDrink().getIdDrink()
-            );
+                    menu.getLunchDrink().getIdDrink());
             String dinnerDrinkName = hibernateMethods.getDrinkNameById(
-                    menu.getDinnerDrink().getIdDrink()
-            );
+                    menu.getDinnerDrink().getIdDrink());
             String snackSecondName = hibernateMethods.getMealOptionNameById(
-                    menu.getSnackSecondDishId().getIdOption()
-            );
+                    menu.getSnackSecondDishId().getIdOption());
 
             rowData.add(new CustomMenuItem("Сніданок",
                     breakfastName, menu.getGramsForBreakfastSelectedMenu()));
@@ -386,14 +223,13 @@ public class CreatedMenuController {
                         dinnerAdditionalDishName, dinnerAdditionalDishQuantity));
             }
             rowData.add(new CustomMenuItem("Напій для вічері", dinnerDrinkName, 200.0));
-
-
         }
         return rowData;
     }
-    // Создаем специальную ячейку для объединения
+
     public class SpanningTableCell<S> extends TableCell<S, String> {
         private final Label label;
+
         public SpanningTableCell() {
             this.label = new Label();
             setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
@@ -424,11 +260,10 @@ public class CreatedMenuController {
         return 1; // По умолчанию
     }
 
-    private void handleUpdateButtonClick(ActionEvent event) {
+    private void handleUpdateButtonClick(TableView<CustomMenuItem> tableProduct, ComboBox<String> productsComboBox) {
         // Очистка таблицы
         tableProduct.getItems().clear();
         User user = getUserFromApplicationContext();
-        // Удаление вариантов меню из базы данных
         String selectedPeriod = productsComboBox.getValue();
         int numberOfDays = getNumberOfDaysForPeriod(selectedPeriod);
         hibernateMethods.deleteUserMenus(user.getPhoneNumber(),numberOfDays);

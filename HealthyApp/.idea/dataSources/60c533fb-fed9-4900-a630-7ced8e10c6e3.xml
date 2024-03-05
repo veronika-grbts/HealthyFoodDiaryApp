@@ -1094,6 +1094,7 @@ Snack</Labels>
     </table>
     <table id="52" parent="13" name="weightlossprogress">
       <ObjectId>19324</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>postgres</Owner>
       <StateNumber>2239</StateNumber>
     </table>

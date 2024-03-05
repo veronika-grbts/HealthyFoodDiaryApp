@@ -22,7 +22,13 @@ public class CalorieCalculator {
     private static final double LUNCH_PERCENTAGE = 0.3;
     private static final double DINNER_PERCENTAGE = 0.2;
 
+    private static final double LOW_LEVEL_ACTIVITY = 1.3;
+    private static final double MIDDLE_LEVEL_ACTIVITY = 1.5;
+    private static final double HIGH_LEVEL_ACTIVITY = 1.7;
+    private static final double DEFAULT_LEVEL_ACTIVITY = 1.0;
 
+    private static final double CALORIES_FOR_ONE_GRAM_PROTEIN_CARBS = 4.1;
+    private static final double CALORIES_FOR_ONE_GRAM_FAT = 7.3;
     public static double calculateCalories(double weight, double height, int age,
                                            boolean isMale, ActivityLevel activityLevel) {
         double bmr;
@@ -42,36 +48,29 @@ public class CalorieCalculator {
     private static double getActivityMultiplier(ActivityLevel activityLevel) {
         switch (activityLevel) {
             case Low:
-                return 1.3;
+                return LOW_LEVEL_ACTIVITY;
             case Medium:
-                return 1.5;
+                return MIDDLE_LEVEL_ACTIVITY;
             case High:
-                return 1.7;
+                return HIGH_LEVEL_ACTIVITY;
             default:
-                return 1.0;
+                return DEFAULT_LEVEL_ACTIVITY;
         }
-    }
-
-    public  Nutrition getNutritionNormForUser(double totalCalories) {
-        double protein = calculateProtein(totalCalories);
-        double fat = calculateFat(totalCalories);
-        double carbs = calculateCarbs(totalCalories);
-        return new Nutrition(protein, fat, carbs);
     }
 
     //Метод для розрахунку кількості білків на день
     public static double calculateProtein(double totalCalories) {
-        return Math.round(((totalCalories * PROTEIN_CALORIES_PERCENTAGE) / 4.1) * 10.0)/ 10.0; // 1 г белка = 4.1 калории
+        return Math.round(((totalCalories * PROTEIN_CALORIES_PERCENTAGE) / CALORIES_FOR_ONE_GRAM_PROTEIN_CARBS) * 10.0)/ 10.0; // 1 г белка = 4.1 калории
     }
 
     // Метод для розрахунку кількості жирів на день
     public static double calculateFat(double totalCalories) {
-        return Math.round(((totalCalories * FAT_CALORIES_PERCENTAGE) / 7.3) * 10.0)/ 10.0; // 1 г жира = 7.3 калорий
+        return Math.round(((totalCalories * FAT_CALORIES_PERCENTAGE) / CALORIES_FOR_ONE_GRAM_FAT) * 10.0)/ 10.0; // 1 г жира = 7.3 калорий
     }
 
     // Метод розрахунку кількості вуглеводів на день
     public static double calculateCarbs(double totalCalories) {
-        return Math.round(((totalCalories * CARBS_CALORIES_PERCENTAGE) / 4.1) * 10.0)/ 10.0; // 1 г углеводов = 4.1 калории
+        return Math.round(((totalCalories * CARBS_CALORIES_PERCENTAGE) / CALORIES_FOR_ONE_GRAM_PROTEIN_CARBS) * 10.0)/ 10.0; // 1 г углеводов = 4.1 калории
     }
 
     //Метод для розрахунку каларажу для сніданку

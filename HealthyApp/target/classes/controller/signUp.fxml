@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1360.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.controller.SignUpController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1360.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.view.SignUpView">
     <children>
         <!-- ����� ��� ������� ImageView -->
         <ImageView fitHeight="720.0" fitWidth="1360.0" pickOnBounds="true">
@@ -96,7 +96,7 @@
                                 <Font name="Lucida Sans Typewriter Regular" size="18.0" />
                             </font>
                         </Button>
-                  <ImageView fx:id="ImagePlus" fitHeight="32.0" fitWidth="38.0" layoutX="264.0" layoutY="60.0" onMouseClicked="#Handle" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ImagePlus" fitHeight="32.0" fitWidth="38.0" layoutX="264.0" layoutY="60.0" onMouseClicked="#handleImagePlusClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../add-button.png" />
                      </image>

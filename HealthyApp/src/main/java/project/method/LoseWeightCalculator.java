@@ -17,6 +17,21 @@ public class LoseWeightCalculator {
     private static final double BMI_18_5_24_9_PERCENT = 0.1;
     private static final double OPTIMAL_BMI = 19.0;
 
+    private static final double NUMBER_OF_FAT_PER_KILOGRAM = 7700;
+
+    private static final double LOWER_LIMIT_OF_NORMAL_BMI = 18.5;
+    private static final double HIGH_LIMIT_OF_NORMAL_BMI = 24.9;
+
+    private static final double LOWER_LIMIT_OF_EXCESSIVE_BMI = 25;
+    private static final double HIGH_LIMIT_OF_EXCESSIVE_BMI = 29.9;
+
+    private static final double LOWER_LIMIT_OF_OBESITY_ONE_BMI = 30;
+    private static final double HIGH_LIMIT_OF_OBESITY_ONE_BMI = 34.9;
+
+    private static final double LOWER_LIMIT_OF_OBESITY_SECOND_BMI = 35;
+    private static final double HIGH_LIMIT_OF_OBESITY_SECOND_BMI = 39.9;
+
+    private static final double LOWER_LIMIT_OF_OBESITY_THIRD_BMI = 35;
     // Метод для расчета индекса массы тела (ИМТ)
     public static double calculateBMI(double weight, double height) {
         double heightInM = height / 100.0;
@@ -33,7 +48,7 @@ public class LoseWeightCalculator {
             bmr = FEMALE_CONSTANT_A + FEMALE_CONSTANT_B * (height - GENERAL_CONSTANT);
         }
         double currentBMI = calculateBMI(bmr, height);
-        if (currentBMI < 18.5 || currentBMI > 24.9) {
+        if (currentBMI < LOWER_LIMIT_OF_NORMAL_BMI || currentBMI > HIGH_LIMIT_OF_NORMAL_BMI) {
             double newWeight = OPTIMAL_BMI * ((height / 100.0) * (height / 100.0));
             return Math.round(newWeight * 10.0) / 10.0;
         }
@@ -53,15 +68,15 @@ public class LoseWeightCalculator {
         // Определяем процентный коэффициент в зависимости от ИМТ
         double deficitPercent = DEFAULT_PERCENT;
 
-        if (bmi >= 18.5 && bmi <= 24.9) {
+        if ((bmi >= LOWER_LIMIT_OF_NORMAL_BMI) && (bmi <= HIGH_LIMIT_OF_NORMAL_BMI)) {
             deficitPercent = BMI_18_5_24_9_PERCENT;
-        }else if (bmi >= 25.0 && bmi < 30.0) {
+        }else if ((bmi >=  LOWER_LIMIT_OF_EXCESSIVE_BMI) && (bmi < HIGH_LIMIT_OF_EXCESSIVE_BMI)) {
             deficitPercent = BMI_25_30_PERCENT;
-        } else if (bmi >= 30.0 && bmi < 35.0) {
+        } else if ((bmi >= LOWER_LIMIT_OF_OBESITY_ONE_BMI ) && (bmi < HIGH_LIMIT_OF_OBESITY_ONE_BMI)) {
             deficitPercent = BMI_30_35_PERCENT;
-        } else if (bmi >= 35.0 && bmi < 40.0) {
+        } else if ((bmi >=  LOWER_LIMIT_OF_OBESITY_SECOND_BMI) && (bmi <  HIGH_LIMIT_OF_OBESITY_SECOND_BMI)) {
             deficitPercent = BMI_35_40_PERCENT;
-        } else if (bmi >= 40.0) {
+        } else if (bmi >= LOWER_LIMIT_OF_OBESITY_THIRD_BMI) {
             deficitPercent = BMI_40_PLUS_PERCENT;
         }
 
@@ -84,7 +99,7 @@ public class LoseWeightCalculator {
     public static short estimateTimeToReachGoal(double currentWeight,
                                                 double targetWeight, double caloricDeficit) {
         // Количество калорий, которые нужно сжечь для достижения целевого веса
-        double totalCaloriesToLose = (currentWeight - targetWeight) * 7700;
+        double totalCaloriesToLose = (currentWeight - targetWeight) * NUMBER_OF_FAT_PER_KILOGRAM;
         // Количество дней, необходимых для достижения цели
         double daysToReachWeight = totalCaloriesToLose / caloricDeficit;
         return (short) daysToReachWeight;

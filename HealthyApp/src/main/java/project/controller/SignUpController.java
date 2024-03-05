@@ -1,162 +1,48 @@
 package project.controller;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-
-import project.HibbernateRunner;
-import project.method.LoseWeightCalculator;
-import project.singleton.ApplicationContext;
-import project.method.CalorieCalculator;
-import project.entity.ActivityLevel;
-import project.entity.Ingredients;
-import project.entity.User;
-import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import project.HibbernateRunner;
+import project.entity.ActivityLevel;
+import project.entity.Ingredients;
+import project.entity.User;
+import project.method.CalorieCalculator;
+import project.method.LoseWeightCalculator;
+import project.singleton.ApplicationContext;
 import project.util.HibernateMethods;
 
+import java.io.IOException;
 
 @Slf4j
 public class SignUpController {
+
     private HibernateMethods hibernateMethods = new HibernateMethods();
 
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private AnchorPane yourImageView;
-
-    @FXML
-    private AnchorPane imagePlus;
-
-    @FXML
-    private AnchorPane signUpPane1;
-
-    @FXML
-    private TextField signUpName;
-
-    @FXML
-    private TextField sighUpPhone;
-
-    @FXML
-    private Button nextBtn1;
-
-    @FXML
-    private AnchorPane signUpPane2;
-
-    @FXML
-    private TextField signUpAge;
-
-    @FXML
-    private TextField signUpWeight;
-
-    @FXML
-    private TextField signUpHeight;
-
-    @FXML
-    private ComboBox<ActivityLevel> signUpActivityLevel;
-
-    @FXML
-    private ComboBox<String> signUpGender;
-
-    @FXML
-    private Button nextBtn2;
-
-    @FXML
-    private AnchorPane signUpPane3;
-
-    @FXML
-    private CheckBox checkBoxAllergy;
-
-    @FXML
-    private CheckBox checkBoxCause;
-
-    @FXML
-    private Button finishBtn;
-
-    @FXML
-    private ImageView ImagePlus;
-
-    @FXML
-    void Handle(MouseEvent event) {
-        double x = 14; // координа Х для ComboBox
-        double y = 100; // координа У для ComboBox
-        double deltaY = 40; // отсутп
-        ComboBox<String> newComboBox = new ComboBox<>();
-
-        // Определяем координаты для нового ComboBox
-        int numberOfExistingComboBoxes = signUpPane3.getChildren().stream()
-                .filter(node -> node instanceof ComboBox)
-                .mapToInt(node -> 1)
-                .sum();
-
-        y += numberOfExistingComboBoxes * deltaY; // Добавляем отступ в зависимости от количества существующих ComboBox
-        newComboBox.setLayoutX(x);
-        newComboBox.setLayoutY(y);
-        newComboBox.setPrefWidth(300);
-        newComboBox.setPrefHeight(30);
-
-        newComboBox.setEditable(true);
-        List<Ingredients> allIngredients = hibernateMethods.getAllIngredients();
-        if (allIngredients != null) {
-            for (Ingredients ingredient : allIngredients) {
-                newComboBox.getItems().add(ingredient.getNameIngredients());
-            }
-
-            signUpPane3.getChildren().add(newComboBox);
-
-            // Додаємо обработчика события для выбора элемента в новом ComboBox
-            newComboBox.setOnAction(e -> {
-                String selectedProduct = newComboBox.getValue();
-                Ingredients ingredient = hibernateMethods.findIngredientByName(selectedProduct);
-                if (ingredient != null) {
-                    hibernateMethods.addUserAllergyForUser(
-                            Long.parseLong(sighUpPhone.getText()),
-                            ingredient.getIdIngredients());
-                } else {
-                    log.warn("the selected ingredient  was not found");
-                }
-            });
-
-            // Добавляем слушатель событий на текстовое поле ComboBox для фильтрации
-            newComboBox.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
-                filterComboBox(newComboBox, newValue);
-            });
-        }
-    }
-
-    @FXML
-    void initialize() {
-        signUpActivityLevel.getItems().addAll(ActivityLevel.High,
-                ActivityLevel.Medium, ActivityLevel.Low);
-
-        signUpGender.getItems().addAll("чоловік", "жінка");
-
+    public void handleNextBtn1(Button nextBtn1, AnchorPane signUpPane1, AnchorPane signUpPane2) {
         nextBtn1.setOnAction(event -> {
             signUpPane1.setVisible(false);
             signUpPane2.setVisible(true);
         });
+    }
 
+    public void handleNextBtn2(Button nextBtn2, AnchorPane signUpPane2, AnchorPane signUpPane3, AnchorPane imagePlus,
+                               TextField sighUpPhone) {
         nextBtn2.setOnAction(event -> {
             signUpPane2.setVisible(false);
             signUpPane3.setVisible(true);
-            imagePlus.setOnMouseClicked(this::Handle);
+            imagePlus.setOnMouseClicked(event1 -> handleImagePlusClicked(sighUpPhone, signUpPane3));
         });
-
+    }
+    public void handleFinishBtn(Button finishBtn, TextField signUpName, TextField sighUpPhone, TextField signUpAge,
+                                TextField signUpWeight, TextField signUpHeight, ComboBox<String> signUpGender,
+                                ComboBox<ActivityLevel> signUpActivityLevel, CheckBox checkBoxAllergy,
+                                CheckBox checkBoxCause, AnchorPane signUpPane3 ){
         finishBtn.setOnAction(event -> {
             String phone = sighUpPhone.getText();
             String name = signUpName.getText();
@@ -180,7 +66,7 @@ public class SignUpController {
                     calories, protein, fat, carbs);
 
             if (hasAllergy) {
-                for (Node node : signUpPane3.getChildren()) {
+                for (javafx.scene.Node node : signUpPane3.getChildren()) {
                     if (node instanceof ComboBox) {
                         ComboBox<String> comboBox = (ComboBox<String>) node;
                         String selectedProduct = comboBox.getValue();
@@ -256,10 +142,60 @@ public class SignUpController {
             }
         });
     }
+
+    public void handleImagePlusClicked(TextField sighUpPhone, AnchorPane signUpPane3) {
+        double x = 14; // координа Х для ComboBox
+        double y = 100; // координа У для ComboBox
+        double deltaY = 40; // отстутп
+        int prefWidth = 300; // newComboBox.setPrefWidth
+        int prefHeight = 30; // newComboBox.setPrefHeight
+        ComboBox<String> newComboBox = new ComboBox<>();
+
+        int numberOfExistingComboBoxes = signUpPane3.getChildren().stream()
+                .filter(node -> node instanceof ComboBox)
+                .mapToInt(node -> 1)
+                .sum();
+
+        y += numberOfExistingComboBoxes * deltaY;
+        newComboBox.setLayoutX(x);
+        newComboBox.setLayoutY(y);
+        newComboBox.setPrefWidth(prefWidth);
+        newComboBox.setPrefHeight(prefHeight);
+
+        newComboBox.setEditable(true);
+        java.util.List<Ingredients> allIngredients = hibernateMethods.getAllIngredients();
+        if (allIngredients != null) {
+            for (Ingredients ingredient : allIngredients) {
+                newComboBox.getItems().add(ingredient.getNameIngredients());
+            }
+
+            signUpPane3.getChildren().add(newComboBox);
+
+
+            newComboBox.setOnAction(e -> {
+                String selectedProduct = newComboBox.getValue();
+                Ingredients ingredient = hibernateMethods.findIngredientByName(selectedProduct);
+                if (ingredient != null) {
+                    hibernateMethods.addUserAllergyForUser(
+                            Long.parseLong(sighUpPhone.getText()),
+                            ingredient.getIdIngredients());
+                } else {
+                    log.warn("the selected ingredient  was not found");
+                }
+            });
+
+
+            newComboBox.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+                filterComboBox(newComboBox, newValue);
+            });
+        }
+    }
+
+
     private void filterComboBox(ComboBox<String> comboBox, String filter) {
         if (filter == null || filter.isEmpty()) {
             comboBox.getItems().clear();
-            List<Ingredients> allIngredients = hibernateMethods.getAllIngredients();
+            java.util.List<Ingredients> allIngredients = hibernateMethods.getAllIngredients();
             if (allIngredients != null) {
                 for (Ingredients ingredient : allIngredients) {
                     comboBox.getItems().add(ingredient.getNameIngredients());
@@ -267,9 +203,9 @@ public class SignUpController {
             }
             comboBox.hide();
         } else {
-            Predicate<String> predicate = item -> item.toLowerCase().contains(filter.toLowerCase());
-            List<String> filteredItems = comboBox.getItems().stream()
-                    .filter(predicate).collect(Collectors.toList());
+            java.util.function.Predicate<String> predicate = item -> item.toLowerCase().contains(filter.toLowerCase());
+            java.util.List<String> filteredItems = comboBox.getItems().stream()
+                    .filter(predicate).collect(java.util.stream.Collectors.toList());
             comboBox.getItems().setAll(filteredItems);
             comboBox.show();
         }

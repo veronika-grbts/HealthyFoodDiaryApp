@@ -1,45 +1,19 @@
 package project.controller;
 
-import java.io.IOException;
-
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import project.HibbernateRunner;
+import project.entity.User;
 import project.method.NavigationMenu;
 import project.singleton.ApplicationContext;
-import project.entity.User;
-import javafx.fxml.FXML;
+import project.util.HibernateMethods;
 
-
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-
-import project.util.HibernateMethods;
-
 public class PrimaryController {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private Button signUpBtn;
-
-    @FXML
-    private TextField loginField;
-
-    @FXML
-    private TextField phoneNumberField;
-
-    @FXML
-    private Button signInBtn;
-
-    @FXML
-    void initialize() {
+    public static void handleSignIn(Button signInBtn, TextField phoneNumberField) {
         signInBtn.setOnAction(event -> {
             try {
                 String phoneNumber = phoneNumberField.getText();
@@ -57,18 +31,24 @@ public class PrimaryController {
                 e.printStackTrace();
             }
         });
+    }
 
+    private User getUserFromApplicationContext() {
+        return ApplicationContext.getInstance().getCurrentUser();
+    }
+
+    public static void handleSignUp(Button signUpBtn) {
         signUpBtn.setOnAction(event -> {
             NavigationMenu.navigateToPage("signUp");
         });
     }
 
-    private User getUserInfo(long phoneNumber) {
+    private static User getUserInfo(long phoneNumber) {
         HibernateMethods hibernateMethods = new HibernateMethods();
         return hibernateMethods.getUserInfo(phoneNumber);
     }
 
-    private void showErrorAlert(String title, String message) {
+    private static void showErrorAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
@@ -76,3 +56,4 @@ public class PrimaryController {
         alert.showAndWait();
     }
 }
+

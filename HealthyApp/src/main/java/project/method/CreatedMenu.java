@@ -10,7 +10,8 @@ import java.util.Random;
 public class CreatedMenu {
     private HibernateMethods hibernateMethods = new HibernateMethods();
     private CalorieCalculator calorieCalculator = new CalorieCalculator();
-
+    private static final double MAIN_COURSE_PERCENTAGE = 0.6;
+    private static final int DIVIDER =100;
     public void createMenu() {
         User user = getUserFromApplicationContext();
         boolean hasAllergy = userHasAllergy(user);
@@ -156,52 +157,22 @@ public class CreatedMenu {
         Double dinnerAdditionalDishGrams = null;
 
         if ((additionalDish != null) && (lunch != null)) {
-            additionalDishGrams = lunchGrams * 0.6;
+            additionalDishGrams = lunchGrams * MAIN_COURSE_PERCENTAGE;
             lunchGrams -= additionalDishGrams;
         }
 
         if ((dinnerAdditionalDish != null) && (dinner != null)) {
-            dinnerAdditionalDishGrams = dinnerGrams * 0.6;
+            dinnerAdditionalDishGrams = dinnerGrams * MAIN_COURSE_PERCENTAGE;
             dinnerGrams -= dinnerAdditionalDishGrams;
         }
 
-        if(breakfast != null) {
             breakfastId = hibernateMethods.findMealIdByName(breakfast.getName());
-            // Остальной код
-        }else {
-            throw new RuntimeException("Завтрака не будет " + breakfast);
-        }
-        if (snack != null) {
             snackId = hibernateMethods.findMealIdByName(snack.getName());
-        } else {
-            throw new RuntimeException("Перекуса не будет " + snack);
-        }
-        if (snackSecond != null) {
             snackSecondId = hibernateMethods.findMealIdByName(snackSecond.getName());
-        } else {
-            throw new RuntimeException("Перекуса 2 не будет " + snackSecond);
-        }
-        if (lunch != null) {
             lunchId = hibernateMethods.findMealIdByName(lunch.getName());
-        }else {
-            throw new RuntimeException("Обеда не будет " + lunch);
-        }
-
-        if (additionalDish != null && lunch != null) {
             additionalDishId = hibernateMethods.findAdditionalDishIdByMainDish(lunch);
-        }
-
-        if (dinner != null) {
             dinnerId = hibernateMethods.findMealIdByName(dinner.getName());
-            // Остальной код
-        }else {
-            System.out.println("Ужина не будет не будет " + dinner);
-            throw new RuntimeException("ужина не будет " + dinner);
-        }
-
-        if (dinnerAdditionalDish != null && dinner != null) {
             dinnerAdditionalDishId = hibernateMethods.findAdditionalDishIdByMainDish(dinner);
-        }
 
         int breakfastDrinkId = breakfastDrink != null
                 ? hibernateMethods.findDrinkIdByName(breakfastDrink.getNameDrink())
@@ -296,103 +267,109 @@ public class CreatedMenu {
         // Расчет общей питательной ценности для каждого приема пищи с учетом количества грамм
         if ((additionalDish != null) && (dinnerAdditionalDish != null)) {
             totalNutrition = new Nutrition(
-                    (breakfastNutrition.getProtein() * breakfastGrams / 100) +
-                            (snackFirstNutrition.getProtein() * snackFirstGrams / 100) +
-                            (snackSecondNutrition.getProtein() * snackSecondGrams / 100) +
-                            (lunchNutrition.getProtein() * lunchGrams / 100) +
-                            (additionalDishNutrition.getProtein() * additionalDishGrams / 100) +
-                            (dinnerAdditionalDishNutrition.getProtein() * dinnerAdditionalDishGrams / 100) +
-                            (dinnerNutrition.getProtein() * dinnerGrams / 100) +
+                    (breakfastNutrition.getProtein() * breakfastGrams / DIVIDER) +
+                            (snackFirstNutrition.getProtein() * snackFirstGrams / DIVIDER) +
+                            (snackSecondNutrition.getProtein() * snackSecondGrams / DIVIDER) +
+                            (lunchNutrition.getProtein() * lunchGrams / DIVIDER) +
+                            (additionalDishNutrition.getProtein() * additionalDishGrams / DIVIDER) +
+                            (dinnerAdditionalDishNutrition.getProtein() * dinnerAdditionalDishGrams / DIVIDER) +
+                            (dinnerNutrition.getProtein() * dinnerGrams / DIVIDER) +
                             breakfastDrinkProtein +
                             lunchDrinkProtein +
                             dinnerDrinkProtein,
 
-                    (breakfastNutrition.getFat() * breakfastGrams / 100) +
-                            (snackFirstNutrition.getFat() * snackFirstGrams / 100) +
-                            (snackSecondNutrition.getFat() * snackSecondGrams / 100) +
-                            (lunchNutrition.getFat() * lunchGrams / 100) +
-                            (additionalDishNutrition.getFat() * additionalDishGrams / 100) +
-                            (dinnerAdditionalDishNutrition.getFat() * dinnerAdditionalDishGrams / 100) +
-                            (dinnerNutrition.getFat() * dinnerGrams / 100) +
+                    (breakfastNutrition.getFat() * breakfastGrams / DIVIDER) +
+                            (snackFirstNutrition.getFat() * snackFirstGrams / DIVIDER) +
+                            (snackSecondNutrition.getFat() * snackSecondGrams / DIVIDER) +
+                            (lunchNutrition.getFat() * lunchGrams / DIVIDER) +
+                            (additionalDishNutrition.getFat() * additionalDishGrams / DIVIDER) +
+                            (dinnerAdditionalDishNutrition.getFat() * dinnerAdditionalDishGrams / DIVIDER) +
+                            (dinnerNutrition.getFat() * dinnerGrams / DIVIDER) +
                             breakfastDrinkFat +
                             lunchDrinkFat +
                             dinnerDrinkFat,
 
-                    (breakfastNutrition.getCarbohydrates() * breakfastGrams / 100) +
-                            (snackFirstNutrition.getCarbohydrates() * snackFirstGrams / 100) +
-                            (snackSecondNutrition.getCarbohydrates() * snackSecondGrams / 100) +
-                            (lunchNutrition.getCarbohydrates() * lunchGrams / 100) +
-                            (additionalDishNutrition.getCarbohydrates() * additionalDishGrams / 100) +
-                            (dinnerAdditionalDishNutrition.getCarbohydrates() * dinnerAdditionalDishGrams / 100) +
-                            (dinnerNutrition.getCarbohydrates() * dinnerGrams / 100) +
+                    (breakfastNutrition.getCarbohydrates() * breakfastGrams / DIVIDER) +
+                            (snackFirstNutrition.getCarbohydrates() * snackFirstGrams / DIVIDER) +
+                            (snackSecondNutrition.getCarbohydrates() * snackSecondGrams / DIVIDER) +
+                            (lunchNutrition.getCarbohydrates() * lunchGrams / DIVIDER) +
+                            (additionalDishNutrition.getCarbohydrates() * additionalDishGrams / DIVIDER) +
+                            (dinnerAdditionalDishNutrition.getCarbohydrates() * dinnerAdditionalDishGrams / DIVIDER) +
+                            (dinnerNutrition.getCarbohydrates() * dinnerGrams / DIVIDER) +
                             breakfastDrinkCarbs +
                             lunchDrinkCarbs +
                             dinnerDrinkCarbs
             );
         }else if ((additionalDish == null) && (dinnerAdditionalDish != null)){
             totalNutrition = new Nutrition(
-                    (breakfastNutrition.getProtein() * breakfastGrams / 100) +
-                            (snackFirstNutrition.getProtein() * snackFirstGrams / 100)+
-                            (snackSecondNutrition.getProtein() * snackSecondGrams / 100)+
-                            (lunchNutrition.getProtein() * lunchGrams / 100) +
-                            (dinnerAdditionalDishNutrition.getProtein() * dinnerAdditionalDishGrams / 100) +
-                            (dinnerNutrition.getProtein() * dinnerGrams / 100) +
+                    (breakfastNutrition.getProtein() * breakfastGrams / DIVIDER) +
+                            (snackFirstNutrition.getProtein() * snackFirstGrams / DIVIDER)+
+                            (snackSecondNutrition.getProtein() * snackSecondGrams / DIVIDER)+
+                            (lunchNutrition.getProtein() * lunchGrams / DIVIDER) +
+                            (dinnerAdditionalDishNutrition.getProtein() * dinnerAdditionalDishGrams / DIVIDER) +
+                            (dinnerNutrition.getProtein() * dinnerGrams / DIVIDER) +
                             breakfastDrinkProtein + lunchDrinkProtein + dinnerDrinkProtein,
 
-                    (breakfastNutrition.getFat() * breakfastGrams / 100) +
-                            (snackFirstNutrition.getFat() * snackFirstGrams / 100)+
-                            (snackSecondNutrition.getFat() * snackSecondGrams / 100) +
-                            (lunchNutrition.getFat() * lunchGrams / 100) +
-                            (dinnerAdditionalDishNutrition.getFat() * dinnerAdditionalDishGrams / 100) +
-                            (dinnerNutrition.getFat() * dinnerGrams / 100)
+                    (breakfastNutrition.getFat() * breakfastGrams / DIVIDER) +
+                            (snackFirstNutrition.getFat() * snackFirstGrams / DIVIDER)+
+                            (snackSecondNutrition.getFat() * snackSecondGrams / DIVIDER) +
+                            (lunchNutrition.getFat() * lunchGrams / DIVIDER) +
+                            (dinnerAdditionalDishNutrition.getFat() * dinnerAdditionalDishGrams / DIVIDER) +
+                            (dinnerNutrition.getFat() * dinnerGrams / DIVIDER)
                             + breakfastDrinkFat + lunchDrinkFat + dinnerDrinkFat,
-                    (breakfastNutrition.getCarbohydrates() * breakfastGrams / 100) + (snackFirstNutrition.getCarbohydrates() * snackFirstGrams / 100)  + (snackSecondNutrition.getCarbohydrates() * snackSecondGrams / 100) +(lunchNutrition.getCarbohydrates() * lunchGrams / 100)+ (dinnerAdditionalDishNutrition.getCarbohydrates() * dinnerAdditionalDishGrams / 100) + (dinnerNutrition.getCarbohydrates() * dinnerGrams / 100) + breakfastDrinkCarbs + lunchDrinkCarbs + dinnerDrinkCarbs
+                    (breakfastNutrition.getCarbohydrates() * breakfastGrams / DIVIDER) +
+                            (snackFirstNutrition.getCarbohydrates() * snackFirstGrams / DIVIDER)  +
+                            (snackSecondNutrition.getCarbohydrates() * snackSecondGrams / DIVIDER) +
+                            (lunchNutrition.getCarbohydrates() * lunchGrams / DIVIDER)+
+                            (dinnerAdditionalDishNutrition.getCarbohydrates() * dinnerAdditionalDishGrams / DIVIDER) +
+                            (dinnerNutrition.getCarbohydrates() * dinnerGrams / DIVIDER) +
+                            breakfastDrinkCarbs + lunchDrinkCarbs + dinnerDrinkCarbs
             );
         } else if (additionalDish != null && dinnerAdditionalDish == null) {
             totalNutrition = new Nutrition(
-            (breakfastNutrition.getProtein() * breakfastGrams / 100) +
-                    (snackFirstNutrition.getProtein() * snackFirstGrams / 100)+
-                    (snackSecondNutrition.getProtein() * snackSecondGrams / 100)+
-                    (lunchNutrition.getProtein() * lunchGrams / 100) +
-                    (additionalDishNutrition.getProtein() * additionalDishGrams / 100) +
-                    (dinnerNutrition.getProtein() * dinnerGrams / 100) +
+            (breakfastNutrition.getProtein() * breakfastGrams / DIVIDER) +
+                    (snackFirstNutrition.getProtein() * snackFirstGrams / DIVIDER)+
+                    (snackSecondNutrition.getProtein() * snackSecondGrams / DIVIDER)+
+                    (lunchNutrition.getProtein() * lunchGrams / DIVIDER) +
+                    (additionalDishNutrition.getProtein() * additionalDishGrams / DIVIDER) +
+                    (dinnerNutrition.getProtein() * dinnerGrams / DIVIDER) +
                     breakfastDrinkProtein + lunchDrinkProtein + dinnerDrinkProtein,
-                    (breakfastNutrition.getFat() * breakfastGrams / 100) +
-                            (snackFirstNutrition.getFat() * snackFirstGrams / 100)+
-                            (snackSecondNutrition.getFat() * snackSecondGrams / 100) +
-                            (lunchNutrition.getFat() * lunchGrams / 100)  +
-                            (additionalDishNutrition.getFat() * additionalDishGrams / 100) +
-                            (dinnerNutrition.getFat() * dinnerGrams / 100)+
+                    (breakfastNutrition.getFat() * breakfastGrams / DIVIDER) +
+                            (snackFirstNutrition.getFat() * snackFirstGrams / DIVIDER)+
+                            (snackSecondNutrition.getFat() * snackSecondGrams / DIVIDER) +
+                            (lunchNutrition.getFat() * lunchGrams / DIVIDER)  +
+                            (additionalDishNutrition.getFat() * additionalDishGrams / DIVIDER) +
+                            (dinnerNutrition.getFat() * dinnerGrams / DIVIDER)+
                             breakfastDrinkFat + lunchDrinkFat + dinnerDrinkFat,
 
-                    (breakfastNutrition.getCarbohydrates() * breakfastGrams / 100) +
-                            (snackFirstNutrition.getCarbohydrates() * snackFirstGrams / 100)  +
-                            (snackSecondNutrition.getCarbohydrates() * snackSecondGrams / 100) +
-                            (lunchNutrition.getCarbohydrates() * lunchGrams / 100) +
-                            (additionalDishNutrition.getCarbohydrates() * additionalDishGrams / 100) +
-                            (dinnerNutrition.getCarbohydrates() * dinnerGrams / 100) +
+                    (breakfastNutrition.getCarbohydrates() * breakfastGrams / DIVIDER) +
+                            (snackFirstNutrition.getCarbohydrates() * snackFirstGrams / DIVIDER)  +
+                            (snackSecondNutrition.getCarbohydrates() * snackSecondGrams / DIVIDER) +
+                            (lunchNutrition.getCarbohydrates() * lunchGrams / DIVIDER) +
+                            (additionalDishNutrition.getCarbohydrates() * additionalDishGrams / DIVIDER) +
+                            (dinnerNutrition.getCarbohydrates() * dinnerGrams / DIVIDER) +
                             breakfastDrinkCarbs + lunchDrinkCarbs + dinnerDrinkCarbs
             );
         } else {
             totalNutrition = new Nutrition(
-                    (breakfastNutrition.getProtein() * breakfastGrams / 100) +
-                            (snackFirstNutrition.getProtein() * snackFirstGrams / 100)+
-                            (snackSecondNutrition.getProtein() * snackSecondGrams / 100)+
-                            (lunchNutrition.getProtein() * lunchGrams / 100)  +
-                            (dinnerNutrition.getProtein() * dinnerGrams / 100) +
+                    (breakfastNutrition.getProtein() * breakfastGrams / DIVIDER) +
+                            (snackFirstNutrition.getProtein() * snackFirstGrams / DIVIDER)+
+                            (snackSecondNutrition.getProtein() * snackSecondGrams / DIVIDER)+
+                            (lunchNutrition.getProtein() * lunchGrams / DIVIDER)  +
+                            (dinnerNutrition.getProtein() * dinnerGrams / DIVIDER) +
                             breakfastDrinkProtein +
                             lunchDrinkProtein + dinnerDrinkProtein,
-                    (breakfastNutrition.getFat() * breakfastGrams / 100) +
-                            (snackFirstNutrition.getFat() * snackFirstGrams / 100)+
-                            (snackSecondNutrition.getFat() * snackSecondGrams / 100) +
-                            (lunchNutrition.getFat() * lunchGrams / 100)  +
-                            (dinnerNutrition.getFat() * dinnerGrams / 100)+
+                    (breakfastNutrition.getFat() * breakfastGrams / DIVIDER) +
+                            (snackFirstNutrition.getFat() * snackFirstGrams / DIVIDER)+
+                            (snackSecondNutrition.getFat() * snackSecondGrams / DIVIDER) +
+                            (lunchNutrition.getFat() * lunchGrams / DIVIDER)  +
+                            (dinnerNutrition.getFat() * dinnerGrams / DIVIDER)+
                             breakfastDrinkFat + lunchDrinkFat + dinnerDrinkFat,
-                    (breakfastNutrition.getCarbohydrates() * breakfastGrams / 100) +
-                            (snackFirstNutrition.getCarbohydrates() * snackFirstGrams / 100)  +
-                            (snackSecondNutrition.getCarbohydrates() * snackSecondGrams / 100) +
-                            (lunchNutrition.getCarbohydrates() * lunchGrams / 100) +
-                            (dinnerNutrition.getCarbohydrates() * dinnerGrams / 100) +
+                    (breakfastNutrition.getCarbohydrates() * breakfastGrams / DIVIDER) +
+                            (snackFirstNutrition.getCarbohydrates() * snackFirstGrams / DIVIDER)  +
+                            (snackSecondNutrition.getCarbohydrates() * snackSecondGrams / DIVIDER) +
+                            (lunchNutrition.getCarbohydrates() * lunchGrams / DIVIDER) +
+                            (dinnerNutrition.getCarbohydrates() * dinnerGrams / DIVIDER) +
                             breakfastDrinkCarbs + lunchDrinkCarbs + dinnerDrinkCarbs
             );
         }
@@ -467,13 +444,11 @@ public class CreatedMenu {
     private MealOption getRandomOption(List<MealOption> options) {
         Random random = new Random();
         int index = random.nextInt(options.size());
-        System.out.println("ID "+index);
         return options.get(index);
     }
 
     private MealOption getRandomOptionSecond(List<MealOption> options) {
         Random random = new Random();
-        // Если список содержит только один элемент, вернуть его
         if (options.size() == 1) {
             return options.get(0);
         } else {
@@ -481,7 +456,6 @@ public class CreatedMenu {
             do {
                 index = random.nextInt(options.size());
             } while (index == 0); // Генерировать новый индекс, пока он не будет отличен от 0
-            System.out.println("ID " + index);
             return options.get(index);
         }
     }
@@ -491,10 +465,6 @@ public class CreatedMenu {
         Random random = new Random();
         int index = random.nextInt(drinks.size());
         return drinks.get(index);
-    }
-
-    private User getUserFromApplicationContext() {
-        return ApplicationContext.getInstance().getCurrentUser();
     }
     //Метод для перерахунку грам із калорійності продукту на 100 грам та загального калорійного споживання
     private double getGramsFromCalories(double caloriesPer100g, double totalCalories) {
@@ -517,5 +487,9 @@ public class CreatedMenu {
         boolean fatMet = totalFatInMenu >= fatRequirement;
         boolean carbMet = totalCarbInMenu >= carbRequirement;
         return proteinMet && fatMet && carbMet;
+    }
+
+    private User getUserFromApplicationContext() {
+        return ApplicationContext.getInstance().getCurrentUser();
     }
 }
