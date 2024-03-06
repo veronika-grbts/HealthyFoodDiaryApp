@@ -95,10 +95,9 @@
                         </ImageView>
                     </graphic>
                 </Button>
-            <SplitMenuButton fx:id="loseWeightMenuButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="282.0" styleClass="menu-item" stylesheets="@../app/styleMenuBar.css" text="  Схуднення">
+            <SplitMenuButton fx:id="loseWeightMenuButton" mnemonicParsing="false" popupSide="RIGHT" prefHeight="39.0" prefWidth="282.0" styleClass="menu-item" stylesheets="@../app/styleMenuBar.css" text="  Схуднення">
                <items>
                   <MenuItem fx:id="forecastMenuItem" mnemonicParsing="false" style="-fx-text-fill: #f4e9e9; -fx-pref-width: 255; -fx-pref-hight: 40;" text="Прогноз" />
-                  <MenuItem fx:id="statisticsMenuItem" mnemonicParsing="false" style="-fx-text-fill: #f4e9e9;" text="Статистика" />
                </items>
                <graphic>
                   <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">

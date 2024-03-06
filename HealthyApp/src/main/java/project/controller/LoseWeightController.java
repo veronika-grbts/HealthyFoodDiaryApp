@@ -6,11 +6,10 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import project.entity.User;
-import project.method.BmiStage;
-import project.method.LoseWeightCalculator;
+import project.enums.BmiStage;
+import project.calculator.LoseWeightCalculator;
 import project.singleton.ApplicationContext;
 import project.util.HibernateMethods;
 

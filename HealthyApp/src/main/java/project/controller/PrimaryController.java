@@ -1,20 +1,16 @@
 package project.controller;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import project.HibbernateRunner;
 import project.entity.User;
-import project.method.NavigationMenu;
+import project.navigation.NavigationMenu;
 import project.singleton.ApplicationContext;
 import project.util.HibernateMethods;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class PrimaryController {
     public static void handleSignIn(Button signInBtn, TextField phoneNumberField) {
-        signInBtn.setOnAction(event -> {
             try {
                 String phoneNumber = phoneNumberField.getText();
                 User user = getUserInfo(Long.parseLong(phoneNumber));
@@ -30,7 +26,6 @@ public class PrimaryController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        });
     }
 
     private User getUserFromApplicationContext() {
@@ -38,9 +33,7 @@ public class PrimaryController {
     }
 
     public static void handleSignUp(Button signUpBtn) {
-        signUpBtn.setOnAction(event -> {
-            NavigationMenu.navigateToPage("signUp");
-        });
+        NavigationMenu.navigateToPage("signUp");
     }
 
     private static User getUserInfo(long phoneNumber) {

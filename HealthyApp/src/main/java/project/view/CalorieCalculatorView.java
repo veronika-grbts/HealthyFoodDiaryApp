@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 import javafx.scene.control.*;
 import project.controller.CalorieCalculatorController;
-import project.method.NavigationMenu;
 import project.entity.Products;
 import project.entity.User;
 import project.entity.UserSelectedProduct;
@@ -18,10 +17,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lombok.extern.slf4j.Slf4j;
+import project.navigation.BaseMenuClass;
 import project.util.HibernateMethods;
 
 @Slf4j
-public class CalorieCalculatorView {
+public class CalorieCalculatorView extends BaseMenuClass {
 
     private HibernateMethods hibernateMethods = new HibernateMethods();
     private  CalorieCalculatorController calorieCalculatorController = new CalorieCalculatorController();
@@ -120,6 +120,12 @@ public class CalorieCalculatorView {
 
     @FXML
     void initialize() {
+        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
+        initializeMenuButton(loseWeightMenuButton);
+        initializeMenuItem(forecastMenuItem);
+        AnimationButton.addFadeAnimation(addProductBtn);
+        AnimationButton.addFadeAnimation(addNewProductBtn);
+
         User user = calorieCalculatorController.getUserFromApplicationContext();
         calorieCalculatorController.updateCaloriesFields(user, caloriesField, fatField, proteinField, carbsField);
         calorieCalculatorController.updateTableContent(tableProduct);
@@ -170,13 +176,6 @@ public class CalorieCalculatorView {
         });
 
         plusProduct.setOnMouseClicked(this::Handle);
-
-        mainPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("mainpage"));
-        calculatorPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("calorieCalculator"));
-        createdMenuPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("createdMenu"));
-        changePageBtn.setOnAction(event -> NavigationMenu.navigateToPage("settings"));
-        loseWeightMenuButton.setOnAction(event -> NavigationMenu.navigateToPage("loseWeight"));
-        forecastMenuItem.setOnAction(event -> NavigationMenu.navigateToPage("forecast"));
     }
 
     @FXML

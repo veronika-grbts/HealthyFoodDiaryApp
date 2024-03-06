@@ -1,6 +1,5 @@
 package project.view;
 
-import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
@@ -8,11 +7,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 import project.controller.LoseWeightController;
-import project.method.NavigationMenu;
+import project.navigation.BaseMenuClass;
 
-public class LoseWeightView {
+public class LoseWeightView extends BaseMenuClass {
     private LoseWeightController loseWeightController = new LoseWeightController();
     private static final  int AXIS_OFFSET_Y = 100;
     private static final int ANIMATION_DURATION = 500;
@@ -37,9 +35,6 @@ public class LoseWeightView {
 
     @FXML
     private MenuItem forecastMenuItem;
-
-    @FXML
-    private MenuItem statisticsMenuItem;
 
     @FXML
     private Button changePageBtn;
@@ -102,17 +97,16 @@ public class LoseWeightView {
     @FXML
     private AnchorPane userLowWeightPage;
 
-    private TranslateTransition transition;
-
     @FXML
     void initialize() {
-        transition = new TranslateTransition(Duration.millis(ANIMATION_DURATION), changePageBtn);
-        transition.setByY(AXIS_OFFSET_Y);
-        loseWeightMenuButton.showingProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                transition.playFromStart();
-            }
-        });
+
+        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
+        initializeMenuButton(loseWeightMenuButton);
+        initializeMenuItem(forecastMenuItem);
+        AnimationButton.addHoverAnimation(updateBestWeightUserBtn);
+        AnimationButton.addFadeAnimation(updateCouseuserBtn);
+        AnimationButton.addHoverAnimation(updateBestWeightBtn);
+
         loseWeightController.initializeUserInfo( bodyMassIndexFieldText,
                  nameBodyMassIndexLable,  descriptionBodyMassIndexLable,
                  userLowWeightPage, userIdealWeightPage,
@@ -143,18 +137,6 @@ public class LoseWeightView {
             closeWindowIdealWeightImg.setOnMouseClicked(this::ClosePaneWithIdealWeight);
         });
 
-
-            loseWeightMenuButton.setOnHidden(event -> {
-                transition.stop();
-                changePageBtn.setTranslateY(0);
-            });
-
-        mainPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("mainpage"));
-        calculatorPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("calorieCalculator"));
-        createdMenuPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("createdMenu"));
-        changePageBtn.setOnAction(event -> NavigationMenu.navigateToPage("settings"));
-        loseWeightMenuButton.setOnAction(event -> NavigationMenu.navigateToPage("loseWeight"));
-        forecastMenuItem.setOnAction(event -> NavigationMenu.navigateToPage("forecast"));
 
     }
 

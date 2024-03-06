@@ -9,9 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import project.controller.MainPageController;
-import project.method.NavigationMenu;
+import project.navigation.BaseMenuClass;
 
-public class MainPageView {
+public class MainPageView extends BaseMenuClass {
     private MainPageController mainPageController = new MainPageController();
     @FXML
     private ResourceBundle resources;
@@ -64,17 +64,12 @@ public class MainPageView {
 
     @FXML
     void initialize() {
+        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
+        initializeMenuButton(loseWeightMenuButton);
+        initializeMenuItem(forecastMenuItem);
 
         mainPageController.fillUserData(name_id, numberPhone, age,
                 height, weight, gender,allergy);
-
-
-        mainPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("mainpage"));
-        calculatorPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("calorieCalculator"));
-        createdMenuPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("createdMenu"));
-        changePageBtn.setOnAction(event -> NavigationMenu.navigateToPage("settings"));
-        loseWeightMenuButton.setOnAction(event -> NavigationMenu.navigateToPage("loseWeight"));
-        forecastMenuItem.setOnAction(event -> NavigationMenu.navigateToPage("forecast"));
     }
 
 }

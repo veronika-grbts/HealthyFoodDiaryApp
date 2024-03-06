@@ -7,7 +7,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import project.entity.User;
-import project.method.LoseWeightCalculator;
+import project.calculator.LoseWeightCalculator;
 import project.singleton.ApplicationContext;
 import project.util.HibernateMethods;
 

@@ -7,16 +7,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
-import project.HibbernateRunner;
-import project.entity.ActivityLevel;
+import project.enums.ActivityLevel;
 import project.entity.Ingredients;
 import project.entity.User;
-import project.method.CalorieCalculator;
-import project.method.NavigationMenu;
+import project.calculator.CalorieCalculator;
 import project.singleton.ApplicationContext;
 import project.util.HibernateMethods;
 
-import java.io.IOException;
 import java.util.List;
 
 @Slf4j

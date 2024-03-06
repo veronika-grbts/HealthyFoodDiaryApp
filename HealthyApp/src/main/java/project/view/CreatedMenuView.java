@@ -2,15 +2,15 @@ package project.view;
 
 import project.controller.CreatedMenuController;
 import project.entity.UserSelectedMenu;
-import project.method.NavigationMenu;
-import project.tableView.CustomMenuItem;
+import project.model.CustomMenuItem;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import project.navigation.BaseMenuClass;
 
 
-public class CreatedMenuView {
+public class CreatedMenuView extends BaseMenuClass {
     private  CreatedMenuController createdMenuController = new CreatedMenuController();
     @FXML
     private ImageView updateImage;
@@ -60,21 +60,17 @@ public class CreatedMenuView {
     @FXML
     private TableColumn<UserSelectedMenu, Double> quantityColumn;
 
-
-
     @FXML
     void initialize() {
+        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
+        initializeMenuButton(loseWeightMenuButton);
+        initializeMenuItem(forecastMenuItem);
+        AnimationButton.addFadeAnimation(createdMenutBtn);
+
         createdMenuController.initialize(tableProduct, productsComboBox, checkBoxCreatedPdf, updateBtn, updateImage,
                 mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn, loseWeightMenuButton,
                 forecastMenuItem, statisticsMenuItem, createdMenutBtn, typeMealColumn, nameProductColumn,
                 quantityColumn);
-
-        mainPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("mainpage"));
-        calculatorPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("calorieCalculator"));
-        createdMenuPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("createdMenu"));
-        changePageBtn.setOnAction(event -> NavigationMenu.navigateToPage("settings"));
-        loseWeightMenuButton.setOnAction(event -> NavigationMenu.navigateToPage("loseWeight"));
-        forecastMenuItem.setOnAction(event -> NavigationMenu.navigateToPage("forecast"));
 
     }
 }

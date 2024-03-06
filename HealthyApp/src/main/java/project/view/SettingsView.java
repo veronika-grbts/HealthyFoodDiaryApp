@@ -6,8 +6,7 @@ import java.util.ResourceBundle;
 
 import project.HibbernateRunner;
 import project.controller.SettingsController;
-import project.method.NavigationMenu;
-import project.entity.ActivityLevel;
+import project.enums.ActivityLevel;
 import project.entity.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -16,9 +15,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
+import project.navigation.BaseMenuClass;
 
 @Slf4j
-public class SettingsView {
+public class SettingsView extends BaseMenuClass {
     private SettingsController settingsController = new SettingsController();
 
     @FXML
@@ -117,6 +117,15 @@ public class SettingsView {
 
     @FXML
     void initialize() {
+        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
+        initializeMenuButton(loseWeightMenuButton);
+        initializeMenuItem(forecastMenuItem);
+
+        AnimationButton.addFadeAnimation(updateDataBtn);
+        AnimationButton.addHoverAnimation(deleteUserBtn);
+
+        AnimationButton.addHoverAnimation(cancelDeleteBtn);
+        AnimationButton.addHoverAnimation(deleteUserAccountBtn);
         ToggleGroup group = new ToggleGroup();
         manRadioButton.setToggleGroup(group);
         femaleRadioButton.setToggleGroup(group);
@@ -151,13 +160,6 @@ public class SettingsView {
                 e.printStackTrace();
             }
         });
-    // Обработчики событий для кнопок перехода на другие страницы
-        mainPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("mainpage"));
-        calculatorPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("calorieCalculator"));
-        createdMenuPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("createdMenu"));
-        changePageBtn.setOnAction(event -> NavigationMenu.navigateToPage("settings"));
-        loseWeightMenuButton.setOnAction(event -> NavigationMenu.navigateToPage("loseWeight"));
-        forecastMenuItem.setOnAction(event -> NavigationMenu.navigateToPage("forecast"));
 
     }
 }

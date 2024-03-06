@@ -19,7 +19,7 @@
 }
 
 .split-menu-button .menu-item {
-    -fx-background-color: #452f42; /* Цвет фона для MenuItem */
+    -fx-background-color: rgba(69, 47, 66, 0.7); /* Цвет фона для MenuItem */
     -fx-font-size: 18px; /* Размер шрифта */
 }
 

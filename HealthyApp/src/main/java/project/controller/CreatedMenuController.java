@@ -3,7 +3,6 @@ package project.controller;
 import javafx.animation.RotateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
@@ -11,13 +10,12 @@ import javafx.util.Duration;
 import project.entity.User;
 import project.entity.UserSelectedMenu;
 import project.filePDF.PDFGenerator;
-import project.method.CreatedMenu;
-import project.method.NavigationMenu;
+import project.menu.CreatedMenu;
 import project.singleton.ApplicationContext;
-import project.tableView.Period;
+import project.enums.Period;
 import project.util.HibernateMethods;
-import project.tableView.CustomMenuItem;
-import java.io.IOException;
+import project.model.CustomMenuItem;
+
 import java.util.List;
 
 public class CreatedMenuController {
@@ -73,11 +71,7 @@ public class CreatedMenuController {
 
     private void createPDF(TableView<CustomMenuItem> tableProduct, String filePath, String fileName) {
         ObservableList<CustomMenuItem> itemsForPDF = getItemsForPDF(tableProduct);
-        try {
-            PDFGenerator.createPDF(itemsForPDF, filePath, fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        PDFGenerator.createPDF(itemsForPDF, filePath, fileName);
     }
 
     private void configureTable(TableView<CustomMenuItem> tableProduct, TableColumn<UserSelectedMenu, String> typeMealColumn,
@@ -88,37 +82,6 @@ public class CreatedMenuController {
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
         tableProduct.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-        // Добавляем стиль для столбца с ингредиентами
-        if (!ingredientsColumnCreated) {
-            TableColumn<CustomMenuItem, Void> ingredientsColumn = new TableColumn<>("Інгрідієнти");
-            ingredientsColumn.setCellFactory(param -> new TableCell<CustomMenuItem, Void>() {
-                private final Button btn = new Button("Інгрідієнти");
-
-                {
-                    btn.setOnAction(event -> {
-                        CustomMenuItem item = getTableView().getItems().get(getIndex());
-                        if (item != null) {
-                            //  нажатия кнопки
-                        }
-                    });
-                }
-
-                @Override
-                protected void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || getTableRow().getItem() == null || ((CustomMenuItem) getTableRow().getItem()).isDayHeader()) {
-                        setGraphic(null);
-                        setText(null);
-                    } else {
-                        setGraphic(btn);
-                        setText(null);
-                    }
-                }
-            });
-            tableProduct.getColumns().add(ingredientsColumn);
-            ingredientsColumnCreated = true;
-        }
         tableProduct.setRowFactory(tv -> new TableRow<>() {
             @Override
             protected void updateItem(CustomMenuItem item, boolean empty) {

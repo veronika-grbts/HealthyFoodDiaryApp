@@ -1,5 +1,8 @@
 package project.view;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 
@@ -9,6 +12,7 @@ import java.util.ResourceBundle;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 import project.controller.PrimaryController;
 
 public class PrimaryView implements Initializable {
@@ -33,7 +37,17 @@ public class PrimaryView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        PrimaryController.handleSignIn(signInBtn, phoneNumberField);
-        PrimaryController.handleSignUp(signUpBtn);
+        AnimationButton.addFadeAnimation(signUpBtn);
+        AnimationButton.addHoverAnimation(signInBtn);
+        signInBtn.setOnAction(event -> {
+            if (loginField.getText().isEmpty() && phoneNumberField.getText().isEmpty()) {
+                AnimationButton.moveButtonToLeftAndBack(signInBtn);
+            }
+            PrimaryController.handleSignIn(signInBtn, phoneNumberField);
+        });
+
+        signUpBtn.setOnAction(event -> {
+            PrimaryController.handleSignUp(signUpBtn);
+        });
     }
 }

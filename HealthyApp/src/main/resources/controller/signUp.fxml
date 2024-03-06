@@ -16,14 +16,14 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1360.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.view.SignUpView">
     <children>
         <!-- ����� ��� ������� ImageView -->
-        <ImageView fitHeight="720.0" fitWidth="1360.0" pickOnBounds="true">
+        <ImageView fitHeight="720.0" fitWidth="1657.0" layoutX="-297.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../top-view-breakfast-bowl-with-granola-fruits.jpg" />
+                <Image url="@../fresh-salad-with-avocado-tomato-olives-mozzarella-bowl.jpg" />
             </image>
         </ImageView>
 
         <!-- ���������� ������������� � ��������� -->
-        <AnchorPane fx:id="yourImageView" prefHeight="720.0" prefWidth="1360.0" style="-fx-background-color: #201e1e; -fx-opacity: 0.2;" visible="false" />
+        <AnchorPane fx:id="yourImageView" prefHeight="720.0" prefWidth="1360.0" style="-fx-background-color: #201e1e; -fx-opacity: 0.2;" />
 
         <!-- ��� AnchorPane � ��������� �������� � ������� -->
         <AnchorPane prefHeight="548.0" prefWidth="410.0" style="-fx-border-radius: 25px; -fx-background-radius: 25px; -fx-stroke: #201e1e; -fx-border-width: 1 1 1 1; -fx-border-color: #F4E9E9;" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="475.0" AnchorPane.rightAnchor="475.0" AnchorPane.topAnchor="110.0">
@@ -52,6 +52,11 @@
                                 <DropShadow color="#0000006b" />
                             </effect>
                         </Button>
+                  <ImageView fx:id="exclamationPointImg" fitHeight="25.0" fitWidth="25.0" layoutX="338.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../exclamation_11248962.png" />
+                     </image>
+                  </ImageView>
                     </children>
                 </AnchorPane>
                 <AnchorPane fx:id="signUpPane2" layoutX="21.0" layoutY="86.0" prefHeight="378.0" prefWidth="366.0" visible="false">

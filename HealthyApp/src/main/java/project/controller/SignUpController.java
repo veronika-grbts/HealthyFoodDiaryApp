@@ -6,14 +6,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import project.HibbernateRunner;
-import project.entity.ActivityLevel;
+import project.enums.ActivityLevel;
 import project.entity.Ingredients;
 import project.entity.User;
-import project.method.CalorieCalculator;
-import project.method.LoseWeightCalculator;
+import project.calculator.CalorieCalculator;
+import project.calculator.LoseWeightCalculator;
 import project.singleton.ApplicationContext;
 import project.util.HibernateMethods;
 
@@ -23,22 +21,6 @@ import java.io.IOException;
 public class SignUpController {
 
     private HibernateMethods hibernateMethods = new HibernateMethods();
-
-    public void handleNextBtn1(Button nextBtn1, AnchorPane signUpPane1, AnchorPane signUpPane2) {
-        nextBtn1.setOnAction(event -> {
-            signUpPane1.setVisible(false);
-            signUpPane2.setVisible(true);
-        });
-    }
-
-    public void handleNextBtn2(Button nextBtn2, AnchorPane signUpPane2, AnchorPane signUpPane3, AnchorPane imagePlus,
-                               TextField sighUpPhone) {
-        nextBtn2.setOnAction(event -> {
-            signUpPane2.setVisible(false);
-            signUpPane3.setVisible(true);
-            imagePlus.setOnMouseClicked(event1 -> handleImagePlusClicked(sighUpPhone, signUpPane3));
-        });
-    }
     public void handleFinishBtn(Button finishBtn, TextField signUpName, TextField sighUpPhone, TextField signUpAge,
                                 TextField signUpWeight, TextField signUpHeight, ComboBox<String> signUpGender,
                                 ComboBox<ActivityLevel> signUpActivityLevel, CheckBox checkBoxAllergy,

@@ -8,9 +8,9 @@ import org.hibernate.query.Query;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.*;
 import project.entity.*;
-import project.method.CalorieCalculator;
+import project.enums.ActivityLevel;
+import project.enums.MealType;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;

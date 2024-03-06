@@ -11,9 +11,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import project.controller.ForecastController;
-import project.method.NavigationMenu;
+import project.navigation.BaseMenuClass;
 
-public class ForecastView {
+public class ForecastView extends BaseMenuClass {
     private ForecastController forecastController = new ForecastController();
     @FXML
     private ResourceBundle resources;
@@ -97,7 +97,12 @@ public class ForecastView {
 
     @FXML
     void initialize() {
+        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
+        initializeMenuButton(loseWeightMenuButton);
+        initializeMenuItem(forecastMenuItem);
 
+        AnimationButton.addHoverAnimation(updateBestWeightUserBtn);
+        AnimationButton.addFadeAnimation(addNewWeightUserBtn);
         forecastController.initialize(weightProgressChart);
         addNewWeightUserBtn.setOnAction(event -> {
             forecastController.addNewWeightUser(newWeightUserTextFiel,
@@ -109,14 +114,6 @@ public class ForecastView {
             addProgressUserPane.setVisible(true);
             closeWindowAddProgressWeightImg.setOnMouseClicked(this::closeWindowAddProgressWeightImg);
         });
-
-        // Определение действий кнопок перехода на другие страницы
-        mainPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("mainpage"));
-        calculatorPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("calorieCalculator"));
-        createdMenuPageBtn.setOnAction(event -> NavigationMenu.navigateToPage("createdMenu"));
-        changePageBtn.setOnAction(event -> NavigationMenu.navigateToPage("settings"));
-        loseWeightMenuButton.setOnAction(event -> NavigationMenu.navigateToPage("loseWeight"));
-        forecastMenuItem.setOnAction(event -> NavigationMenu.navigateToPage("forecast"));
 
     }
 }
