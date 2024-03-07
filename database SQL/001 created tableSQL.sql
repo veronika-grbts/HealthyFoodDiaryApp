@@ -98,6 +98,17 @@ CREATE TABLE UserSelectedMenu (
   "lunch_drink_id" integer REFERENCES Drinks("id_drink"),
   "dinner_id" integer REFERENCES MealOption("id_option"),
   "dinner_drink_id" integer REFERENCES Drinks("id_drink"),
+  "calorie_breakfast" double NOT NULL,
+  "calorie_lunch" double NOT NULL,
+  "calorie_dinner" double NOT NULL,
+  "lunch_additional_dish_id" REFERENCES MealOption("id_option"),
+  "lunch_additional_dish_grams" double, 
+  "snack_first_dish_id" REFERENCES MealOption("id_option"),
+  "snack_first_dish_grams" double,
+  "snack_second_dish_id" REFERENCES MealOption("id_option"),
+  "snack_second_dish_grams" double,
+  "dinner_additional_dish_id" REFERENCES MealOption("id_option"),
+  "dinner_additional_dish_grams" double 
   CONSTRAINT "UserSelectedMenu_pk" PRIMARY KEY ("id"),
   CONSTRAINT "UserSelectedMenu_fk0" FOREIGN KEY ("phone_number") REFERENCES User("phone_number")
 ) WITH (
@@ -149,6 +160,40 @@ CREATE TABLE MealIngredientsDrink (
 
 
 
+CREATE TABLE MainDishPairing (
+    "id" serial NOT NULL,
+    "main_dish_id" integer NOT NULL,
+    "additional_dish_id" integer,
+    CONSTRAINT "MainDishPairing_pk" PRIMARY KEY ("id")
+) WITH (
+    OIDS=FALSE
+);
+
+CREATE TABLE WeightLossGoals (
+  "goal_id" serial NOT NULL,
+  "phone_number" bigint NOT NULL,
+  "current_weight" FLOAT NOT NULL,
+  "target_weight" FLOAT NOT NULL,
+  "target_caloric_deficit" FLOAT NOT NULL,
+  "estimated_completion_time" INTERVAL,
+  "caloric_deficit_rate" FLOAT,
+  CONSTRAINT "WeightLossGoals_pk" PRIMARY KEY ("goal_id"),
+  
+) WITH (
+  OIDS=FALSE
+);
+
+CREATE TABLE WeightLossProgress (
+  "progress_id" serial NOT NULL,
+  "goal_id" integer NOT NULL,
+  "date" DATE NOT NULL,
+  "current_weight" FLOAT NOT NULL,
+  "caloric_intake" FLOAT,
+  CONSTRAINT "WeightLossProgress_pk" PRIMARY KEY ("progress_id"),
+) WITH (
+  OIDS=FALSE
+);
+
 ALTER TABLE UserAllergy ADD CONSTRAINT "UserAllergy_fk0" FOREIGN KEY ("number_phone") REFERENCES User("phone_number") ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE UserSelectedProduct ADD CONSTRAINT "UserSelectedProduct_fk0" FOREIGN KEY ("phone_number") REFERENCES User("phone_number") ON UPDATE CASCADE ON DELETE CASCADE;
@@ -161,3 +206,11 @@ ALTER TABLE MealIngredientsDrink ADD CONSTRAINT "MealIngredientsDrink_fk0" FOREI
 ALTER TABLE MealIngredientsDrink ADD CONSTRAINT "MealIngredientsDrink_fk1" FOREIGN KEY ("id_ingredients") REFERENCES Ingredients("id_ingredients")ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE UserAllergy ADD CONSTRAINT fk_userallergy_ingredients FOREIGN KEY ("id_ingredients") REFERENCES Ingredients ("id_ingredients") ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABL MainDishPairing  ADD CONSTRAINT "MainDishPairing_fk_main_dish" FOREIGN KEY ("main_dish_id") REFERENCES MealOption("id_option") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE MainDishPairing ADD  CONSTRAINT "MainDishPairing_fk_additional_dish" FOREIGN KEY ("additional_dish_id") REFERENCES MealOption("id_option") ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE WeightLossGoals ADD  CONSTRAINT "WeightLossGoals_fk0" FOREIGN KEY ("phone_number") REFERENCES Users("phone_number") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE WeightLossProgress ADD CONSTRAINT "WeightLossProgress_fk0" FOREIGN KEY ("goal_id") REFERENCES WeightLossGoals("goal_id") ON UPDATE CASCADE ON DELETE CASCADE;
+
+

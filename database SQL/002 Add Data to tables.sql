@@ -161,16 +161,16 @@ VALUES
 SELECT * from UserAllergy
     
 -- add data to the "Products" table 
-COPY Products  FROM 'C:/products.csv' DELIMITER ';' CSV HEADER;
+COPY Products  FROM 'csvtable/products.csv' DELIMITER ';' CSV HEADER;
 
 -- add data to the "Ingredients" table 
-COPY Ingredients FROM 'C:/ingredients.csv' DELIMITER ';' CSV HEADER;
+COPY Ingredients FROM 'csvtable/ingredients.csv' DELIMITER ';' CSV HEADER;
 
 --add data to the "MealOption" table
-COPY MealOption FROM 'C:/food.csv' DELIMITER ';' CSV HEADER;
+COPY MealOption FROM 'csvtable/food.csv' DELIMITER ';' CSV HEADER;
 
 --add data to the "Drink" table
-COPY Drinks FROM 'C:/drink.csv' DELIMITER ';' CSV HEADER;
+COPY Drinks FROM 'csvtable/drink.csv' DELIMITER ';' CSV HEADER;
 
 --add data to the MealIngredients
 
