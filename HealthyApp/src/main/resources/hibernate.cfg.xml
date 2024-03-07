@@ -16,19 +16,19 @@
     <property name="hibernate.current_session_context_class">thread</property>
 
 
-    <mapping class="project.entity.User"/>
-    <mapping class="project.entity.UserAllergy"/>
-    <mapping class="project.entity.Products"/>
-    <mapping class="project.entity.UserSelectedProduct"/>
-    <mapping class="project.entity.MealOption"/>
-    <mapping class="project.entity.Ingredients"/>
-    <mapping class="project.entity.Drink"/>
-    <mapping class="project.entity.UserSelectedMenu"/>
-    <mapping class="project.entity.MealIngredients"/>
-    <mapping class="project.entity.MealIngredientsDrink"/>
-    <mapping class="project.entity.MainDishPairing"/>
-    <mapping class="project.entity.WeightLossGoals"/>
-    <mapping class="project.entity.WeightLossProgress"/>
+    <mapping class="HealthyDiaryApp.entity.User"/>
+    <mapping class="HealthyDiaryApp.entity.UserAllergy"/>
+    <mapping class="HealthyDiaryApp.entity.Products"/>
+    <mapping class="HealthyDiaryApp.entity.UserSelectedProduct"/>
+    <mapping class="HealthyDiaryApp.entity.MealOption"/>
+    <mapping class="HealthyDiaryApp.entity.Ingredients"/>
+    <mapping class="HealthyDiaryApp.entity.Drink"/>
+    <mapping class="HealthyDiaryApp.entity.UserSelectedMenu"/>
+    <mapping class="HealthyDiaryApp.entity.MealIngredients"/>
+    <mapping class="HealthyDiaryApp.entity.MealIngredientsDrink"/>
+    <mapping class="HealthyDiaryApp.entity.MainDishPairing"/>
+    <mapping class="HealthyDiaryApp.entity.WeightLossGoals"/>
+    <mapping class="HealthyDiaryApp.entity.WeightLossProgress"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
 
