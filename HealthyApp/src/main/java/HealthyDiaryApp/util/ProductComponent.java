@@ -11,6 +11,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+/*
+ * ProductComponent class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас містить методи для пошуку, отримання, та створення продуктів.
+ */
 
 @Slf4j
 public class ProductComponent {

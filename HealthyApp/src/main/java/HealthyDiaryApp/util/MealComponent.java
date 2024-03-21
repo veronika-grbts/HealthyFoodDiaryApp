@@ -9,7 +9,15 @@ import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
+/*
+ * MealComponent class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас містить методи для пошуку айдішок їжі за назвою.
+ */
 @Slf4j
 public class MealComponent {
     //Метод для пошуку айди їжі по назві

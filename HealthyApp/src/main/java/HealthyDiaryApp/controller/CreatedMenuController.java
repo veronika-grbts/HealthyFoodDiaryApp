@@ -1,3 +1,12 @@
+/*
+ * CreatedMenuController  class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description:Контролер для створення меню користувача та відображення його в таблиці.
+ */
 package HealthyDiaryApp.controller;
 
 import javafx.animation.RotateTransition;

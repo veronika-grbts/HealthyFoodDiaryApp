@@ -1,3 +1,12 @@
+/*
+ * SettingsController  class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Контролер, що відповідає за обробку подій під час зміни в настройках користувача.
+ */
 package HealthyDiaryApp.controller;
 
 import javafx.scene.Node;

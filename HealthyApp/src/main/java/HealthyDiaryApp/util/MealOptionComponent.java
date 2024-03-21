@@ -12,6 +12,16 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+/*
+ * MealOptionComponent class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Этот класс содержит методы для получения списка вариантов блюд по типу и получения информации
+ * о вариантах блюд по их идентификатору.
+ */
 
 @Slf4j
 public class MealOptionComponent {

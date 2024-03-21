@@ -12,7 +12,16 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import java.util.List;
-
+/*
+ * IngredientComponent class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас містить методи для пошуку інгредієнтів за назвою, отримання всіх інгредієнтів
+ * з таблиці Ingredients та отримання інгредієнтів для блюда чи напою.
+ */
 @Slf4j
 public class IngredientComponent {
     //Пошук інгредієнтів на ім'я

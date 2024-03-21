@@ -1,6 +1,15 @@
 package HealthyDiaryApp.model;
 
 import java.util.Objects;
+/*
+ * Nutrition  class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас представляє харчову цінність продукту та містить дані про його білки, жири та вуглеводи.
+ */
 
 public class Nutrition {
     private double protein;

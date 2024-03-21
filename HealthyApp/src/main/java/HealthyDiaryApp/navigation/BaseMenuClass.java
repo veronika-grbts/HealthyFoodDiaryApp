@@ -5,6 +5,17 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import HealthyDiaryApp.view.AnimationButton;
 
+/*
+ * BaseMenuClass abstract class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас є базовим класом для всіх меню в програмі. Він містить загальні методи
+ * для ініціалізації кнопок та обробки подій кнопок у меню.
+ */
+
 public abstract class BaseMenuClass {
 
     protected void initializeButtons(Button... buttons) {

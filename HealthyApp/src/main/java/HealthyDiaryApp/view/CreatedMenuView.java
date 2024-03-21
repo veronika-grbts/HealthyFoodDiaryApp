@@ -8,7 +8,16 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import HealthyDiaryApp.navigation.BaseMenuClass;
-
+/*
+ * CreatedMenuView class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас представляє відображення створення меню і наслідує клас BaseMenuClass.
+ * Клас містить різні поля та методи для взаємодії з елементами вікна та обробки подій кнопок.
+ */
 
 public class CreatedMenuView extends BaseMenuClass {
     private  CreatedMenuController createdMenuController = new CreatedMenuController();

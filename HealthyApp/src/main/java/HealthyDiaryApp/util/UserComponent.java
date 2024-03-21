@@ -12,6 +12,18 @@ import HealthyDiaryApp.enums.ActivityLevel;
 
 import javax.persistence.criteria.*;
 import java.util.List;
+/*
+ * UserComponent class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас містить методи для додавання алергій, продуктів та створення,
+ * оновлення та видалення користувачів. Також він надає методи для отримання
+ * інформації про користувача, його алергії, останнього меню та оновлення даних
+ * користувача за номером телефону.
+ */
 
 @Slf4j
 public class UserComponent {

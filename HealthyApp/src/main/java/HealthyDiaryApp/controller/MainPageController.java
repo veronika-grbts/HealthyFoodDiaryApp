@@ -1,3 +1,12 @@
+/*
+ * MainPageController  class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description:Контролер, що відповідає за заповнення основних даних користувача на головній сторінці.
+ */
 package HealthyDiaryApp.controller;
 
 import javafx.scene.control.TextField;

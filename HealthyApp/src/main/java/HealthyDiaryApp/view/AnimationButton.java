@@ -7,7 +7,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-
+/*
+ * AnimationButton class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас містить статичні методи для додавання анімацій до елементів у користувацькому інтерфейсі.
+ * Методи включають анімації затухання, наведення курсору, зсув кнопки вліво та назад, затемнення та розмірні анімації.
+*/
 public class AnimationButton {
     public static void addFadeAnimation(Button button) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), button);

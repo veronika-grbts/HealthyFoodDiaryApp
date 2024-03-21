@@ -1,3 +1,13 @@
+/*
+ * WeightLossProgress  class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description:Клас, що представляє сутність прогресу  похудіння в програмі HealthyDiary.
+ */
+
 package HealthyDiaryApp.entity;
 
 
@@ -37,5 +47,8 @@ public class WeightLossProgress {
 
     @Column(name = "deficit_caloric")
     private Double deficitCaloric;
+
+    @Column(name = "goal_achieved")
+    private boolean goalAchieved;
 
 }

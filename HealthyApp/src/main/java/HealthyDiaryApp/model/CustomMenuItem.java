@@ -1,7 +1,16 @@
 package HealthyDiaryApp.model;
 import HealthyDiaryApp.entity.UserSelectedMenu;
+/*
+ * CustomMenuItem  class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас представляє елемент меню з користувацькою інформацією.
+ */
 
-public class CustomMenuItem extends UserSelectedMenu {
+public class CustomMenuItem {
     private String mealType;
     private String name;
     private double quantity;

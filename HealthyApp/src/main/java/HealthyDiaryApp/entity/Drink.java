@@ -1,3 +1,12 @@
+/*
+ * Drink  class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description:Клас, що представляє сутність напоїв в програмі HealthyDiary.
+ */
 package HealthyDiaryApp.entity;
 
 import lombok.AllArgsConstructor;

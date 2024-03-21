@@ -11,6 +11,16 @@ import java.net.URL;
 
 import lombok.extern.slf4j.Slf4j;
 
+/*
+ * LoseWeightCalculator class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Запуск додатку НealthyDiary.
+ */
+
 @Slf4j
 public class HibbernateRunner extends Application {
     private static Scene scene;

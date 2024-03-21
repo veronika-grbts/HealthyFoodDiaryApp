@@ -27,12 +27,12 @@
                         <Font name="Gabriola" size="36.0" />
                     </font>
                 </Label>
-                <ImageView fx:id="deleteImage" fitHeight="30.0" fitWidth="25.0" layoutX="955.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="deleteImage" fitHeight="30.0" fitWidth="25.0" layoutX="975.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/trash.png" />
                     </image>
                 </ImageView>
-                <Button fx:id="deleteUserBtn" alignment="BASELINE_LEFT" layoutX="778.0" layoutY="39.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="217.0" style="-fx-background-color: transparent; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #f4e9e9;" text="ВИДАЛЕННЯ АКАУНТА" textFill="#f4e9e9" />
+                <Button fx:id="deleteUserBtn" alignment="CENTER" layoutX="778.0" layoutY="39.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="230.0" style="-fx-background-color: transparent; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #f4e9e9;" text="ВИДАЛЕННЯ АКАУНТА" textFill="#f4e9e9" />
             </children>
             <effect>
                 <DropShadow color="#000000a6" />
@@ -97,7 +97,7 @@
                 </Button>
             <SplitMenuButton fx:id="loseWeightMenuButton" mnemonicParsing="false" popupSide="RIGHT" prefHeight="39.0" prefWidth="282.0" styleClass="menu-item" stylesheets="@../css/styleMenuBar.css" text="  Схуднення">
                <items>
-                  <MenuItem fx:id="forecastMenuItem" mnemonicParsing="false" style="-fx-text-fill: #f4e9e9; -fx-pref-width: 255; -fx-pref-hight: 40;" text="Прогноз" />
+                  <MenuItem fx:id="forecastMenuItem" mnemonicParsing="false" style="-fx-text-fill: #f4e9e9; -fx-pref-width: 255; -fx-pref-hight: 40;" text="Прогрес" />
                </items>
                <graphic>
                   <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">

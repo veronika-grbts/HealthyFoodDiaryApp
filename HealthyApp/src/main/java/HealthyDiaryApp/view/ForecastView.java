@@ -13,6 +13,17 @@ import javafx.scene.layout.VBox;
 import HealthyDiaryApp.controller.ForecastController;
 import HealthyDiaryApp.navigation.BaseMenuClass;
 
+/*
+ * ForecastView class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description:Цей клас представляє відображення  статистики і наслідує клас BaseMenuClass.
+ * Клас містить різні поля та методи для взаємодії з елементами вікна та обробки подій кнопок.
+ */
+
 public class ForecastView extends BaseMenuClass {
     private ForecastController forecastController = new ForecastController();
     @FXML
@@ -103,6 +114,7 @@ public class ForecastView extends BaseMenuClass {
 
         AnimationButton.addHoverAnimation(updateBestWeightUserBtn);
         AnimationButton.addFadeAnimation(addNewWeightUserBtn);
+
         forecastController.initialize(weightProgressChart);
         addNewWeightUserBtn.setOnAction(event -> {
             forecastController.addNewWeightUser(newWeightUserTextFiel,

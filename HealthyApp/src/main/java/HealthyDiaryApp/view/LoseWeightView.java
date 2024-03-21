@@ -1,15 +1,45 @@
+/*
+ * LoseWeightView class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description:Цей клас представляє відображення втрати ваги і наслідує клас BaseMenuClass.
+ Клас містить різні поля та методи для взаємодії з елементами вікна та обробки подій кнопок.
+ */
 package HealthyDiaryApp.view;
-
+import java.util.concurrent.TimeUnit;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import HealthyDiaryApp.controller.LoseWeightController;
 import HealthyDiaryApp.navigation.BaseMenuClass;
+import javafx.util.Duration;
 
+import java.time.LocalDateTime;
+import java.time.LocalDateTime;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
 public class LoseWeightView extends BaseMenuClass {
     private LoseWeightController loseWeightController = new LoseWeightController();
     private static final  int AXIS_OFFSET_Y = 100;
@@ -98,6 +128,35 @@ public class LoseWeightView extends BaseMenuClass {
     private AnchorPane userLowWeightPage;
 
     @FXML
+    private AnchorPane userChoseIncorrectBestWeightPage;
+
+    @FXML
+    private ImageView closePageUserchoseIncorectBestWeightImg;
+
+    @FXML
+    private HBox hBoxTime;
+
+    @FXML
+    private Label daysLabel;
+
+    @FXML
+    private Label hoursLabel;
+
+    @FXML
+    private Label minutesLabel;
+
+    @FXML
+    private Label secondsLabel;
+
+    @FXML
+    private AnchorPane userFinishedLossWeighttPage;
+
+    @FXML
+    private ImageView userShinishedLossWeightImg;
+
+    private Timeline timeline;
+
+    @FXML
     void initialize() {
 
         initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
@@ -109,10 +168,13 @@ public class LoseWeightView extends BaseMenuClass {
 
         loseWeightController.initializeUserInfo( bodyMassIndexFieldText,
                  nameBodyMassIndexLable,  descriptionBodyMassIndexLable,
-                 userLowWeightPage, userIdealWeightPage,
+                 userLowWeightPage,
+                 userIdealWeightPage,
                  bestweightFieldText,  currentCaloricIntakeTextField,
                  oopsWindowPane,  updateCouseInPageBtn,
-                 updateCouseUserPage,  diagramAboutWeightLossStage);
+                 updateCouseUserPage,  diagramAboutWeightLossStage,
+                 hBoxTime,  daysLabel,  hoursLabel,
+                 minutesLabel,  secondsLabel, userFinishedLossWeighttPage);
         closeWindowIdealWeightImg.setOnMouseClicked(this::ClosePaneWithIdealWeight);
 
         updateCouseInPageBtn.setOnAction(event -> {
@@ -120,7 +182,10 @@ public class LoseWeightView extends BaseMenuClass {
         });
 
         updateBestWeightBtn.setOnAction(event -> {
-            loseWeightController.changeTargetWeight(newBestWeighttextField,  updateBestWeightPage,  bestweightFieldText,  diagramAboutWeightLossStage);
+            loseWeightController.changeTargetWeight(newBestWeighttextField,
+                    updateBestWeightPage,  bestweightFieldText,
+                    diagramAboutWeightLossStage, userChoseIncorrectBestWeightPage);
+            closePageUserchoseIncorectBestWeightImg.setOnMouseClicked(this::ClosePaneUserChoseIncorectWeight);
         });
 
         updateCouseuserBtn.setOnAction(event -> {
@@ -137,9 +202,8 @@ public class LoseWeightView extends BaseMenuClass {
             closeWindowIdealWeightImg.setOnMouseClicked(this::ClosePaneWithIdealWeight);
         });
 
-
+        userShinishedLossWeightImg.setOnMouseClicked(this::ClosePaneFinishedLossWeightImg);
     }
-
     @FXML
     void ClosePane(MouseEvent event) {
         updateBestWeightPage.setVisible(false);
@@ -153,5 +217,13 @@ public class LoseWeightView extends BaseMenuClass {
     @FXML
     void ClosePaneWithLowWeight(MouseEvent event) {
         userLowWeightPage.setVisible(false);
+    }
+
+    @FXML
+    void ClosePaneUserChoseIncorectWeight(MouseEvent event){userChoseIncorrectBestWeightPage.setVisible(false);}
+
+    @FXML
+    void ClosePaneFinishedLossWeightImg(MouseEvent event){
+        userFinishedLossWeighttPage.setVisible(false);
     }
 }

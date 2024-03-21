@@ -7,7 +7,15 @@ import org.hibernate.query.Query;
 import HealthyDiaryApp.entity.MealOption;
 
 import javax.persistence.NoResultException;
-
+/*
+ * MainDishPairingComponent class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас містить метод для знаходження додаткової страви за основною стравою.
+ */
 @Slf4j
 public class MainDishPairingComponent {
 

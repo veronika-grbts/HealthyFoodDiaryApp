@@ -19,6 +19,16 @@ import javafx.scene.layout.AnchorPane;
 import lombok.extern.slf4j.Slf4j;
 import HealthyDiaryApp.navigation.BaseMenuClass;
 import HealthyDiaryApp.util.ProductComponent;
+/*
+ * CalorieCalculatorView class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас представляє відображення створення сторінки "лічильник калорій" і наслідує клас BaseMenuClass.
+ * Клас містить різні поля та методи для взаємодії з елементами вікна та обробки подій кнопок.
+ */
 
 @Slf4j
 public class CalorieCalculatorView extends BaseMenuClass {

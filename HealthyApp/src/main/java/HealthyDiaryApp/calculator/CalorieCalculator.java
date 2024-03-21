@@ -2,6 +2,17 @@ package HealthyDiaryApp.calculator;
 
 import HealthyDiaryApp.enums.ActivityLevel;
 
+/*
+ * CalorieCalculator class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: В цьому класі робляться підрахунки для визначення калоражу, норми поживних речовин;
+ */
+
+
 public class CalorieCalculator {
     private static final double MALE_CONSTANT_A = 66.5;
     private static final double MALE_CONSTANT_B = 13.75;
@@ -29,6 +40,7 @@ public class CalorieCalculator {
 
     private static final double CALORIES_FOR_ONE_GRAM_PROTEIN_CARBS = 4.1;
     private static final double CALORIES_FOR_ONE_GRAM_FAT = 7.3;
+
     public static double calculateCalories(double weight, double height, int age,
                                            boolean isMale, ActivityLevel activityLevel) {
         double bmr;

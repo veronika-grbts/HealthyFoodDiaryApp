@@ -1,5 +1,13 @@
+/*
+ * Period enum
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description:перерахування, що представляє періоди часу  для створення меню.
+ */
 package HealthyDiaryApp.enums;
-
 public enum Period {
     ONE_DAY("Один день", 1),
     THREE_DAYS("Три дні", 3),

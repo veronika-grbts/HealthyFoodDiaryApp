@@ -1,4 +1,14 @@
 package HealthyDiaryApp.view;
+/*
+ * SignUpView class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас представляє відображення реєстрації користувача, реалізує інтерфейс Initializable для ініціалізації контролера.
+Клас містить різні поля та методи для обробки даних користувача та відображення відповідних повідомлень про помилки.
+ */
 
 import java.net.URL;
 import java.util.*;

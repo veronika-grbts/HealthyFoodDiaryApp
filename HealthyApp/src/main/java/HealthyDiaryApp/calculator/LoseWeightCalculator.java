@@ -1,6 +1,19 @@
+/*
+ * LoseWeightCalculator class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: В цьому класі робляться підрахунки для визначення калоражного дефіциту при схуднені,
+ * ІМТ, калораж з урахуванням дефіциту;
+ */
 package HealthyDiaryApp.calculator;
 
 import HealthyDiaryApp.enums.ActivityLevel;
+
+
+
 
 public class LoseWeightCalculator {
     private static final double MALE_CONSTANT_A = 50;

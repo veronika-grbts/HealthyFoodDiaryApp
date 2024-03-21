@@ -13,7 +13,16 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.Collections;
 import java.util.List;
-
+/*
+ * DrinkComponent class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас містить методи для роботи з напоями, зокрема отримання всіх напоїв,
+ * пошуку айді напою за назвою, а також отримання назви напою за його айді.
+ */
 @Slf4j
 public class DrinkComponent {
     //Метод для отримання всіх елементів з таблиці Drink

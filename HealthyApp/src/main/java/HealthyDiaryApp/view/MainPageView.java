@@ -2,7 +2,18 @@ package HealthyDiaryApp.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+/*
+ * MainPageView class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас представляє відображення сторінки "профіль користувача" програми і наслідує клас BaseMenuClass.
+ * Клас містить різні поля та методи для взаємодії з елементами вікна та ініціалізації.
+ */
 
+import HealthyDiaryApp.navigation.NavigationMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.fxml.FXML;
@@ -63,14 +74,21 @@ public class MainPageView extends BaseMenuClass {
     private TextField allergy;
 
     @FXML
+    private Button existBtn;
+
+    @FXML
     void initialize() {
         initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
         initializeMenuButton(loseWeightMenuButton);
         initializeMenuItem(forecastMenuItem);
+        AnimationButton.addHoverAnimation(existBtn);
 
         mainPageController.fillUserData(name_id, numberPhone, age,
                 height, weight, gender,allergy);
-    }
 
+        existBtn.setOnAction(event -> {
+                NavigationMenu.navigateToPage("primary");
+        });
+    }
 }
 

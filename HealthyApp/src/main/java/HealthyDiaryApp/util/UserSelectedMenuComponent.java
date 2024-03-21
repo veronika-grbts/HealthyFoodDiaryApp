@@ -17,6 +17,18 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+/*
+ * UserSelectedMenuComponent class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас містить методи для збереження меню для користувача та отримання і видалення списку
+ * вибраних користувачем меню. Використовується для збереження, видалення та отримання списку меню,
+ * обраних користувачем на основі їхнього номера телефону.
+ */
+
 
 @Slf4j
 public class UserSelectedMenuComponent {

@@ -1,3 +1,12 @@
+/*
+ * MainDishPairing  class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description:Клас, що представляє сутність зв'язків інгрідіентів для блюда основного та додаткового в програмі HealthyDiary.
+ */
 package HealthyDiaryApp.entity;
 
 

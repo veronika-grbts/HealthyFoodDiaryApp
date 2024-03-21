@@ -1,3 +1,12 @@
+/*
+ * CalorieCalculatorController  class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Контролер для розрахунку калорій та оновлення даних користувача.
+ */
 package HealthyDiaryApp.controller;
 
 import javafx.animation.RotateTransition;

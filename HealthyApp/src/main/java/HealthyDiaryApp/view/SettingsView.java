@@ -4,6 +4,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/*
+ * SettingsView class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас представляє відображення налаштувань користувача і наслідує клас BaseMenuClass.
+Клас містить різні поля та методи для взаємодії з даними користувача та обробки подій кнопок.
+ */
 import HealthyDiaryApp.HibbernateRunner;
 import HealthyDiaryApp.controller.SettingsController;
 import HealthyDiaryApp.enums.ActivityLevel;

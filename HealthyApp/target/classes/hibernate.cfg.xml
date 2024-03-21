@@ -10,7 +10,7 @@
     <property name="connection.username">postgres</property>
     <property name="connection.password">2607</property>
 
-    <property name="show_sql">true</property>
+    <property name="show_sql">false</property>
     <property name="format_sql">true</property>
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
     <property name="hibernate.current_session_context_class">thread</property>
@@ -31,6 +31,5 @@
     <mapping class="HealthyDiaryApp.entity.WeightLossProgress"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
-
   </session-factory>
 </hibernate-configuration>

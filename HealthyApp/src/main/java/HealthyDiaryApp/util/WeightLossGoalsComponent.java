@@ -13,6 +13,18 @@ import javax.persistence.criteria.*;
 import java.util.Date;
 import java.util.List;
 
+/*
+ * WeightLossGoalsComponent class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас містить методи для взаємодії з цілями зниження ваги користувача, а також зберігання та отримання
+ * прогресу зниження ваги. Використовується для визначення та зберігання цілей зниження ваги користувача та
+ * вимірювання прогресу зниження ваги.
+ */
+
 @Slf4j
 public class WeightLossGoalsComponent {
 
@@ -205,6 +217,80 @@ public class WeightLossGoalsComponent {
         }
     }
 
+    public Date getDataFinishGoalsByPhoneNumber(long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Date> criteriaQuery = builder.createQuery(Date.class);
+            Root<WeightLossProgress> root = criteriaQuery.from(WeightLossProgress.class);
+            Join<WeightLossProgress, WeightLossGoals> joinGoal = root.join("goal");
+            Join<WeightLossGoals, User> joinUser = joinGoal.join("user");
+
+            criteriaQuery.select(root.get("date"))
+                    .where(builder.equal(joinUser.get("phoneNumber"), phoneNumber))
+                    .orderBy(builder.desc(root.get("date")));
+
+            Query<Date> query = session.createQuery(criteriaQuery);
+            query.setMaxResults(1);
+
+            Date currentWeight = query.uniqueResult();
+            return currentWeight;
+        } catch (Exception e) {
+            // Обработка ошибок
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Double getWeightFromGoalsByPhoneNumber(long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Double> criteriaQuery = builder.createQuery(Double.class);
+            Root<WeightLossGoals> root = criteriaQuery.from(WeightLossGoals.class);
+
+            criteriaQuery.select(root.get("currentWeightUserLossGoals"))
+                    .where(builder.equal(root.get("user").get("phoneNumber"), phoneNumber));
+
+            Query<Double> query = session.createQuery(criteriaQuery);
+            query.setMaxResults(1);
+
+            Double weight = query.uniqueResult();
+            return weight;
+        } catch (Exception e) {
+            // Обработка ошибок
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public boolean hasWeightLossGoal(Long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Long> criteriaQuery = builder.createQuery(Long.class);
+            Root<WeightLossGoals> root = criteriaQuery.from(WeightLossGoals.class);
+
+            criteriaQuery.select(builder.count(root))
+                    .where(builder.equal(root.get("user").get("phoneNumber"), phoneNumber));
+
+            Query<Long> query = session.createQuery(criteriaQuery);
+            long count = query.getSingleResult();
+
+            return count > 0;
+        } catch (Exception e) {
+            // Обработка ошибок
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
     public Double getCaloricIntakeByPhoneNumber(long phoneNumber) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
@@ -289,7 +375,7 @@ public class WeightLossGoalsComponent {
 
     public void saveWeightLossProgress(Long phoneNumber, Date date,
                                        Double currentWeight, Double caloricIntake,
-                                       Double deficitCaloric) {
+                                       Double deficitCaloric, boolean goalAchieved) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
 
@@ -311,6 +397,7 @@ public class WeightLossGoalsComponent {
             progress.setCurrentWeight(currentWeight);
             progress.setCaloricIntake(caloricIntake);
             progress.setDeficitCaloric(deficitCaloric);
+            progress.setGoalAchieved(goalAchieved);
 
             session.save(progress);
             session.getTransaction().commit();
@@ -318,5 +405,33 @@ public class WeightLossGoalsComponent {
             e.printStackTrace();
         }
     }
+
+    public boolean isLastWeightLossGoalAchieved(long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Boolean> criteriaQuery = builder.createQuery(Boolean.class);
+            Root<WeightLossProgress> root = criteriaQuery.from(WeightLossProgress.class);
+            Join<WeightLossProgress, WeightLossGoals> joinGoal = root.join("goal");
+            Join<WeightLossGoals, User> joinUser = joinGoal.join("user");
+
+            criteriaQuery.select(root.get("goalAchieved"))
+                    .where(builder.equal(joinUser.get("phoneNumber"), phoneNumber))
+                    .orderBy(builder.desc(root.get("date")));
+
+            Query<Boolean> query = session.createQuery(criteriaQuery);
+            query.setMaxResults(1);
+
+            Boolean isAchieved = query.uniqueResult();
+            return isAchieved != null ? isAchieved : false; // Если значение null, возвращаем false
+        } catch (Exception e) {
+            // Обработка ошибок
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 
 }

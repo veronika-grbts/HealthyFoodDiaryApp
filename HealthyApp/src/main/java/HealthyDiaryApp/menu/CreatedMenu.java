@@ -1,3 +1,12 @@
+/*
+ * CreatedMenu  class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description:Цей клас відповідає за створення користувацького меню та його перевірку.
+ */
 package HealthyDiaryApp.menu;
 import HealthyDiaryApp.calculator.CalorieCalculator;
 import HealthyDiaryApp.enums.MealType;
@@ -5,7 +14,6 @@ import HealthyDiaryApp.model.Nutrition;
 import HealthyDiaryApp.singleton.ApplicationContext;
 import HealthyDiaryApp.entity.*;
 import HealthyDiaryApp.util.*;
-
 import java.util.List;
 import java.util.Random;
 

@@ -8,6 +8,18 @@ import HealthyDiaryApp.entity.UserSelectedProduct;
 
 import javax.persistence.criteria.*;
 import java.util.List;
+/*
+ * UserProductComponent class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description: Цей клас містить методи для отримання продуктів конкретного користувача,
+ * видалення всіх продуктів для користувача, а також отримання інформації про
+ * калорійність, жири, білки та вуглеводи останнього продукту для користувача.
+ * Використовується для роботи з продуктами, обраними користувачем.
+ */
 
 @Slf4j
 public class UserProductComponent {

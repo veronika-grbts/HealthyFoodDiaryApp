@@ -10,7 +10,15 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import javafx.collections.ObservableList;
 import HealthyDiaryApp.model.CustomMenuItem;
-
+/*
+ * PDFGenerator  class
+ *
+ * Version: 1.0
+ * Date: 2024-03-07
+ * Author: Veronika Horobets
+ *
+ * Description:Цей клас відповідає за генерацію PDF-файлу зі списком елементів для друку.
+ */
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,6 +34,7 @@ public class PDFGenerator {
     private static final int MAX_PAPER_IN_LIST = 32;
 
     public static void createPDF(ObservableList<CustomMenuItem> itemsForPDF, String filePath, String fileName) {
+
         try {
             PDDocument document = new PDDocument();
             PDPage page = new PDPage();
