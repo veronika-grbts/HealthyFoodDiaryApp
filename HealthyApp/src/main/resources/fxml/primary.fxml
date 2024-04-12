@@ -7,6 +7,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1360.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HealthyDiaryApp.view.PrimaryView">
@@ -17,35 +18,35 @@
                 <Image url="@../images/top-view-breakfast-bowl-with-granola-fruits.jpg" />
             </image>
         </ImageView>
-        <AnchorPane layoutX="857.0" layoutY="-3.0" prefHeight="730.0" prefWidth="520.0" style="-fx-border-radius: 30px; -fx-background-color: #2D6B22; -fx-background-radius: 30px;" AnchorPane.leftAnchor="857.0" AnchorPane.topAnchor="-3.0">
+        <AnchorPane layoutX="855.0" layoutY="-5.0" prefHeight="730.0" prefWidth="520.0" style="-fx-border-radius: 30px; -fx-background-color: #2D6B22; -fx-background-radius: 30px;" AnchorPane.leftAnchor="855.0" AnchorPane.topAnchor="-5.0">
             <effect>
                 <DropShadow color="#00000080" height="125.96" offsetY="10.0" radius="60.34" spread="0.49" width="117.4" />
             </effect>
          <children>
-                <Label layoutX="35.0" layoutY="316.0" prefHeight="21.0" prefWidth="231.0" text="Номер телефону" textFill="#f4e9e9">
+                <Label layoutX="35.0" layoutY="401.0" prefHeight="21.0" prefWidth="231.0" text="Номер телефону" textFill="#f4e9e9">
                     <font>
-                        <Font name="Informal Roman" size="24.0" />
+                        <Font name="Georgia" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="phoneNumberField" layoutX="35.0" layoutY="356.0" prefHeight="52.0" prefWidth="430.0" style="-fx-background-color: #2D6B22; -fx-border-width: 0 0 1 0; -fx-border-color: #F4E9E9; -fx-text-fill: #F4E9E9;">
+                <TextField fx:id="phoneNumberField" layoutX="35.0" layoutY="423.0" prefHeight="52.0" prefWidth="430.0" style="-fx-background-color: #2D6B22; -fx-border-width: 0 0 1 0; -fx-border-color: #F4E9E9; -fx-text-fill: #F4E9E9;">
                <font>
                   <Font size="24.0" />
                </font>
             </TextField>
-                <Button fx:id="signInBtn" layoutX="266.0" layoutY="448.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="211.0" style="-fx-background-radius: 25px; -fx-background-color: #F4E9E9;" text="Login" textFill="#201e1e">
+                <Button fx:id="signInBtn" layoutX="338.0" layoutY="510.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="125.0" style="-fx-background-radius: 5px; -fx-background-color: #f0e1c9;" text="LOGIN" textFill="#4e5660">
                     <font>
-                        <Font size="25.0" />
+                        <Font name="Georgia" size="24.0" />
                     </font>
                     <effect>
-                        <DropShadow blurType="ONE_PASS_BOX" height="0.0" offsetY="4.0" radius="10.1925" width="42.77" />
+                        <DropShadow blurType="ONE_PASS_BOX" color="#0000009e" height="32.08" offsetY="2.0" radius="18.2125" width="42.77" />
                     </effect>
                 </Button>
-                <Label layoutX="35.0" layoutY="204.0" prefHeight="34.0" prefWidth="204.0" text="Ім’ я Користувача" textFill="#f4e9e9" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="204.0">
+                <Label layoutX="34.0" layoutY="279.0" prefHeight="34.0" prefWidth="204.0" text="Ім’ я Користувача" textFill="#f4e9e9" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="279.0">
                     <font>
-                        <Font name="Informal Roman" size="24.0" />
+                        <Font name="Georgia" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="loginField" layoutX="34.0" layoutY="238.0" prefHeight="55.0" prefWidth="430.0" style="-fx-background-color: #2D6B22; -fx-border-width: 0 0 1 0; -fx-border-color: #F4E9E9; -fx-text-fill: #F4E9E9;">
+                <TextField fx:id="loginField" layoutX="34.0" layoutY="305.0" prefHeight="55.0" prefWidth="430.0" style="-fx-background-color: #2D6B22; -fx-border-width: 0 0 1 0; -fx-border-color: #F4E9E9; -fx-text-fill: #F4E9E9;">
                <font>
                   <Font size="25.0" />
                </font>
@@ -55,7 +56,42 @@
                         <Font size="18.0" />
                     </font>
                 </Button>
+            <AnchorPane layoutX="35.0" layoutY="14.0" prefHeight="145.0" prefWidth="357.0">
+               <children>
+                  <ImageView fitHeight="69.0" fitWidth="78.0" layoutX="13.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/diary-book.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="83.0" layoutY="63.0" text="Healthy" textFill="#f4e9e9">
+                     <font>
+                        <Font name="Gabriola" size="57.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="220.0" layoutY="70.0" text="Diary" textFill="#f4e9e9">
+                     <font>
+                        <Font name="Georgia" size="51.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <Label layoutX="34.0" layoutY="190.0" lineSpacing="5.0" prefHeight="69.0" prefWidth="430.0" text="Ласкаво просимо! Увійдіть до свого облікового запису для продовження" textAlignment="JUSTIFY" textFill="#f4e9e9" wrapText="true">
+               <font>
+                  <Font name="Georgia" size="18.0" />
+               </font>
+            </Label>
          </children>
         </AnchorPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9c9c9" height="21.0" layoutX="-15.0" stroke="#c9c9c9" strokeType="INSIDE" width="1383.0" AnchorPane.bottomAnchor="699.0" AnchorPane.rightAnchor="-8.0" />
+      <ImageView fx:id="closeAppImg" fitHeight="15.0" fitWidth="15.0" layoutX="1338.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="7.0">
+         <image>
+            <Image url="@../images/cross.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="MinimizeAppImg" fitHeight="17.0" fitWidth="17.0" layoutX="1314.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="701.0" AnchorPane.rightAnchor="29.0">
+         <image>
+            <Image url="@../images/minus-button.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

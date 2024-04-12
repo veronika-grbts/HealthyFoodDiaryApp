@@ -10,6 +10,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -23,7 +24,7 @@
         </ImageView>
 
         <!-- ���������� ������������� � ��������� -->
-        <AnchorPane fx:id="yourImageView" prefHeight="720.0" prefWidth="1360.0" style="-fx-background-color: #201e1e; -fx-opacity: 0.2;" />
+        <AnchorPane fx:id="yourImageView" layoutY="-2.0" prefHeight="720.0" prefWidth="1360.0" style="-fx-background-color: #201e1e; -fx-opacity: 0.2;" />
 
         <!-- ��� AnchorPane � ��������� �������� � ������� -->
         <AnchorPane prefHeight="548.0" prefWidth="410.0" style="-fx-border-radius: 25px; -fx-background-radius: 25px; -fx-stroke: #201e1e; -fx-border-width: 1 1 1 1; -fx-border-color: #F4E9E9;" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="475.0" AnchorPane.rightAnchor="475.0" AnchorPane.topAnchor="110.0">
@@ -123,5 +124,26 @@
                 </Text>
             </children>
         </AnchorPane>
+      <AnchorPane fx:id="backPane" layoutX="15.0" layoutY="25.0" prefHeight="41.0" prefWidth="81.0" style="-fx-border-width: 1px; -fx-border-color: #293241; -fx-border-radius: 10px;" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="6.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/back.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="backBtn" layoutX="20.0" layoutY="5.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Назад" textFill="#111111" AnchorPane.topAnchor="5.0" />
+         </children>
+      </AnchorPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9c9c9" height="21.0" layoutX="-15.0" stroke="#c9c9c9" strokeType="INSIDE" width="1383.0" />
+      <ImageView fx:id="closeAppImg" fitHeight="15.0" fitWidth="15.0" layoutX="1338.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="7.0">
+         <image>
+            <Image url="@../images/cross.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="MinimizeAppImg" fitHeight="17.0" fitWidth="17.0" layoutX="1314.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="701.0" AnchorPane.rightAnchor="29.0">
+         <image>
+            <Image url="@../images/minus-button.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

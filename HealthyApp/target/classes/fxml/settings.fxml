@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1360.0" style="-fx-background-color: linear-gradient(from 0% 20% to 30% 60%,  #F4E9E9,  #f3f3f3);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HealthyDiaryApp.view.SettingsView">
@@ -200,5 +201,16 @@
             </AnchorPane>
          </children>
       </AnchorPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9c9c9" height="21.0" layoutX="-15.0" stroke="#c9c9c9" strokeType="INSIDE" width="1383.0" AnchorPane.bottomAnchor="699.0" AnchorPane.rightAnchor="-8.0" />
+      <ImageView fx:id="closeAppImg" fitHeight="15.0" fitWidth="15.0" layoutX="1338.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="7.0">
+         <image>
+            <Image url="@../images/cross.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="MinimizeAppImg" fitHeight="17.0" fitWidth="17.0" layoutX="1314.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="29.0">
+         <image>
+            <Image url="@../images/minus-button.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

@@ -1,9 +1,4 @@
 package HealthyDiaryApp.view;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 /*
  * SettingsView class
  *
@@ -14,6 +9,11 @@ import java.util.ResourceBundle;
  * Description: Цей клас представляє відображення налаштувань користувача і наслідує клас BaseMenuClass.
 Клас містить різні поля та методи для взаємодії з даними користувача та обробки подій кнопок.
  */
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+
 import HealthyDiaryApp.HibbernateRunner;
 import HealthyDiaryApp.controller.SettingsController;
 import HealthyDiaryApp.enums.ActivityLevel;
@@ -24,6 +24,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import HealthyDiaryApp.navigation.BaseMenuClass;
 
@@ -116,6 +117,12 @@ public class SettingsView extends BaseMenuClass {
     private Button deleteUserAccountBtn;
 
     @FXML
+    private ImageView closeAppImg;
+
+    @FXML
+    private ImageView MinimizeAppImg;
+
+    @FXML
     void AddAllergy(MouseEvent event) {
         settingsController.addAllergy(allergyVbox, phoneNumberTextField, plusAllergyBtn, updateDataBtn);
     }
@@ -127,6 +134,22 @@ public class SettingsView extends BaseMenuClass {
 
     @FXML
     void initialize() {
+
+        // Обработчик для закрытия приложения при нажатии на closeAppImg
+        closeAppImg.setOnMouseClicked(event -> {
+            // Получаем сцену и закрываем ее
+            Stage stage = (Stage) closeAppImg.getScene().getWindow();
+            stage.close();
+        });
+
+        // Обработчик для сворачивания окна при нажатии на MinimizeAppImg
+        MinimizeAppImg.setOnMouseClicked(event -> {
+            // Получаем сцену и минимизируем окно
+            Stage stage = (Stage) MinimizeAppImg.getScene().getWindow();
+            stage.setIconified(true);
+        });
+
+        
         initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
         initializeMenuButton(loseWeightMenuButton);
         initializeMenuItem(forecastMenuItem);

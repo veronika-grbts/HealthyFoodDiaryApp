@@ -97,7 +97,20 @@ public class SettingsController {
 
                 currentUser.setNameUser(nameTextField.getText());
                 currentUser.setAgeUser(Integer.parseInt(ageTextField.getText()));
-                currentUser.setPhoneNumber(Long.parseLong(phoneNumberTextField.getText()));
+
+                // Проверяем, что номер телефона не занят другим пользователем
+                if (userComponent.isPhoneNumberExists(Long.parseLong(phoneNumberTextField.getText()))) {
+                    ErrorDialogController.showErrorAlert("Помилка", "Цей номер телефона вже зайнятий");
+                    return;
+                }
+                // Преобразуем строку с номером телефона в Long
+                Long phoneNumber = null;
+                try {
+                    phoneNumber = Long.parseLong(phoneNumberTextField.getText());
+                } catch (NumberFormatException e) {
+                    ErrorDialogController.showErrorAlert("Помилка", "Невірний формат номера телефона");
+                    return;
+                }
                 currentUser.setHeightUser(Double.parseDouble(heightTextField.getText()));
                 currentUser.setWeightUser(Double.parseDouble(weightTextField.getText()));
 
@@ -120,10 +133,15 @@ public class SettingsController {
                 currentUser.setTotalFatUser(fats);
                 currentUser.setTotalCarbsUser(carbs);
 
+
                 // Обновляем информацию о пользователе в базе данных
                 userComponent.updateUser(currentUser);
                 ApplicationContext.getInstance().setCurrentUser(
                         userComponent.getUserByPhoneNumber(currentUser.getPhoneNumber()));
+            }else {
+                ErrorDialogController.showErrorAlert("Помилка","Заповніть всі поля для наступної дії");
+                return;
+
             }
         }
     }

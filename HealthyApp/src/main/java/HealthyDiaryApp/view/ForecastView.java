@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import HealthyDiaryApp.controller.ForecastController;
 import HealthyDiaryApp.navigation.BaseMenuClass;
+import javafx.stage.Stage;
 
 /*
  * ForecastView class
@@ -92,6 +93,28 @@ public class ForecastView extends BaseMenuClass {
     private Button addNewWeightUserBtn;
 
     @FXML
+    private ImageView closeAppImg;
+
+    @FXML
+    private ImageView MinimizeAppImg;
+
+
+    @FXML
+    private AnchorPane progressPane;
+
+    @FXML
+    private TextField sizeDayDuringLoseWeight;
+
+    @FXML
+    private TextField howUserAlredyLossWeight;
+
+    @FXML
+    private TextField kgWhatContinue;
+
+    @FXML
+    private Label supportText;
+
+    @FXML
     void ClosePaneWithLowWeight (MouseEvent event) {
         userLowWeightPage.setVisible(false);
     }
@@ -115,10 +138,25 @@ public class ForecastView extends BaseMenuClass {
         AnimationButton.addHoverAnimation(updateBestWeightUserBtn);
         AnimationButton.addFadeAnimation(addNewWeightUserBtn);
 
-        forecastController.initialize(weightProgressChart);
+        forecastController.initialize(weightProgressChart, progressPane,
+                sizeDayDuringLoseWeight, howUserAlredyLossWeight, kgWhatContinue,supportText);
+
         addNewWeightUserBtn.setOnAction(event -> {
             forecastController.addNewWeightUser(newWeightUserTextFiel,
-                     addProgressUserPane, weightProgressChart);
+                     addProgressUserPane, weightProgressChart,progressPane);
+        });
+        // Обработчик для закрытия приложения при нажатии на closeAppImg
+        closeAppImg.setOnMouseClicked(event -> {
+            // Получаем сцену и закрываем ее
+            Stage stage = (Stage) closeAppImg.getScene().getWindow();
+            stage.close();
+        });
+
+        // Обработчик для сворачивания окна при нажатии на MinimizeAppImg
+        MinimizeAppImg.setOnMouseClicked(event -> {
+            // Получаем сцену и минимизируем окно
+            Stage stage = (Stage) MinimizeAppImg.getScene().getWindow();
+            stage.setIconified(true);
         });
 
         // Определение действий кнопки обновления лучшего веса

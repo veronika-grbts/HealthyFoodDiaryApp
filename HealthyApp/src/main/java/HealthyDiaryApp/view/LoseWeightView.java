@@ -9,7 +9,13 @@
  Клас містить різні поля та методи для взаємодії з елементами вікна та обробки подій кнопок.
  */
 package HealthyDiaryApp.view;
+import java.io.File;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import HealthyDiaryApp.entity.User;
+import HealthyDiaryApp.singleton.ApplicationContext;
+import HealthyDiaryApp.util.UserComponent;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,6 +23,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -24,6 +31,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import HealthyDiaryApp.controller.LoseWeightController;
 import HealthyDiaryApp.navigation.BaseMenuClass;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.time.LocalDateTime;
@@ -40,11 +48,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
+
 public class LoseWeightView extends BaseMenuClass {
     private LoseWeightController loseWeightController = new LoseWeightController();
+    private UserComponent userComponent = new UserComponent();
     private static final  int AXIS_OFFSET_Y = 100;
     private static final int ANIMATION_DURATION = 500;
-
+    private static final String FEMALE_PHOTOS_DIRECTORY = "C://Users//User//IdeaProjects//HealthyApp//src//main//resources//images//female";
+    private static final String MALE_PHOTOS_DIRECTORY= "C://Users//User//IdeaProjects//HealthyApp//src//main//resources//images//male";
     @FXML
     private Button updateBestWeightUserBtn;
 
@@ -65,6 +76,9 @@ public class LoseWeightView extends BaseMenuClass {
 
     @FXML
     private MenuItem forecastMenuItem;
+
+    @FXML
+    private MenuItem progresisMenuItem;
 
     @FXML
     private Button changePageBtn;
@@ -157,14 +171,39 @@ public class LoseWeightView extends BaseMenuClass {
     private Timeline timeline;
 
     @FXML
-    void initialize() {
+    private ImageView closeAppImg;
 
+    @FXML
+    private ImageView MinimizeAppImg;
+
+    @FXML
+    private ImageView photoAccount;
+
+    @FXML
+    void initialize() {
+        setRandomUserPhoto();
         initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
         initializeMenuButton(loseWeightMenuButton);
-        initializeMenuItem(forecastMenuItem);
+        //initializeMenuItem(forecastMenuItem);
+        initializeMenuItem(progresisMenuItem);
         AnimationButton.addHoverAnimation(updateBestWeightUserBtn);
         AnimationButton.addFadeAnimation(updateCouseuserBtn);
         AnimationButton.addHoverAnimation(updateBestWeightBtn);
+
+        // Обработчик для закрытия приложения при нажатии на closeAppImg
+        closeAppImg.setOnMouseClicked(event -> {
+            // Получаем сцену и закрываем ее
+            Stage stage = (Stage) closeAppImg.getScene().getWindow();
+            stage.close();
+        });
+
+        // Обработчик для сворачивания окна при нажатии на MinimizeAppImg
+        MinimizeAppImg.setOnMouseClicked(event -> {
+            // Получаем сцену и минимизируем окно
+            Stage stage = (Stage) MinimizeAppImg.getScene().getWindow();
+            stage.setIconified(true);
+        });
+
 
         loseWeightController.initializeUserInfo( bodyMassIndexFieldText,
                  nameBodyMassIndexLable,  descriptionBodyMassIndexLable,
@@ -203,6 +242,40 @@ public class LoseWeightView extends BaseMenuClass {
         });
 
         userShinishedLossWeightImg.setOnMouseClicked(this::ClosePaneFinishedLossWeightImg);
+    }
+    private void setRandomUserPhoto() {
+        User user = getUserFromApplicationContext();
+
+        // Определение пола пользователя (допустим, у вас есть метод для этого)
+        boolean gender = user.isGenderUser();
+
+        // Выбор случайного фото в зависимости от пола пользователя
+        String photoPath;
+        if (gender == true) {
+           photoPath = getRandomPhotoPathFromDirectory(MALE_PHOTOS_DIRECTORY);
+        } else {
+            photoPath = getRandomPhotoPathFromDirectory(FEMALE_PHOTOS_DIRECTORY);
+        }
+
+        // Установка выбранного фото в ImageView
+        Image image = new Image(photoPath);
+        photoAccount.setImage(image);
+    }
+
+    private String getRandomPhotoPathFromDirectory(String directoryPath) {
+        File directory = new File(directoryPath);
+        File[] files = directory.listFiles();
+        if (files != null && files.length > 0) {
+            // Выбор случайного файла из директории
+            Random random = new Random();
+            int randomIndex = random.nextInt(files.length);
+            return files[randomIndex].toURI().toString();
+        } else {
+            return null;
+        }
+    }
+    private User getUserFromApplicationContext() {
+        return ApplicationContext.getInstance().getCurrentUser();
     }
     @FXML
     void ClosePane(MouseEvent event) {

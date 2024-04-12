@@ -14,6 +14,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import HealthyDiaryApp.entity.User;
@@ -25,6 +26,9 @@ import HealthyDiaryApp.util.WeightLossGoalsComponent;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +37,9 @@ public class ForecastController {
     private WeightLossGoalsComponent weightLossGoalsComponent = new WeightLossGoalsComponent();
 
 
-    public void initialize(LineChart<String, Number> weightProgressChart) {
+    public void initialize(LineChart<String, Number> weightProgressChart, AnchorPane progressPane,
+                           TextField sizeDayDuringLoseWeight, TextField howUserAlredyLossWeight,
+                           TextField kgWhatContinue, Label supportText) {
         User user = getUserFromApplicationContext();
         // Получение данных из базы данных
         List<Double> weightList = weightLossGoalsComponent.fetchWeightLossProgress(user.getPhoneNumber());
@@ -44,12 +50,21 @@ public class ForecastController {
             String formattedDate = dateFormat.format(date);
             formattedDateList.add(formattedDate);
         }
-        createWeightProgressChart(formattedDateList, weightList, weightProgressChart);
+
+        createWeightProgressChart(formattedDateList, weightList, weightProgressChart, progressPane);
+
+        // Проверяем видимость progressPane и вызываем метод updateSizeDayDuringLoseWeight
+        if (progressPane.isVisible()) {
+            addCountsDayLossWeight(user, sizeDayDuringLoseWeight);
+            addOddWeight(user, howUserAlredyLossWeight);
+            addOddWightLoss(user, kgWhatContinue);
+        }
     }
 
     private void createWeightProgressChart(List<String> formattedDateList,
                                            List<Double> weightList,
-                                           LineChart<String, Number> weightProgressChart) {
+                                           LineChart<String, Number> weightProgressChart,
+                                           AnchorPane progressPane) {
         // Создание осей графика
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -64,14 +79,60 @@ public class ForecastController {
             series.getData().add(new XYChart.Data<>(formattedDateList.get(i), weightList.get(i)));
         }
         weightProgressChart.getData().add(series);
+
+        // Отображаем progressPane, если есть маркеры (точки) в серии данных, иначе скрываем его
+        boolean hasMarkers = !series.getData().isEmpty();
+        progressPane.setVisible(hasMarkers);
+    }
+
+    private void addCountsDayLossWeight(User user, TextField sizeDayDuringLoseWeight) {
+        java.util.Date firstProgressDate = weightLossGoalsComponent.getFirstProgressDate(user.getPhoneNumber());
+
+        if (firstProgressDate == null) {
+            sizeDayDuringLoseWeight.setText("");
+            return;
+        }
+        LocalDate firstProgressLocalDate = firstProgressDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate currentDate = LocalDate.now();
+        long daysSinceFirstProgress = ChronoUnit.DAYS.between(firstProgressLocalDate, currentDate);
+        sizeDayDuringLoseWeight.setText(String.valueOf(daysSinceFirstProgress));
+    }
+    private void addOddWeight(User user, TextField howUserAlredyLossWeight){
+        double currentWeight = weightLossGoalsComponent.getCurrentWeightByPhoneNumber(user.getPhoneNumber());
+        double startWeight = weightLossGoalsComponent.getFirstWeightByPhoneNumber(user.getPhoneNumber());
+        double oddWeight = startWeight - currentWeight;
+        howUserAlredyLossWeight.setText(String.valueOf(oddWeight));
+    }
+
+    private void  addOddWightLoss(User user, TextField kgWhatContinue){
+        double currentWeight = weightLossGoalsComponent.getCurrentWeightByPhoneNumber(user.getPhoneNumber());
+        double targetWeight = weightLossGoalsComponent.getTargetWeightByPhoneNumber(user.getPhoneNumber());
+        double oddWeightLoss = currentWeight - targetWeight;
+        if(currentWeight <= targetWeight){
+            kgWhatContinue.setText("0");
+        }else {
+            kgWhatContinue.setText(String.valueOf(oddWeightLoss));
+        }
     }
 
     public void addNewWeightUser(TextField newWeightUserTextFiel,
                                  AnchorPane addProgressUserPane,
-                                 LineChart<String, Number> weightProgressChart) {
+                                 LineChart<String, Number> weightProgressChart,
+                                 AnchorPane proggresPane) {
         User user = getUserFromApplicationContext();
-        double newWeightUser = Double.parseDouble(newWeightUserTextFiel.getText());
 
+
+        // Получение введенного нового веса
+        String newWeightText = newWeightUserTextFiel.getText().trim();
+
+        // Проверка, не является ли поле ввода пустым
+        if (newWeightText.isEmpty()) {
+            // Если поле ввода пустое, показываем окно с ошибкой
+            ErrorDialogController.showErrorAlert("Помилка", "Ви не ввели свій прогрес. Пусте поле не може бути запам'ятоване");
+            return; // Выходим из метода, так как нет смысла продолжать выполнение
+        }
+
+        double newWeightUser = Double.parseDouble(newWeightText);
         // Получение оптимального веса из таблицы WeightLossGoals
         double targetWeight = weightLossGoalsComponent.getTargetWeightByPhoneNumber(user.getPhoneNumber());
 
@@ -111,8 +172,9 @@ public class ForecastController {
             formattedDateListNew.add(formattedDate);
         }
         weightProgressChart.getData().clear();
-        createWeightProgressChart(formattedDateListNew, updatedWeightList, weightProgressChart);
+        createWeightProgressChart(formattedDateListNew, updatedWeightList, weightProgressChart, proggresPane);
     }
+
     private User getUserFromApplicationContext() {
         return ApplicationContext.getInstance().getCurrentUser();
     }

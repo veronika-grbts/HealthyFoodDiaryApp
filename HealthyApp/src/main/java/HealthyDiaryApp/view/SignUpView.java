@@ -14,6 +14,9 @@ import java.net.URL;
 import java.util.*;
 
 
+import HealthyDiaryApp.controller.ErrorDialogController;
+import HealthyDiaryApp.navigation.BaseMenuClass;
+import HealthyDiaryApp.util.UserComponent;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -27,12 +30,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
-public class SignUpView implements Initializable {
+public class SignUpView extends BaseMenuClass implements Initializable {
     private SignUpController signUpController = new SignUpController();
+    private UserComponent userComponent = new UserComponent();
     @FXML
     private ResourceBundle resources;
 
@@ -96,29 +101,113 @@ public class SignUpView implements Initializable {
     @FXML
     private ImageView exclamationPointImg;
 
+    @FXML
+    private AnchorPane backPane;
+
+    @FXML
+    private Button backBtn;
+
+    @FXML
+    private ImageView closeAppImg;
+
+    @FXML
+    private ImageView MinimizeAppImg;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         signUpActivityLevel.getItems().addAll(ActivityLevel.High, ActivityLevel.Medium, ActivityLevel.Low);
         signUpGender.getItems().addAll("чоловік", "жінка");
 
-        nextBtn1.setOnAction(event -> {
-            if (isDataValid(signUpName, sighUpPhone)) {
-                signUpPane1.setVisible(false);
-                signUpPane2.setVisible(true);
-
-                // Показать восклицательные знаки после установки видимости signUpPane2
-                Platform.runLater(() -> showExclamationMarks(signUpPane3));
-            }
+        // Обработчик для закрытия приложения при нажатии на closeAppImg
+        closeAppImg.setOnMouseClicked(event -> {
+            // Получаем сцену и закрываем ее
+            Stage stage = (Stage) closeAppImg.getScene().getWindow();
+            stage.close();
         });
+
+        // Обработчик для сворачивания окна при нажатии на MinimizeAppImg
+        MinimizeAppImg.setOnMouseClicked(event -> {
+            // Получаем сцену и минимизируем окно
+            Stage stage = (Stage) MinimizeAppImg.getScene().getWindow();
+            stage.setIconified(true);
+        });
+
+        nextBtn1.setOnAction(event -> {
+            String phoneNumber = sighUpPhone.getText();
+            if (!phoneNumber.isEmpty()) {
+                long phone = Long.parseLong(phoneNumber);
+                if (!userComponent.isPhoneNumberExists(phone)) {
+                    signUpPane1.setVisible(false);
+                    signUpPane2.setVisible(true);
+                    Platform.runLater(() -> showExclamationMarks(signUpPane3));
+                }else {
+                    ErrorDialogController.showErrorAlert("Помилка","Цей номер телефона вже зайнятий");
+                    return;
+                }
+            } else {
+                // Обработка случая, когда поле с номером телефона пустое
+            }
+
+        });
+
 
         nextBtn2.setOnAction(event -> {
             if (isDataValid(signUpAge, signUpWeight, signUpHeight)) {
                 signUpPane2.setVisible(false);
                 signUpPane3.setVisible(true);
-                // Показать восклицательные знаки после установки видимости signUpPane3
                 Platform.runLater(() -> showExclamationMarks(signUpPane3));
             }
         });
+
+
+        // Обработчик для backPane
+        backPane.setOnMouseEntered(event -> {
+            backPane.setOpacity(0.5); // Устанавливаем немного тусклый эффект при наведении
+        });
+
+        backPane.setOnMouseExited(event -> {
+            backPane.setOpacity(1.0); // Возвращаем обычную непрозрачность после ухода мыши
+        });
+
+        initializeButtons(backBtn);
+
+
+        // Добавляем слушатель для поля signUpName
+        signUpName.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (TextFieldValidator.isValidField(signUpName)) {
+                signUpName.setStyle(""); // Убираем стиль при вводе правильных данных
+            }
+        });
+
+        // Добавляем слушатель для поля sighUpPhone
+        sighUpPhone.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (TextFieldValidator.isValidField(sighUpPhone)) {
+                sighUpPhone.setStyle(""); // Убираем стиль при вводе правильных данных
+            }
+        });
+
+        // Добавляем слушатель для поля signUpAge
+        signUpAge.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (TextFieldValidator.isValidField(signUpAge)) {
+                signUpAge.setStyle(""); // Убираем стиль при вводе правильных данных
+            }
+        });
+
+        // Добавляем слушатель для поля signUpWeight
+        signUpWeight.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (TextFieldValidator.isValidField(signUpWeight)) {
+                signUpWeight.setStyle(""); // Убираем стиль при вводе правильных данных
+            }
+        });
+
+        // Добавляем слушатель для поля signUpHeight
+        signUpHeight.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (TextFieldValidator.isValidField(signUpHeight)) {
+                signUpHeight.setStyle(""); // Убираем стиль при вводе правильных данных
+            }
+        });
+
+
         ImagePlus.setOnMouseClicked(event -> signUpController.handleImagePlusClicked(sighUpPhone, signUpPane3));
         AnimationButton.addHoverAnimation(finishBtn);
         finishBtn.setOnAction(event -> {
@@ -137,8 +226,7 @@ public class SignUpView implements Initializable {
     @FXML
     private boolean isDataValid(TextField... fields) {
         for (TextField field : fields) {
-            if (!isValidField(field)) {
-                showExclamationMarkForField(field);
+            if (!TextFieldValidator.isValidField(field)) {
                 return false;
             }
         }
@@ -220,7 +308,5 @@ public class SignUpView implements Initializable {
         signUpPane3.setVisible(true);
         handleImagePlusClicked(event);
     }
-
-
 
 }

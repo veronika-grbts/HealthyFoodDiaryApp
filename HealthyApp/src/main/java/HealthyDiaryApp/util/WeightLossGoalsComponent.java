@@ -432,6 +432,66 @@ public class WeightLossGoalsComponent {
         }
     }
 
+    public Date getFirstProgressDate(long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
 
+            // Находим айдицели пользователя по номеру телефона в таблице WeightLossGoals
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Integer> criteriaQuery = builder.createQuery(Integer.class);
+            Root<WeightLossGoals> rootGoals = criteriaQuery.from(WeightLossGoals.class);
+            Join<WeightLossGoals, User> joinUser = rootGoals.join("user");
+            criteriaQuery.select(rootGoals.get("idWeightLossGoals"))
+                    .where(builder.equal(joinUser.get("phoneNumber"), phoneNumber));
+            Query<Integer> queryGoals = session.createQuery(criteriaQuery);
+            queryGoals.setMaxResults(1);
+            Integer goalId = queryGoals.uniqueResult();
 
+            if (goalId == null) {
+                // Если нет записей о целях пользователя, возвращаем null
+                return null;
+            }
+
+            // Используем айдицели пользователя для поиска первой даты в таблице WeightLossProgress
+            CriteriaQuery<Date> criteriaQueryProgress = builder.createQuery(Date.class);
+            Root<WeightLossProgress> rootProgress = criteriaQueryProgress.from(WeightLossProgress.class);
+            criteriaQueryProgress.select(rootProgress.get("date"))
+                    .where(builder.equal(rootProgress.get("goal").get("idWeightLossGoals"), goalId))
+                    .orderBy(builder.asc(rootProgress.get("date")));
+            Query<Date> queryProgress = session.createQuery(criteriaQueryProgress);
+            queryProgress.setMaxResults(1);
+            return queryProgress.uniqueResult();
+        } catch (Exception e) {
+            // Обработка ошибок
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public double getFirstWeightByPhoneNumber(long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Double> criteriaQuery = builder.createQuery(Double.class);
+            Root<WeightLossGoals> root = criteriaQuery.from(WeightLossGoals.class);
+
+            criteriaQuery.select(root.get("currentWeightUserLossGoals"))
+                    .where(builder.equal(root.get("user").get("phoneNumber"),
+                            phoneNumber));
+
+            Query<Double> query = session.createQuery(criteriaQuery);
+            Double targetWeight = query.uniqueResult();
+
+            if (targetWeight != null) {
+                log.info("Start weight found for phone number {}: {}",
+                        phoneNumber, targetWeight);
+            } else {
+                log.warn("Start weight not found for phone number {}", phoneNumber);
+            }
+
+            return targetWeight != null ? targetWeight : 0.0; // Возвращаем целевой вес или 0.0, если он не найден
+        } catch (HibernateException e) {
+            log.error("An error occurred while getting start weight by phone number", e);
+            return 0.0;
+        }
+    }
 }

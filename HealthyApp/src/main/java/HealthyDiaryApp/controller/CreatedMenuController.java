@@ -53,6 +53,10 @@ public class CreatedMenuController {
         CreatedMenu createdMenu = new CreatedMenu();
         createdMenutBtn.setOnAction(actionEvent -> {
             String selectedPeriod = productsComboBox.getValue();
+            if (selectedPeriod == null || selectedPeriod.isEmpty()) {
+                ErrorDialogController.showErrorAlert("Помилка", "Будь-ласака оберіть період для створення меню.");
+                return; // Прерываем выполнение дальнейших действий
+            }
             int numberOfDays = getNumberOfDaysForPeriod(selectedPeriod);
             for (int i = 0; i < numberOfDays; i++) {
                 createdMenu.createMenu();

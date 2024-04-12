@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import HealthyDiaryApp.navigation.BaseMenuClass;
+import javafx.stage.Stage;
 /*
  * CreatedMenuView class
  *
@@ -70,11 +71,33 @@ public class CreatedMenuView extends BaseMenuClass {
     private TableColumn<UserSelectedMenu, Double> quantityColumn;
 
     @FXML
+    private ImageView closeAppImg;
+
+    @FXML
+    private ImageView MinimizeAppImg;
+
+
+    @FXML
     void initialize() {
         initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
         initializeMenuButton(loseWeightMenuButton);
         initializeMenuItem(forecastMenuItem);
         AnimationButton.addFadeAnimation(createdMenutBtn);
+
+        // Обработчик для закрытия приложения при нажатии на closeAppImg
+        closeAppImg.setOnMouseClicked(event -> {
+            // Получаем сцену и закрываем ее
+            Stage stage = (Stage) closeAppImg.getScene().getWindow();
+            stage.close();
+        });
+
+        // Обработчик для сворачивания окна при нажатии на MinimizeAppImg
+        MinimizeAppImg.setOnMouseClicked(event -> {
+            // Получаем сцену и минимизируем окно
+            Stage stage = (Stage) MinimizeAppImg.getScene().getWindow();
+            stage.setIconified(true);
+        });
+
 
         createdMenuController.initialize(tableProduct, productsComboBox, checkBoxCreatedPdf, updateBtn, updateImage,
                 mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn, loseWeightMenuButton,

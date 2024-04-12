@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
  */
 
 import HealthyDiaryApp.navigation.NavigationMenu;
+import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.fxml.FXML;
@@ -21,9 +22,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import HealthyDiaryApp.controller.MainPageController;
 import HealthyDiaryApp.navigation.BaseMenuClass;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class MainPageView extends BaseMenuClass {
     private MainPageController mainPageController = new MainPageController();
+
+    @FXML
+    private AnchorPane mainAnchorePane;
+
+
     @FXML
     private ResourceBundle resources;
 
@@ -77,11 +86,34 @@ public class MainPageView extends BaseMenuClass {
     private Button existBtn;
 
     @FXML
+    private ImageView closeAppImg;
+
+    @FXML
+    private ImageView MinimizeAppImg;
+
+
+    @FXML
     void initialize() {
+
         initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
         initializeMenuButton(loseWeightMenuButton);
         initializeMenuItem(forecastMenuItem);
         AnimationButton.addHoverAnimation(existBtn);
+
+        // Обработчик для закрытия приложения при нажатии на closeAppImg
+        closeAppImg.setOnMouseClicked(event -> {
+            // Получаем сцену и закрываем ее
+            Stage stage = (Stage) closeAppImg.getScene().getWindow();
+            stage.close();
+        });
+
+        // Обработчик для сворачивания окна при нажатии на MinimizeAppImg
+        MinimizeAppImg.setOnMouseClicked(event -> {
+            // Получаем сцену и минимизируем окно
+            Stage stage = (Stage) MinimizeAppImg.getScene().getWindow();
+            stage.setIconified(true);
+        });
+
 
         mainPageController.fillUserData(name_id, numberPhone, age,
                 height, weight, gender,allergy);
@@ -89,6 +121,8 @@ public class MainPageView extends BaseMenuClass {
         existBtn.setOnAction(event -> {
                 NavigationMenu.navigateToPage("primary");
         });
+
+
     }
 }
 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="BackPane" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" prefHeight="186.0" prefWidth="484.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HealthyDiaryApp.view.ErrorDialogView">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#484a4dc4" height="26.0" layoutY="-2.0" stroke="#484a4d98" strokeType="INSIDE" width="484.0" />
+      <Label fx:id="titleMessager" layoutX="74.0" layoutY="41.0" prefHeight="46.0" prefWidth="394.0" textFill="#dd3b3b" wrapText="true">
+         <font>
+            <Font name="Georgia" size="24.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="46.0" fitWidth="37.0" layoutX="30.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/delete-button_5974771.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="225.0" layoutY="1.0" text="помилка" textFill="#322727">
+         <font>
+            <Font name="Georgia" size="15.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="backImg" fitHeight="19.0" fitWidth="17.0" layoutX="457.0" layoutY="2.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/cross.png" />
+         </image>
+      </ImageView>
+      <Separator layoutX="7.0" layoutY="93.0" prefHeight="11.0" prefWidth="471.0" />
+      <Label fx:id="messageLabel" layoutX="22.0" layoutY="108.0" prefHeight="68.0" prefWidth="450.0" wrapText="true">
+         <font>
+            <Font name="Georgia Bold" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

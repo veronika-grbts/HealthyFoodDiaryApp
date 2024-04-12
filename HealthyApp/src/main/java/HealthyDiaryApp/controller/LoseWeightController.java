@@ -38,9 +38,6 @@ public class LoseWeightController {
     private static final double LOWER_LIMIT_OF_OBESITY_ONE_BMI = 30;
     private CountdownTimer countdownTimer;
 
-    public LoseWeightController() {
-        // Не нужно создавать CountdownTimer здесь
-    }
 
     public void initializeUserInfo(TextField bodyMassIndexFieldText,
                                    Label nameBodyMassIndexLable, Label descriptionBodyMassIndexLable,
@@ -141,7 +138,14 @@ public class LoseWeightController {
                                    PieChart diagramAboutWeightLossStage,
                                    AnchorPane userChoseIncorrectBestWeightPage) {
         User user = getUserFromApplicationContext();
-        double newWeight = Double.parseDouble(newBestWeighttextField.getText());
+        String newWeightText = newBestWeighttextField.getText();
+        if (newWeightText == null || newWeightText.isEmpty()) {
+            // Показать окно с ошибкой, если новый вес пустой
+            ErrorDialogController.showErrorAlert("Помилка", "Будь-ласка введіть нову оптимальну вагу");
+            return; // Прервать выполнение метода, чтобы избежать дальнейших ошибок
+        }
+
+        double newWeight = Double.parseDouble(newWeightText);
         double bmi = LoseWeightCalculator.calculateBMI(newWeight, user.getHeightUser());
 
         // Проверяем, находится ли новый вес в пределах нормального ИМТ
@@ -156,6 +160,7 @@ public class LoseWeightController {
             userChoseIncorrectBestWeightPage.setVisible(true);
         }
     }
+
 
 
     // Метод инициализации обновления лучшего веса

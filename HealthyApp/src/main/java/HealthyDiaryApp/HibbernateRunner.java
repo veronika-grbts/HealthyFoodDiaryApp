@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
+import javafx.stage.StageStyle;
 import lombok.extern.slf4j.Slf4j;
 
 /*
@@ -23,29 +24,35 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class HibbernateRunner extends Application {
-    private static Scene scene;
+
+    private static Stage stage;
+    private static  double xOffset = 0;
+    private static  double yOffset = 0;
 
     @Override
-    public void start(Stage stage) throws IOException {
-        String fxmlPath = "file:///C:/Users/User/IdeaProjects/HealthyApp/src/main/resources/fxml/primary.fxml";
-        FXMLLoader fxmlLoader = new FXMLLoader(new URL(fxmlPath));
-        Parent root = fxmlLoader.load();
-        scene = new Scene(root); // изменение здесь
-        stage.setScene(scene);
+    public void start(Stage primaryStage) throws IOException {
+        stage = primaryStage;
+        setRoot("primary");
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 
-
     public static void setRoot(String fxml) throws IOException {
-        String path = "/fxml/" + fxml + ".fxml";
-        URL resourceUrl = HibbernateRunner.class.getResource(path);
-        if (resourceUrl == null) {
-            throw new IOException("FXML file not found: " + path);
-        }
-        FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
+        FXMLLoader fxmlLoader = new FXMLLoader(HibbernateRunner.class.getResource("/fxml/" + fxml + ".fxml"));
         Parent root = fxmlLoader.load();
-        scene.setRoot(root);
+        Scene scene = new Scene(root);
+        root.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - xOffset);
+            stage.setY(event.getScreenY() - yOffset);
+        });
+        stage.setScene(scene);
+        stage.sizeToScene();
     }
+
 
     public static void main(String[] args) {
         launch();

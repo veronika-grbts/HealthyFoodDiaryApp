@@ -1,9 +1,12 @@
 package HealthyDiaryApp.navigation;
 
+import HealthyDiaryApp.view.DraggableWindow;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import HealthyDiaryApp.view.AnimationButton;
+import javafx.stage.Stage;
 
 /*
  * BaseMenuClass abstract class
@@ -48,6 +51,9 @@ public abstract class BaseMenuClass {
             case "changePageBtn":
                 NavigationMenu.navigateToPage("settings");
                 break;
+            case "backBtn":
+                NavigationMenu.navigateToPage("primary");
+                break;
         }
     }
 
@@ -56,7 +62,6 @@ public abstract class BaseMenuClass {
             case "loseWeightMenuButton":
                 NavigationMenu.navigateToPage("loseWeight");
                 break;
-
         }
     }
 
@@ -65,7 +70,11 @@ public abstract class BaseMenuClass {
             case "forecastMenuItem":
                 NavigationMenu.navigateToPage("forecast");
                 break;
+            case "progresisMenuItem":
+                NavigationMenu.navigateToPage("prognosis");
+                break;
 
         }
     }
+
 }

@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1360.0" style="-fx-background-color: linear-gradient(from 0% 20% to 30% 60%,  #F4E9E9,  #f3f3f3);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HealthyDiaryApp.view.PrognosisView">
+    <children>
+        <AnchorPane layoutX="-19.0" prefHeight="720.0" prefWidth="351.0" style="-fx-background-color: #ACC860;" visible="false" AnchorPane.leftAnchor="-19.0" AnchorPane.topAnchor="0.0">
+            <effect>
+                <DropShadow color="#0000004a" />
+            </effect>
+        </AnchorPane>
+        <Pane layoutX="282.0" layoutY="73.0" prefHeight="123.0" prefWidth="1078.0" style="-fx-background-color: #6f991d;">
+            <children>
+                <Label layoutX="65.0" layoutY="39.0" text="Прогноз схуднення" textFill="#f4e9e9">
+                    <font>
+                        <Font name="Gabriola" size="36.0" />
+                    </font>
+                </Label>
+                <HBox fx:id="hBoxTime" alignment="CENTER" layoutX="375.0" layoutY="12.0" prefHeight="100.0" prefWidth="200.0" visible="false">
+                    <children>
+                        <Label fx:id="daysLabel" prefHeight="43.0" prefWidth="45.0" textFill="#fff8f8">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label prefHeight="27.0" prefWidth="9.0" text=":" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="hoursLabel" prefHeight="43.0" prefWidth="45.0" textFill="#fff8f8">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label prefHeight="27.0" prefWidth="9.0" text=":" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="minutesLabel" prefHeight="43.0" prefWidth="45.0" textFill="#fff8f8">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label prefHeight="27.0" prefWidth="9.0" text=":" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="secondsLabel" prefHeight="43.0" prefWidth="45.0" textFill="#fff8f8">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+            </children>
+            <effect>
+                <DropShadow color="#000000a6" />
+            </effect>
+        </Pane>
+        <ImageView fitHeight="542.0" fitWidth="392.0" layoutX="996.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/top-view-fresh-salad-with-fried-egg-removebg-preview.png" />
+            </image>
+            <effect>
+                <DropShadow />
+            </effect>
+        </ImageView>
+        <VBox fx:id="VBoxMenu" prefHeight="737.0" prefWidth="283.0" style="-fx-background-color: #452f42;">
+            <children>
+                <Pane prefHeight="130.0" prefWidth="332.0">
+                    <children>
+                        <ImageView fitHeight="45.0" fitWidth="55.0" layoutX="41.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/diary-book.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="95.0" layoutY="46.0" text="Healthy" textFill="#f4e9e9">
+                            <font>
+                                <Font name="Gabriola" size="36.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="181.0" layoutY="51.0" text="Diary" textFill="#f4e9e9">
+                            <font>
+                                <Font name="Ebrima" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+                <Button fx:id="mainPageBtn" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="336.0" style="-fx-background-color: #452f42;" text="Профіль користувача" textFill="#f4e9e9">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/woman.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="calculatorPageBtn" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="332.0" style="-fx-background-color: #452f42;" text="Лічильник калорій   " textFill="#f4e9e9">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/calories-calculator.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="createdMenuPageBtn" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="346.0" style="-fx-background-color: #452f42;" text="Створення меню      " textFill="#f4e9e9">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/diet.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <SplitMenuButton fx:id="loseWeightMenuButton" mnemonicParsing="false" popupSide="RIGHT" prefHeight="39.0" prefWidth="282.0" styleClass="menu-item" stylesheets="@../css/styleMenuBar.css" text="  Схуднення">
+                    <items>
+                        <MenuItem fx:id="forecastMenuItem" mnemonicParsing="false" style="-fx-text-fill: #f4e9e9; -fx-pref-width: 255; -fx-pref-hight: 40;" text="Прогрес" />
+                    </items>
+                    <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/diet_5769852.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </SplitMenuButton>
+                <Button fx:id="changePageBtn" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="346.0" style="-fx-background-color: #452f42;" text="Редагування              " textFill="#f4e9e9">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/settings.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
+            <effect>
+                <DropShadow color="#513c3cb5" offsetY="4.0" spread="0.01" />
+            </effect>
+        </VBox>
+        <ScrollPane layoutX="283.0" layoutY="196.0" prefHeight="525.0" prefWidth="1078.0">
+            <content>
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="520.0" minWidth="1070.0">
+                    <children>
+                        <AnchorPane layoutX="30.0" layoutY="27.0" prefHeight="624.0" prefWidth="363.0" style="-fx-background-color: #bfdc9c; -fx-border-width: 1px; -fx-border-radius: 20px; -fx-background-radius: 20px; -fx-border-color: #769549;">
+                            <children>
+                                <TextField fx:id="currentCaloricIntakeTextField" editable="false" layoutX="171.0" layoutY="169.0" prefHeight="31.0" prefWidth="86.0" />
+                                <Label layoutX="30.0" layoutY="171.0" text="вік: ">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="30.0" layoutY="90.0" prefHeight="59.0" prefWidth="200.0" text="Актуальна вага користувача: " wrapText="true">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="bestweightFieldText" editable="false" layoutX="171.0" layoutY="120.0" prefHeight="31.0" prefWidth="86.0" />
+                        <Label layoutX="30.0" layoutY="31.0" text="Дані для створення прогнозу:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="30.0" layoutY="215.0" text="зріст: ">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="currentCaloricIntakeTextField1" editable="false" layoutX="171.0" layoutY="213.0" prefHeight="31.0" prefWidth="86.0" />
+                        <Label layoutX="30.0" layoutY="277.0" text="Рівень активності: ">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="currentCaloricIntakeTextField11" editable="false" layoutX="187.0" layoutY="275.0" prefHeight="31.0" prefWidth="156.0" />
+                            </children>
+                            <effect>
+                                <DropShadow color="#00000059" offsetY="4.0" />
+                            </effect>
+                        </AnchorPane>
+                        <AnchorPane layoutX="462.0" layoutY="27.0" prefHeight="420.0" prefWidth="544.0" style="-fx-background-color: #f6e2ba; -fx-border-width: 1px; -fx-border-radius: 20px; -fx-background-radius: 20px;" AnchorPane.leftAnchor="462.0" AnchorPane.rightAnchor="64.0">
+                            <children>
+                                <Label layoutX="112.0" layoutY="11.0" text="На якому єтапі схуднення">
+                                    <font>
+                                        <Font name="Gabriola" size="36.0" />
+                                    </font>
+                                </Label>
+                        <ImageView fitHeight="43.0" fitWidth="33.0" layoutX="27.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/back.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="43.0" fitWidth="33.0" layoutX="484.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+                           <image>
+                              <Image url="@../images/back.png" />
+                           </image>
+                        </ImageView>
+                        <AnchorPane fx:id="chartPane" layoutX="27.0" layoutY="75.0" prefHeight="392.0" prefWidth="498.0" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="oopsWindowPane" prefHeight="420.0" prefWidth="544.0" style="-fx-background-color: linear-gradient(from 0% 20% to 30% 60%,  #F4E9E9,  #f3f3f3);" visible="false" AnchorPane.rightAnchor="74.0" AnchorPane.topAnchor="290.0">
+                            <children>
+                                <ImageView fitHeight="224.0" fitWidth="233.0" layoutX="213.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/healthy-food(1).png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="142.0" fitWidth="172.0" layoutX="71.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/oops.png" />
+                                    </image>
+                                </ImageView>
+                                <Label layoutX="66.0" layoutY="41.0" text="Oops!">
+                                    <font>
+                                        <Font name="System Bold Italic" size="36.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="66.0" layoutY="94.0" prefHeight="93.0" prefWidth="342.0" text="При реєстрації, Ви не вибрали схуднення за мету використання програми, тому ця сторінка не доступна повністю." wrapText="true">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <Button fx:id="updateCouseInPageBtn" layoutX="66.0" layoutY="214.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="138.0" style="-fx-background-color: #6f991d; -fx-background-radius: 10px;" text="Змінити" textFill="#fffbfb">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+        <AnchorPane fx:id="updateBestWeightPage" layoutY="-4.0" prefHeight="729.0" prefWidth="1360.0" visible="false">
+            <children>
+                <AnchorPane prefHeight="729.0" prefWidth="1368.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, gray, black); -fx-opacity: 0.3;" />
+                <AnchorPane prefHeight="237.0" prefWidth="478.0" style="-fx-background-color: #fcf5ff;" AnchorPane.bottomAnchor="280.0" AnchorPane.rightAnchor="420.0">
+                    <children>
+                        <ImageView fx:id="closeWindowImg" fitHeight="25.0" fitWidth="25.0" layoutX="435.0" layoutY="10.0" onMouseClicked="#ClosePane" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/delete.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="28.0" layoutY="23.0" prefHeight="66.0" prefWidth="397.0" text="Не подобається оптимальна вага обрана програмою?" wrapText="true">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="28.0" layoutY="89.0" text="Введіть в поле нижче свій варіант (Приклад: 52.5)" />
+                        <TextField fx:id="newBestWeighttextField" layoutX="28.0" layoutY="127.0" prefHeight="31.0" prefWidth="126.0" style="-fx-background-color: rgba(255, 255, 255, 0.5); -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #616266;" />
+                        <Button fx:id="updateBestWeightBtn" layoutX="28.0" layoutY="179.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" style="-fx-background-color: #6f991d; -fx-background-radius: 10px;" text="Змінити" textFill="WHITE" />
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="updateCouseUserPage" layoutX="10.0" layoutY="6.0" prefHeight="729.0" prefWidth="1360.0" visible="false">
+            <children>
+                <AnchorPane layoutX="-14.0" layoutY="-7.0" prefHeight="729.0" prefWidth="1368.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, gray, black); -fx-opacity: 0.3;" />
+                <AnchorPane prefHeight="237.0" prefWidth="478.0" style="-fx-background-color: #fcf5ff;" AnchorPane.bottomAnchor="280.0" AnchorPane.rightAnchor="420.0">
+                    <children>
+                        <ImageView fx:id="closeWindowUpdateCouseImg" fitHeight="25.0" fitWidth="25.0" layoutX="435.0" layoutY="10.0" onMouseClicked="#ClosePane" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/delete.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="28.0" layoutY="23.0" prefHeight="66.0" prefWidth="397.0" text="Ви впевнені, що хочите додати ціль використання програми схудення ?" wrapText="true">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="28.0" layoutY="89.0" prefHeight="45.0" prefWidth="416.0" text="Ваше рішення завжди можна змінити в розділі програми Редагування" wrapText="true" />
+                        <Button fx:id="updateCouseuserBtn" layoutX="28.0" layoutY="154.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" style="-fx-background-color: #6f991d; -fx-background-radius: 10px;" text="Змінити" textFill="WHITE" />
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="userIdealWeightPage" layoutY="-9.0" prefHeight="729.0" prefWidth="1360.0" visible="false">
+            <children>
+                <AnchorPane prefHeight="729.0" prefWidth="1360.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, gray, black); -fx-opacity: 0.3;" />
+                <AnchorPane layoutX="357.0" layoutY="130.0" prefHeight="441.0" prefWidth="867.0" style="-fx-background-color: #fcf5ff;">
+                    <children>
+                        <ImageView fx:id="closeWindowIdealWeightImg" fitHeight="25.0" fitWidth="25.0" layoutX="812.0" layoutY="27.0" onMouseClicked="#ClosePaneWithIdealWeight" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/delete.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="63.0" layoutY="52.0" text="У Вас ідеальна  вага!">
+                            <font>
+                                <Font name="System Bold" size="36.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="63.0" layoutY="112.0" text="Ця функція програми, Вам не підходить">
+                            <font>
+                                <Font name="Cambria" size="24.0" />
+                            </font>
+                        </Label>
+                        <ImageView fitHeight="292.0" fitWidth="283.0" layoutX="542.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/woman(2).png" />
+                            </image>
+                            <effect>
+                                <DropShadow color="#00000063">
+                                    <input>
+                                        <Glow />
+                                    </input>
+                                </DropShadow>
+                            </effect>
+                        </ImageView>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="userLowWeightPage" layoutX="10.0" layoutY="1.0" prefHeight="729.0" prefWidth="1360.0" visible="false">
+            <children>
+                <AnchorPane layoutX="-34.0" prefHeight="729.0" prefWidth="1400.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, gray, black); -fx-opacity: 0.3;" />
+                <AnchorPane layoutX="357.0" layoutY="130.0" prefHeight="441.0" prefWidth="867.0" style="-fx-background-color: #fcf5ff;">
+                    <children>
+                        <ImageView fx:id="closeWindowLowWeightImg" fitHeight="25.0" fitWidth="25.0" layoutX="812.0" layoutY="27.0" onMouseClicked="#ClosePaneWithLowWeight" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/delete.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="63.0" layoutY="52.0" text="У Вас недостаток ваги!">
+                            <font>
+                                <Font name="System Bold" size="36.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="63.0" layoutY="112.0" text="Ця функція програми, Вам не підходить">
+                            <font>
+                                <Font name="Cambria" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="63.0" layoutY="151.0" prefHeight="112.0" prefWidth="619.0" text="Автор працює над удосконаленням програми, для Вашого випадку. А поки їжте більше та сходіть ло лікаря." wrapText="true">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <ImageView fitHeight="256.0" fitWidth="225.0" layoutX="589.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/eating.png" />
+                            </image>
+                            <effect>
+                                <DropShadow color="#00000063">
+                                    <input>
+                                        <Glow />
+                                    </input>
+                                </DropShadow>
+                            </effect>
+                        </ImageView>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="userChoseIncorrectBestWeightPage" layoutX="-14.0" layoutY="-9.0" prefHeight="729.0" prefWidth="1390.0" visible="false">
+            <children>
+                <AnchorPane prefHeight="729.0" prefWidth="1400.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, gray, black); -fx-opacity: 0.3;" />
+                <AnchorPane layoutX="357.0" layoutY="130.0" prefHeight="441.0" prefWidth="867.0" style="-fx-background-color: #fcf5ff;">
+                    <children>
+                        <ImageView fx:id="closePageUserchoseIncorectBestWeightImg" fitHeight="25.0" fitWidth="25.0" layoutX="812.0" layoutY="27.0" onMouseClicked="#ClosePaneUserChoseIncorectWeight" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/delete.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="63.0" layoutY="52.0" prefHeight="53.0" prefWidth="708.0" text="Не правильна обрана оптимальна вага">
+                            <font>
+                                <Font name="System Bold" size="36.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="63.0" layoutY="112.0" text="Значення оптимальної ваги, що Ви обради Вам не підходить">
+                            <font>
+                                <Font name="Cambria" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="63.0" layoutY="151.0" prefHeight="112.0" prefWidth="619.0" text="Обрана Вами оптимальна вага не дозволяє Вам отримати ІМТ(індекс маси тіла) в нормі. Оберіть інакше значення для оптимальної ваги." wrapText="true">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <ImageView fitHeight="256.0" fitWidth="225.0" layoutX="587.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/healthy-food.png" />
+                            </image>
+                            <effect>
+                                <DropShadow color="#00000063">
+                                    <input>
+                                        <Glow />
+                                    </input>
+                                </DropShadow>
+                            </effect>
+                        </ImageView>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="userFinishedLossWeighttPage" layoutX="30.0" layoutY="21.0" prefHeight="729.0" prefWidth="1360.0" visible="false">
+            <children>
+                <AnchorPane layoutX="-60.0" layoutY="-22.0" prefHeight="729.0" prefWidth="1400.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, gray, black); -fx-opacity: 0.3;" />
+                <AnchorPane layoutX="357.0" layoutY="130.0" prefHeight="441.0" prefWidth="867.0" style="-fx-background-color: #fcf5ff;">
+                    <children>
+                        <ImageView fx:id="userShinishedLossWeightImg" fitHeight="25.0" fitWidth="25.0" layoutX="812.0" layoutY="27.0" onMouseClicked="#ClosePaneFinishedLossWeightImg" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/delete.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="63.0" layoutY="52.0" prefHeight="53.0" prefWidth="708.0" text="Вітаємо!">
+                            <font>
+                                <Font name="System Bold" size="36.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="63.0" layoutY="112.0" text="Ваш важкий шляж схудження завершено!">
+                            <font>
+                                <Font name="Cambria" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="63.0" layoutY="160.0" prefHeight="35.0" prefWidth="619.0" text="Тепер ця функція програми Вам не доступна.  " wrapText="true">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <ImageView fitHeight="275.0" fitWidth="308.0" layoutX="534.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/woman(2).png" />
+                            </image>
+                            <effect>
+                                <DropShadow color="#00000063">
+                                    <input>
+                                        <Glow />
+                                    </input>
+                                </DropShadow>
+                            </effect>
+                        </ImageView>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c9c9c9" height="21.0" layoutX="-15.0" stroke="#c9c9c9" strokeType="INSIDE" width="1383.0" />
+        <ImageView fx:id="closeAppImg" fitHeight="15.0" fitWidth="15.0" layoutX="1338.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="7.0">
+            <image>
+                <Image url="@../images/cross.png" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="MinimizeAppImg" fitHeight="17.0" fitWidth="17.0" layoutX="1314.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="701.0" AnchorPane.rightAnchor="29.0">
+            <image>
+                <Image url="@../images/minus-button.png" />
+            </image>
+        </ImageView>
+    </children>
+</AnchorPane>

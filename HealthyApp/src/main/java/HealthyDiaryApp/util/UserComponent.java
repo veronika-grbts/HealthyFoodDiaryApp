@@ -376,6 +376,25 @@ public class UserComponent {
         }
     }
 
+    public boolean isPhoneNumberExists(Long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
 
+            // Создаем запрос для проверки существования пользователя с указанным номером телефона
+            Query query = session.createQuery("SELECT COUNT(*) FROM User WHERE phoneNumber = :phoneNumber");
+            query.setParameter("phoneNumber", phoneNumber);
+
+
+            // Получаем количество пользователей с данным номером телефона
+            long count = (long) query.uniqueResult();
+
+            // Если количество больше нуля, значит, пользователь существует
+            return count > 0;
+        } catch (Exception e) {
+            // Обработка ошибок
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }
