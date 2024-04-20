@@ -1,0 +1,28 @@
+.choice-box {
+    -fx-background-color: #bfdc9c; /* Цвет фона */
+    -fx-border-color: white; /* Цвет обводки */
+    -fx-border-width: 1px; /* Толщина обводки */
+    -fx-border-radius: 5px; /* Закругление углов обводки */
+}
+
+.choice-box:focused {
+    -fx-background-color: grey; /* Устанавливаем полупрозрачность при фокусировке */
+}
+
+.choice-box .arrow {
+    -fx-padding: 0.333333em; /* Расстояние от края до стрелочки */
+}
+
+.choice-box > .arrow-button {
+    -fx-background-color:  #bfdc9c;
+    -fx-padding: 0;
+}
+
+.choice-box > .arrow-button > .arrow {
+    -fx-background-color: black; /* Цвет стрелочки */
+}
+
+.choice-box .list-view {
+    -fx-pref-width: 170px; /* Автоматическое растягивание по ширине */
+    -fx-max-width: -1; /* Максимальная ширина без ограничений */
+}
