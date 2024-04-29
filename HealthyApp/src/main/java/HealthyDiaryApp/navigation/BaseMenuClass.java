@@ -54,6 +54,15 @@ public abstract class BaseMenuClass {
             case "backBtn":
                 NavigationMenu.navigateToPage("primary");
                 break;
+            case "loseWeightMenuButton":
+                NavigationMenu.navigateToPage("loseWeight");
+                break;
+            case "forecastMenuItem":
+                NavigationMenu.navigateToPage("forecast");
+                break;
+            case "progresisMenuItem":
+                NavigationMenu.navigateToPage("prognosis");
+                break;
         }
     }
 

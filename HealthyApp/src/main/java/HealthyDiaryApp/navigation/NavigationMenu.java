@@ -1,6 +1,7 @@
 package HealthyDiaryApp.navigation;
 
 import HealthyDiaryApp.HibbernateRunner;
+import javafx.stage.Stage;
 /*
  * NavigationMenu class
  *
@@ -15,9 +16,15 @@ import HealthyDiaryApp.HibbernateRunner;
 import java.io.IOException;
 
 public class NavigationMenu {
+    private static Stage stage; // Добавляем статическое поле для хранения текущего Stage
+
+    public static void setStage(Stage primaryStage) {
+        stage = primaryStage;
+    }
+
     public static void navigateToPage(String pageName) {
         try {
-            HibbernateRunner.setRoot(pageName);
+            HibbernateRunner.setRoot(stage, pageName); // Передаем текущий Stage
         } catch (IOException e) {
             e.printStackTrace();
         }

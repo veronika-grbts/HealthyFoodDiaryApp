@@ -23,10 +23,7 @@ import javafx.fxml.Initializable;
 import HealthyDiaryApp.controller.SignUpController;
 import HealthyDiaryApp.enums.ActivityLevel;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -38,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SignUpView extends BaseMenuClass implements Initializable {
     private SignUpController signUpController = new SignUpController();
     private UserComponent userComponent = new UserComponent();
+
     @FXML
     private ResourceBundle resources;
 
@@ -113,21 +111,18 @@ public class SignUpView extends BaseMenuClass implements Initializable {
     @FXML
     private ImageView MinimizeAppImg;
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         signUpActivityLevel.getItems().addAll(ActivityLevel.High, ActivityLevel.Medium, ActivityLevel.Low);
         signUpGender.getItems().addAll("чоловік", "жінка");
 
-        // Обработчик для закрытия приложения при нажатии на closeAppImg
         closeAppImg.setOnMouseClicked(event -> {
-            // Получаем сцену и закрываем ее
             Stage stage = (Stage) closeAppImg.getScene().getWindow();
             stage.close();
         });
 
-        // Обработчик для сворачивания окна при нажатии на MinimizeAppImg
         MinimizeAppImg.setOnMouseClicked(event -> {
-            // Получаем сцену и минимизируем окно
             Stage stage = (Stage) MinimizeAppImg.getScene().getWindow();
             stage.setIconified(true);
         });
@@ -139,77 +134,62 @@ public class SignUpView extends BaseMenuClass implements Initializable {
                 if (!userComponent.isPhoneNumberExists(phone)) {
                     signUpPane1.setVisible(false);
                     signUpPane2.setVisible(true);
-                    Platform.runLater(() -> showExclamationMarks(signUpPane3));
-                }else {
+                    Platform.runLater(() -> showExclamationMarks(signUpPane2));
+                } else {
                     ErrorDialogController.showErrorAlert("Помилка","Цей номер телефона вже зайнятий");
                     return;
                 }
             } else {
-                // Обработка случая, когда поле с номером телефона пустое
+                ErrorDialogController.showErrorAlert("Помилка","Будь ласка, введіть номер телефону");
+                return;
             }
-
         });
 
-
         nextBtn2.setOnAction(event -> {
-            if (isDataValid(signUpAge, signUpWeight, signUpHeight)) {
+            if (isDataValid(signUpAge, signUpWeight, signUpHeight) && isComboBoxValid(signUpGender) && isComboBoxValid(signUpActivityLevel)) {
                 signUpPane2.setVisible(false);
                 signUpPane3.setVisible(true);
                 Platform.runLater(() -> showExclamationMarks(signUpPane3));
             }
         });
 
-
-        // Обработчик для backPane
-        backPane.setOnMouseEntered(event -> {
-            backPane.setOpacity(0.5); // Устанавливаем немного тусклый эффект при наведении
-        });
-
-        backPane.setOnMouseExited(event -> {
-            backPane.setOpacity(1.0); // Возвращаем обычную непрозрачность после ухода мыши
-        });
-
         initializeButtons(backBtn);
 
 
-        // Добавляем слушатель для поля signUpName
         signUpName.textProperty().addListener((observable, oldValue, newValue) -> {
             if (TextFieldValidator.isValidField(signUpName)) {
-                signUpName.setStyle(""); // Убираем стиль при вводе правильных данных
+                signUpName.setStyle("");
             }
         });
 
-        // Добавляем слушатель для поля sighUpPhone
         sighUpPhone.textProperty().addListener((observable, oldValue, newValue) -> {
             if (TextFieldValidator.isValidField(sighUpPhone)) {
-                sighUpPhone.setStyle(""); // Убираем стиль при вводе правильных данных
+                sighUpPhone.setStyle("");
             }
         });
 
-        // Добавляем слушатель для поля signUpAge
         signUpAge.textProperty().addListener((observable, oldValue, newValue) -> {
             if (TextFieldValidator.isValidField(signUpAge)) {
-                signUpAge.setStyle(""); // Убираем стиль при вводе правильных данных
+                signUpAge.setStyle("");
             }
         });
 
-        // Добавляем слушатель для поля signUpWeight
         signUpWeight.textProperty().addListener((observable, oldValue, newValue) -> {
             if (TextFieldValidator.isValidField(signUpWeight)) {
-                signUpWeight.setStyle(""); // Убираем стиль при вводе правильных данных
+                signUpWeight.setStyle("");
             }
         });
 
-        // Добавляем слушатель для поля signUpHeight
         signUpHeight.textProperty().addListener((observable, oldValue, newValue) -> {
             if (TextFieldValidator.isValidField(signUpHeight)) {
-                signUpHeight.setStyle(""); // Убираем стиль при вводе правильных данных
+                signUpHeight.setStyle("");
             }
         });
-
 
         ImagePlus.setOnMouseClicked(event -> signUpController.handleImagePlusClicked(sighUpPhone, signUpPane3));
         AnimationButton.addHoverAnimation(finishBtn);
+        AnimationButton.addHoverAnimation(nextBtn1);
+        AnimationButton.addHoverAnimation(nextBtn2);
         finishBtn.setOnAction(event -> {
             handleFinishBtn(event);
         });
@@ -217,13 +197,12 @@ public class SignUpView extends BaseMenuClass implements Initializable {
 
     @FXML
     void handleFinishBtn(ActionEvent event) {
-        signUpController.handleFinishBtn( finishBtn,  signUpName,  sighUpPhone,  signUpAge,
-                 signUpWeight,  signUpHeight, signUpGender,
-                 signUpActivityLevel,  checkBoxAllergy,
-                 checkBoxCause,  signUpPane3);
+        signUpController.handleFinishBtn(finishBtn, signUpName, sighUpPhone, signUpAge,
+                signUpWeight, signUpHeight, signUpGender,
+                signUpActivityLevel, checkBoxAllergy,
+                checkBoxCause, signUpPane3);
     }
 
-    @FXML
     private boolean isDataValid(TextField... fields) {
         for (TextField field : fields) {
             if (!TextFieldValidator.isValidField(field)) {
@@ -233,7 +212,6 @@ public class SignUpView extends BaseMenuClass implements Initializable {
         return true;
     }
 
-    @FXML
     private boolean isValidField(TextField field) {
         if (field == null || field.getText().trim().isEmpty()) {
             return false;
@@ -253,7 +231,15 @@ public class SignUpView extends BaseMenuClass implements Initializable {
         }
     }
 
-    @FXML
+    private <T> boolean isComboBoxValid(ComboBox<T>... comboBoxes) {
+        for (ComboBox<T> comboBox : comboBoxes) {
+            if (comboBox.getValue() == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void showExclamationMarks(AnchorPane pane) {
         for (javafx.scene.Node node : pane.getChildren()) {
             if (node instanceof TextField) {
@@ -265,7 +251,6 @@ public class SignUpView extends BaseMenuClass implements Initializable {
         }
     }
 
-    @FXML
     private void showExclamationMarkForField(TextField field) {
         exclamationPointImg.setVisible(true);
         double fieldX = field.getLayoutX();
@@ -276,32 +261,28 @@ public class SignUpView extends BaseMenuClass implements Initializable {
         exclamationPointImg.setLayoutY(fieldY);
     }
 
-    @FXML
     private boolean isPhoneValid(String phone) {
         return phone.matches("^380\\d{9}$");
     }
 
-    @FXML
     private boolean isAgeValid(String age) {
         return age.matches("\\d+");
     }
 
-    @FXML
     private boolean isHeightValid(String height) {
         return height.matches("\\d+\\.?\\d*");
     }
 
-    @FXML
     private boolean isWeightValid(String weight) {
         return weight.matches("\\d+(\\.\\d+)?");
     }
 
-    @FXML
-    private void handleImagePlusClicked(MouseEvent event) {
-        signUpPane2.setVisible(false);
-        signUpPane3.setVisible(true);
+    private void showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
-
     @FXML
     private void handleImagePlusClicked(ActionEvent event) {
         signUpPane2.setVisible(false);

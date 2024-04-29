@@ -1,12 +1,14 @@
 package HealthyDiaryApp.view;
 
-import HealthyDiaryApp.controller.ForecastController;
 import HealthyDiaryApp.controller.PrognosisController;
 import HealthyDiaryApp.navigation.BaseMenuClass;
+import HealthyDiaryApp.navigation.MouseEnterHandler;
+import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
+import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -14,18 +16,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.util.Duration;
 
 public class PrognosisView extends BaseMenuClass {
     private PrognosisController  prognosisController = new PrognosisController();
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private HBox hBoxTime;
@@ -43,73 +37,82 @@ public class PrognosisView extends BaseMenuClass {
     private Label secondsLabel;
 
     @FXML
-    private VBox VBoxMenu;
+    private Button firstDataBtn;
 
     @FXML
-    private Button mainPageBtn;
+    private Button currentDataBtn;
 
     @FXML
-    private Button calculatorPageBtn;
+    private Button yourselfChoiceBtn;
 
     @FXML
-    private Button createdMenuPageBtn;
+    private AnchorPane firstWeightData;
 
     @FXML
-    private SplitMenuButton loseWeightMenuButton;
+    private TextField ageUser;
 
     @FXML
-    private MenuItem forecastMenuItem;
+    private TextField currentWeightUser;
 
     @FXML
-    private Button changePageBtn;
+    private TextField heightUser;
 
     @FXML
-    private TextField currentCaloricIntakeTextField;
+    private TextField levelActivityUser;
 
     @FXML
-    private TextField bestweightFieldText;
+    private AnchorPane currentDataUser;
 
     @FXML
-    private TextField currentCaloricIntakeTextField1;
+    private TextField ageUserPageCurrentData;
 
     @FXML
-    private TextField currentCaloricIntakeTextField11;
+    private TextField nowWeightPageCurrentData;
 
     @FXML
-    private LineChart<Number, Number> lineChart;
+    private TextField heightUserPageCurrentData;
 
     @FXML
-    private AnchorPane oopsWindowPane;
+    private TextField levelActivityUserPageCurrentData;
 
     @FXML
-    private Button updateCouseInPageBtn;
+    private AnchorPane dataChoiceYourself;
 
     @FXML
-    private AnchorPane updateBestWeightPage;
+    private TextField agePageChoiceYourself;
 
     @FXML
-    private ImageView closeWindowImg;
+    private TextField weightUserPageChoieceYourself;
 
     @FXML
-    private TextField newBestWeighttextField;
+    private TextField heighPageChoiceYourself;
 
     @FXML
-    private Button updateBestWeightBtn;
+    private ChoiceBox<String> activityLevelPageChoiceYourself;
 
     @FXML
-    private AnchorPane updateCouseUserPage;
+    private Button countPageChoiceData;
 
     @FXML
-    private ImageView closeWindowUpdateCouseImg;
+    private Label textNameGraphics;
 
     @FXML
-    private Button updateCouseuserBtn;
+    private ImageView backGraphic;
 
     @FXML
-    private AnchorPane userIdealWeightPage;
+    private ImageView nextGrafic;
 
     @FXML
-    private ImageView closeWindowIdealWeightImg;
+    private AnchorPane chartPane;
+
+    @FXML
+    private AnchorPane pleceForDiscribe;
+
+    @FXML
+    private AnchorPane graphicBMI;
+
+    @FXML
+    private AnchorPane barChar;
 
     @FXML
     private AnchorPane userLowWeightPage;
@@ -118,25 +121,37 @@ public class PrognosisView extends BaseMenuClass {
     private ImageView closeWindowLowWeightImg;
 
     @FXML
-    private AnchorPane userChoseIncorrectBestWeightPage;
-
-    @FXML
-    private ImageView closePageUserchoseIncorectBestWeightImg;
-
-    @FXML
-    private AnchorPane userFinishedLossWeighttPage;
-
-    @FXML
-    private ImageView userShinishedLossWeightImg;
-
-    @FXML
     private ImageView closeAppImg;
 
     @FXML
     private ImageView MinimizeAppImg;
 
     @FXML
-    private AnchorPane chartPane;
+    private Button createdMenuPageBtn;
+
+    @FXML
+    private Button loseWeightMenuButton;
+
+    @FXML
+    private Button changePageBtn;
+
+    @FXML
+    private Button progresisMenuItem;
+
+    @FXML
+    private Button forecastMenuItem;
+
+    @FXML
+    private Button calculatorPageBtn;
+
+    @FXML
+    private Button mainPageBtn;
+
+    @FXML
+    private ImageView standClock;
+
+    @FXML
+    private ImageView maximizeAppImg;
 
     @FXML
     void ClosePane(MouseEvent event) {
@@ -163,15 +178,90 @@ public class PrognosisView extends BaseMenuClass {
 
     }
 
+    private void setMouseHandlers() {
+        MouseEnterHandler.addMouseEnterHandler(loseWeightMenuButton, forecastMenuItem, progresisMenuItem, changePageBtn);
+    }
+
     @FXML
     void initialize() {
-        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
-        initializeMenuButton(loseWeightMenuButton);
-        initializeMenuItem(forecastMenuItem);
+        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn, loseWeightMenuButton, forecastMenuItem, progresisMenuItem);
+        setMouseHandlers(); // Установить обработчики событий наведения и убирания мыши
+        // Варианты ответов
+        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(2), standClock);
+        ObservableList<String> activityLevels = FXCollections.observableArrayList(
+                "Низкий", "Средний", "Высокий"
+        );
 
+        // Установка вариантов ответов в чойсбокс
+        activityLevelPageChoiceYourself.setItems(activityLevels);
+        prognosisController.initialized(chartPane, graphicBMI, barChar, currentWeightUser, ageUser, heightUser,
+                levelActivityUser, textNameGraphics, pleceForDiscribe, nextGrafic, true, activityLevelPageChoiceYourself);
 
-        prognosisController.initialized(chartPane);
+        // Обработчик для кнопки firstDataBtn
+        firstDataBtn.setOnAction(event -> {
+            rotateTransition.stop();
+            standClock.setVisible(false);
 
+            pleceForDiscribe.getChildren().clear();
+            chartPane.getChildren().clear(); // Очистить панель с графиком
+            graphicBMI.getChildren().clear(); // Очистить панель с графиком BMI
+            barChar.getChildren().clear(); // Очистить панель с столбчатой диаграммой
+
+            prognosisController.initialized(chartPane, graphicBMI, barChar, currentWeightUser, ageUser, heightUser,
+                    levelActivityUser, textNameGraphics, pleceForDiscribe, nextGrafic, true, activityLevelPageChoiceYourself);
+            firstWeightData.setVisible(true); // Отобразить панель с первоначальными данными
+            currentDataUser.setVisible(false); // Скрыть панель с текущими данными
+            dataChoiceYourself.setVisible(false); // Скрыть панель с выбором данных самостоятельно
+        });
+
+        // Обработчик для кнопки yourselfChoiceBtn
+        yourselfChoiceBtn.setOnAction(event -> {
+
+            pleceForDiscribe.getChildren().clear();
+            chartPane.getChildren().clear(); // Очистить панель с графиком
+            graphicBMI.getChildren().clear(); // Очистить панель с графиком BMI
+            barChar.getChildren().clear(); // Очистить панель с столбчатой диаграммой
+
+            firstWeightData.setVisible(false); // Скрыть панель с первоначальными данными
+            currentDataUser.setVisible(false); // Скрыть панель с текущими данными
+            dataChoiceYourself.setVisible(true); // Отобразить панель с выбором данных самостоятельно
+            pleceForDiscribe.setVisible(false);
+            standClock.setVisible(true);
+            // Создание анимации для изображения standClock
+
+            rotateTransition.setByAngle(360); // Поворот на 360 градусов
+            rotateTransition.setCycleCount(Timeline.INDEFINITE); // Зацикливание анимации
+            rotateTransition.setInterpolator(Interpolator.LINEAR); // Линейная интерполяция для плавного движения
+            rotateTransition.play();
+
+        });
+
+        countPageChoiceData.setOnAction(event1 -> {
+            rotateTransition.stop();
+            standClock.setVisible(false);
+            pleceForDiscribe.setVisible(true);
+            prognosisController.initialized(chartPane, graphicBMI, barChar, weightUserPageChoieceYourself,
+                    agePageChoiceYourself, heighPageChoiceYourself,
+                    levelActivityUser, textNameGraphics, pleceForDiscribe, nextGrafic, false, activityLevelPageChoiceYourself);
+        });
+
+        // Обработчик для кнопки currentDataBtn
+        currentDataBtn.setOnAction(event -> {
+            rotateTransition.stop();
+            standClock.setVisible(false);
+
+            pleceForDiscribe.getChildren().clear();
+            chartPane.getChildren().clear(); // Очистить панель с графиком
+            graphicBMI.getChildren().clear(); // Очистить панель с графиком BMI
+            barChar.getChildren().clear(); // Очистить панель с столбчатой диаграммой
+
+            prognosisController.initialized(chartPane, graphicBMI, barChar, nowWeightPageCurrentData,
+                    ageUserPageCurrentData, heightUserPageCurrentData,
+                    levelActivityUserPageCurrentData, textNameGraphics, pleceForDiscribe, nextGrafic, false, activityLevelPageChoiceYourself);
+            firstWeightData.setVisible(false); // Скрыть панель с первоначальными данными
+            currentDataUser.setVisible(true); // Отобразить панель с текущими данными
+            dataChoiceYourself.setVisible(false); // Скрыть панель с выбором данных самостоятельно
+        });
 
         // Обработчик для закрытия приложения при нажатии на closeAppImg
         closeAppImg.setOnMouseClicked(event -> {
@@ -186,6 +276,18 @@ public class PrognosisView extends BaseMenuClass {
             Stage stage = (Stage) MinimizeAppImg.getScene().getWindow();
             stage.setIconified(true);
         });
+
+        maximizeAppImg.setOnMouseClicked(event -> {
+            Stage stage = (Stage) maximizeAppImg.getScene().getWindow();
+            if (stage.isFullScreen()) {
+                stage.setFullScreen(false);
+                stage.setWidth(1360); // Устанавливаем ширину окна
+                stage.setHeight(720); // Устанавливаем высоту окна
+            } else {
+                stage.setFullScreen(true);
+            }
+        });
+
 
     }
 }

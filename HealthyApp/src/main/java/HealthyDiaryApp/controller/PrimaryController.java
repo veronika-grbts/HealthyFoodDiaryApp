@@ -29,14 +29,15 @@ import java.net.URL;
 
 public class PrimaryController {
 
-    public static void handleSignIn(Button signInBtn, TextField phoneNumberField) {
+    public static void handleSignIn(Stage stage ,Button signInBtn, TextField phoneNumberField) {
         try {
             String phoneNumber = phoneNumberField.getText();
             User user = getUserInfo(Long.parseLong(phoneNumber));
             if (user != null) {
                 // Зберігаємо user в ApplicationContext
                 ApplicationContext.getInstance().setCurrentUser(user);
-                HibbernateRunner.setRoot("mainpage");
+
+                HibbernateRunner.setRoot(stage,"mainpage");
             } else {
                 ErrorDialogController.showErrorAlert("Користувач не знайдений", "Користувач із вказаним номером телефону не знайдений.");
             }

@@ -37,7 +37,7 @@ public class CreatedMenuController {
 
     public void initialize(TableView<CustomMenuItem> tableProduct, ComboBox<String> productsComboBox, CheckBox checkBoxCreatedPdf,
                            Button updateBtn, ImageView updateImage, Button mainPageBtn, Button calculatorPageBtn,
-                           Button createdMenuPageBtn, Button changePageBtn, SplitMenuButton loseWeightMenuButton, MenuItem forecastMenuItem,
+                           Button createdMenuPageBtn, Button changePageBtn, Button loseWeightMenuButton, Button forecastMenuItem,
                            MenuItem statisticsMenuItem, Button createdMenutBtn, TableColumn<UserSelectedMenu, String> typeMealColumn,
                            TableColumn<UserSelectedMenu, String> nameProductColumn, TableColumn<UserSelectedMenu, Double> quantityColumn) {
 

@@ -1,0 +1,6 @@
+.anchor-pane {
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-pref-width: Region.USE_COMPUTED_SIZE;
+    -fx-pref-height: Region.USE_COMPUTED_SIZE;
+}

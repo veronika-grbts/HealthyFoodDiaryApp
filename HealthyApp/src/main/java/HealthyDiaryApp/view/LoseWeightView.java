@@ -14,6 +14,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import HealthyDiaryApp.entity.User;
+import HealthyDiaryApp.navigation.MouseEnterHandler;
 import HealthyDiaryApp.singleton.ApplicationContext;
 import HealthyDiaryApp.util.UserComponent;
 import javafx.animation.Animation;
@@ -60,28 +61,19 @@ public class LoseWeightView extends BaseMenuClass {
     private Button updateBestWeightUserBtn;
 
     @FXML
-    private VBox VBoxMenu;
+    private HBox hBoxTime;
 
     @FXML
-    private Button mainPageBtn;
+    private Label daysLabel;
 
     @FXML
-    private Button calculatorPageBtn;
+    private Label hoursLabel;
 
     @FXML
-    private Button createdMenuPageBtn;
+    private Label minutesLabel;
 
     @FXML
-    private SplitMenuButton loseWeightMenuButton;
-
-    @FXML
-    private MenuItem forecastMenuItem;
-
-    @FXML
-    private MenuItem progresisMenuItem;
-
-    @FXML
-    private Button changePageBtn;
+    private Label secondsLabel;
 
     @FXML
     private TextField bodyMassIndexFieldText;
@@ -94,6 +86,9 @@ public class LoseWeightView extends BaseMenuClass {
 
     @FXML
     private TextField currentCaloricIntakeTextField;
+
+    @FXML
+    private ImageView photoAccount;
 
     @FXML
     private TextField bestweightFieldText;
@@ -132,14 +127,13 @@ public class LoseWeightView extends BaseMenuClass {
     private AnchorPane userIdealWeightPage;
 
     @FXML
-    private ImageView closeWindowLowWeightImg;
-
-
-    @FXML
     private ImageView closeWindowIdealWeightImg;
 
     @FXML
     private AnchorPane userLowWeightPage;
+
+    @FXML
+    private ImageView closeWindowLowWeightImg;
 
     @FXML
     private AnchorPane userChoseIncorrectBestWeightPage;
@@ -148,27 +142,10 @@ public class LoseWeightView extends BaseMenuClass {
     private ImageView closePageUserchoseIncorectBestWeightImg;
 
     @FXML
-    private HBox hBoxTime;
-
-    @FXML
-    private Label daysLabel;
-
-    @FXML
-    private Label hoursLabel;
-
-    @FXML
-    private Label minutesLabel;
-
-    @FXML
-    private Label secondsLabel;
-
-    @FXML
     private AnchorPane userFinishedLossWeighttPage;
 
     @FXML
     private ImageView userShinishedLossWeightImg;
-
-    private Timeline timeline;
 
     @FXML
     private ImageView closeAppImg;
@@ -177,15 +154,42 @@ public class LoseWeightView extends BaseMenuClass {
     private ImageView MinimizeAppImg;
 
     @FXML
-    private ImageView photoAccount;
+    private Button createdMenuPageBtn;
+
+    @FXML
+    private Button loseWeightMenuButton;
+
+    @FXML
+    private Button changePageBtn;
+
+    @FXML
+    private Button progresisMenuItem;
+
+    @FXML
+    private Button forecastMenuItem;
+
+    @FXML
+    private Button calculatorPageBtn;
+
+    @FXML
+    private Button mainPageBtn;
+
+    @FXML
+    private ImageView maximizeAppImg;
+
+    @FXML
+    private AnchorPane AnchorePaneinScroll;
+
+    // Метод для установки обработчиков событий наведения и убирания мыши с кнопки loseWeightMenuButton
+    private void setMouseHandlers() {
+        MouseEnterHandler.addMouseEnterHandler(loseWeightMenuButton, forecastMenuItem, progresisMenuItem, changePageBtn);
+    }
 
     @FXML
     void initialize() {
         setRandomUserPhoto();
-        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
-        initializeMenuButton(loseWeightMenuButton);
-        //initializeMenuItem(forecastMenuItem);
-        initializeMenuItem(progresisMenuItem);
+        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn, loseWeightMenuButton, forecastMenuItem, progresisMenuItem);
+        setMouseHandlers(); // Установить обработчики событий наведения и убирания мыши
         AnimationButton.addHoverAnimation(updateBestWeightUserBtn);
         AnimationButton.addFadeAnimation(updateCouseuserBtn);
         AnimationButton.addHoverAnimation(updateBestWeightBtn);
@@ -202,6 +206,18 @@ public class LoseWeightView extends BaseMenuClass {
             // Получаем сцену и минимизируем окно
             Stage stage = (Stage) MinimizeAppImg.getScene().getWindow();
             stage.setIconified(true);
+        });
+
+
+        maximizeAppImg.setOnMouseClicked(event -> {
+            Stage stage = (Stage) maximizeAppImg.getScene().getWindow();
+            if (stage.isFullScreen()) {
+                stage.setFullScreen(false);
+                stage.setWidth(1360); // Устанавливаем ширину окна
+                stage.setHeight(720); // Устанавливаем высоту окна
+            } else {
+                stage.setFullScreen(true);
+            }
         });
 
 

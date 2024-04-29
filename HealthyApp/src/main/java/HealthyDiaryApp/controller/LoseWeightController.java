@@ -310,12 +310,13 @@ public class LoseWeightController {
     // Метод для пересчета калоража и вывода его в консоль
     private void recalculateAndPrintCalories() {
         User user = getUserFromApplicationContext();
+        double weight = user.getWeightUser();
         double newCalories = CalorieCalculator.calculateCalories(weightLossGoalsComponent.getCurrentWeightByPhoneNumber(user.getPhoneNumber()),
                 user.getHeightUser(), user.getAgeUser(), user.isGenderUser(), user.getActivityLevel());
         double newTotalProteinUser = CalorieCalculator.calculateProtein(newCalories);
         double newTotalFatUser = CalorieCalculator.calculateFat(newCalories);
         double newTotalCarbsUser = CalorieCalculator.calculateCarbs(newCalories);
-        userComponent.updateUserDataByPhoneNumber(user.getPhoneNumber(), newCalories,newTotalProteinUser, newTotalFatUser, newTotalCarbsUser);
+        userComponent.updateUserDataByPhoneNumber(user.getPhoneNumber(), weight, newCalories,newTotalProteinUser, newTotalFatUser, newTotalCarbsUser);
         System.out.println("Новый калораж с учетом снижения веса до нормы: " + newCalories);
     }
 }

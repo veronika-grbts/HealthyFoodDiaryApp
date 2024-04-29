@@ -329,7 +329,7 @@ public class UserComponent {
         }
     }
 
-    public  void updateUserDataByPhoneNumber(Long phoneNumber, double totalCaloricUser,
+    public  void updateUserDataByPhoneNumber(Long phoneNumber, double newWeight, double totalCaloricUser,
                                              double totalProteinUser,
                                              double totalFatUser, double totalCarbsUser) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -338,6 +338,7 @@ public class UserComponent {
             CriteriaUpdate<User> criteriaUpdate = builder.createCriteriaUpdate(User.class);
             Root<User> root = criteriaUpdate.from(User.class);
 
+            criteriaUpdate.set(root.get("weightUser"), newWeight);
             criteriaUpdate.set(root.get("totalCaloricUser"), totalCaloricUser);
             criteriaUpdate.set(root.get("totalProteinUser"), totalProteinUser);
             criteriaUpdate.set(root.get("totalFatUser"), totalFatUser);

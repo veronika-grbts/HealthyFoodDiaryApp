@@ -118,7 +118,7 @@ public class SignUpController {
                     );
 
                     userComponent.updateUserDataByPhoneNumber(
-                            newUser.getPhoneNumber(), caloriesWithLosingWeight,
+                            newUser.getPhoneNumber(), newUser.getWeightUser(), caloriesWithLosingWeight,
                             proteinWithLosingWeight, fatWithLosingWeight, carbsWithLosingWeight
                     );
 

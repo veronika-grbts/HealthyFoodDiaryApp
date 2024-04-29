@@ -1,0 +1,10 @@
+.my-scroll-pane {
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}
+
+.my-anchor-pane {
+    -fx-min-height: 0 !important;
+    -fx-pref-width: Region.USE_COMPUTED_SIZE;
+    -fx-pref-height: Region.USE_COMPUTED_SIZE;
+}

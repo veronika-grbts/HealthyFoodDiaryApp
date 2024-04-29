@@ -1,0 +1,7 @@
+.table-view .column1 {
+    -fx-pref-width: 25%;
+}
+
+.table-view .column2 {
+    -fx-pref-width: 50%;
+}

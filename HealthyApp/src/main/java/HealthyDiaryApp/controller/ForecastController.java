@@ -154,10 +154,11 @@ public class ForecastController {
         // Сохранение данных о прогрессе веса, включая флаг выполнения цели
         weightLossGoalsComponent.saveWeightLossProgress(user.getPhoneNumber(),
                 sqlDate, newWeightUser, caloricInTake, deficitCaloric, goalAchieved);
+        ApplicationContext.getInstance().setCurrentUser(userComponent.getUserByPhoneNumber(user.getPhoneNumber()));
         double newTotalProteinUser = CalorieCalculator.calculateProtein(caloricInTake);
         double newTotalFatUser = CalorieCalculator.calculateFat(caloricInTake);
         double newTotalCarbsUser = CalorieCalculator.calculateCarbs(caloricInTake);
-        userComponent.updateUserDataByPhoneNumber(user.getPhoneNumber(), caloricInTake,newTotalProteinUser, newTotalFatUser, newTotalCarbsUser);
+        userComponent.updateUserDataByPhoneNumber(user.getPhoneNumber(), newWeightUser, caloricInTake,newTotalProteinUser, newTotalFatUser, newTotalCarbsUser);
         addProgressUserPane.setVisible(false);
 
         // Обновление данных на графике

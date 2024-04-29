@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 
 import HealthyDiaryApp.controller.ErrorDialogController;
+import HealthyDiaryApp.navigation.MouseEnterHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import HealthyDiaryApp.controller.CalorieCalculatorController;
@@ -38,31 +39,10 @@ public class CalorieCalculatorView extends BaseMenuClass {
     private  CalorieCalculatorController calorieCalculatorController = new CalorieCalculatorController();
     private ProductComponent productComponent = new ProductComponent();
     @FXML
-    private ResourceBundle resources;
+    private ImageView updateImage;
 
     @FXML
-    private URL location;
-
-    @FXML
-    private Button mainPageBtn;
-
-    @FXML
-    private Button calculatorPageBtn;
-
-    @FXML
-    private Button createdMenuPageBtn;
-
-    @FXML
-    private Button changePageBtn;
-
-    @FXML
-    private SplitMenuButton loseWeightMenuButton;
-
-    @FXML
-    private MenuItem forecastMenuItem;
-
-    @FXML
-    private MenuItem statisticsMenuItem;
+    private Button updateBtn;
 
     @FXML
     private TextField fatField;
@@ -86,6 +66,8 @@ public class CalorieCalculatorView extends BaseMenuClass {
     private TextField gramsField;
 
     @FXML
+    private ImageView plusProduct;
+    @FXML
     private TableView<UserSelectedProduct> tableProduct;
 
     @FXML
@@ -93,12 +75,6 @@ public class CalorieCalculatorView extends BaseMenuClass {
 
     @FXML
     private TableColumn<UserSelectedProduct, Double> quantity;
-
-    @FXML
-    private ImageView updateImage;
-
-    @FXML
-    private Button updateBtn;
 
     @FXML
     private AnchorPane PaneAddProduct;
@@ -119,13 +95,10 @@ public class CalorieCalculatorView extends BaseMenuClass {
     private TextField carbsProductsField;
 
     @FXML
-    private ImageView closePane;
-
-    @FXML
     private Button addNewProductBtn;
 
     @FXML
-    private ImageView plusProduct;
+    private ImageView closePane;
 
     @FXML
     private ImageView closeAppImg;
@@ -134,10 +107,38 @@ public class CalorieCalculatorView extends BaseMenuClass {
     private ImageView MinimizeAppImg;
 
     @FXML
+    private Button createdMenuPageBtn;
+
+    @FXML
+    private Button loseWeightMenuButton;
+
+    @FXML
+    private Button changePageBtn;
+
+    @FXML
+    private Button progresisMenuItem;
+
+    @FXML
+    private Button forecastMenuItem;
+
+    @FXML
+    private Button calculatorPageBtn;
+
+    @FXML
+    private Button mainPageBtn;
+
+    @FXML
+    private ImageView maximizeAppImg;
+
+    // Метод для установки обработчиков событий наведения и убирания мыши с кнопки loseWeightMenuButton
+    private void setMouseHandlers() {
+        MouseEnterHandler.addMouseEnterHandler(loseWeightMenuButton, forecastMenuItem, progresisMenuItem, changePageBtn);
+    }
+
+    @FXML
     void initialize() {
-        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
-        initializeMenuButton(loseWeightMenuButton);
-        initializeMenuItem(forecastMenuItem);
+        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn, loseWeightMenuButton, forecastMenuItem, progresisMenuItem);
+        setMouseHandlers(); // Установить обработчики событий наведения и убирания мыши
         AnimationButton.addFadeAnimation(addProductBtn);
         AnimationButton.addFadeAnimation(addNewProductBtn);
 
@@ -159,6 +160,19 @@ public class CalorieCalculatorView extends BaseMenuClass {
             Stage stages = (Stage) MinimizeAppImg.getScene().getWindow();
             stages.setIconified(true);
         });
+
+        maximizeAppImg.setOnMouseClicked(event -> {
+            Stage stage = (Stage) maximizeAppImg.getScene().getWindow();
+            if (stage.isFullScreen()) {
+                stage.setFullScreen(false);
+                stage.setWidth(1360); // Устанавливаем ширину окна
+                stage.setHeight(720); // Устанавливаем высоту окна
+
+            } else {
+                stage.setFullScreen(true);
+            }
+        });
+
 
         nameProduct.setCellValueFactory(cellData -> {
             UserSelectedProduct userSelectedProduct = cellData.getValue();

@@ -1,5 +1,6 @@
 package HealthyDiaryApp.util;
 
+import javafx.concurrent.Task;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -265,6 +266,40 @@ public class WeightLossGoalsComponent {
             return null;
         }
     }
+
+    public Task<Double> createFetchWeightTask(long phoneNumber) {
+        Task<Double> task = new Task<>() {
+            @Override
+            protected Double call() throws Exception {
+                return fetchWeightFromGoals(phoneNumber);
+            }
+        };
+        return task;
+    }
+
+    public Double fetchWeightFromGoals(long phoneNumber) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Double> criteriaQuery = builder.createQuery(Double.class);
+            Root<WeightLossGoals> root = criteriaQuery.from(WeightLossGoals.class);
+
+            criteriaQuery.select(root.get("currentWeightUserLossGoals"))
+                    .where(builder.equal(root.get("user").get("phoneNumber"), phoneNumber));
+
+            Query<Double> query = session.createQuery(criteriaQuery);
+            query.setMaxResults(1);
+
+            Double weight = query.uniqueResult();
+            return weight;
+        } catch (Exception e) {
+            // Обработка ошибок
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 
     public boolean hasWeightLossGoal(Long phoneNumber) {

@@ -18,6 +18,7 @@ import HealthyDiaryApp.HibbernateRunner;
 import HealthyDiaryApp.controller.SettingsController;
 import HealthyDiaryApp.enums.ActivityLevel;
 import HealthyDiaryApp.entity.User;
+import HealthyDiaryApp.navigation.MouseEnterHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -25,45 +26,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 import HealthyDiaryApp.navigation.BaseMenuClass;
 
 @Slf4j
 public class SettingsView extends BaseMenuClass {
     private SettingsController settingsController = new SettingsController();
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private Button deleteUserBtn;
-
     @FXML
     private ImageView deleteImage;
 
     @FXML
-    private Button mainPageBtn;
-
-    @FXML
-    private Button calculatorPageBtn;
-
-    @FXML
-    private Button createdMenuPageBtn;
-
-    @FXML
-    private Button changePageBtn;
-
-    @FXML
-    private SplitMenuButton loseWeightMenuButton;
-
-    @FXML
-    private MenuItem forecastMenuItem;
-
-    @FXML
-    private MenuItem statisticsMenuItem;
+    private Button deleteUserBtn;
 
     @FXML
     private TextField nameTextField;
@@ -123,6 +97,34 @@ public class SettingsView extends BaseMenuClass {
     private ImageView MinimizeAppImg;
 
     @FXML
+    private Button createdMenuPageBtn;
+
+    @FXML
+    private Button loseWeightMenuButton;
+
+    @FXML
+    private Button changePageBtn;
+
+    @FXML
+    private Button progresisMenuItem;
+
+    @FXML
+    private Button forecastMenuItem;
+
+    @FXML
+    private Button calculatorPageBtn;
+
+    @FXML
+    private Button mainPageBtn;
+
+    @FXML
+    private ImageView maximizeAppImg;
+
+
+    @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
     void AddAllergy(MouseEvent event) {
         settingsController.addAllergy(allergyVbox, phoneNumberTextField, plusAllergyBtn, updateDataBtn);
     }
@@ -132,9 +134,15 @@ public class SettingsView extends BaseMenuClass {
         settingsController.closePane(deleteUserPane);
     }
 
+    // Метод для установки обработчиков событий наведения и убирания мыши с кнопки loseWeightMenuButton
+    private void setMouseHandlers() {
+        MouseEnterHandler.addMouseEnterHandler(loseWeightMenuButton, forecastMenuItem, progresisMenuItem, changePageBtn);
+    }
     @FXML
     void initialize() {
 
+
+        setMouseHandlers(); // Установить обработчики событий наведения и убирания мыши
         // Обработчик для закрытия приложения при нажатии на closeAppImg
         closeAppImg.setOnMouseClicked(event -> {
             // Получаем сцену и закрываем ее
@@ -149,10 +157,9 @@ public class SettingsView extends BaseMenuClass {
             stage.setIconified(true);
         });
 
-        
-        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn);
-        initializeMenuButton(loseWeightMenuButton);
-        initializeMenuItem(forecastMenuItem);
+        activityLevelComboBox.getItems().addAll(ActivityLevel.High, ActivityLevel.Medium, ActivityLevel.Low);
+
+        initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn, loseWeightMenuButton, forecastMenuItem, progresisMenuItem);
 
         AnimationButton.addFadeAnimation(updateDataBtn);
         AnimationButton.addHoverAnimation(deleteUserBtn);
@@ -180,6 +187,17 @@ public class SettingsView extends BaseMenuClass {
             settingsController.updateUserData(nameTextField, ageTextField, phoneNumberTextField,
                     heightTextField, weightTextField, activityLevelComboBox, allergyCheckBox,
                     manRadioButton);
+        });
+
+        maximizeAppImg.setOnMouseClicked(event -> {
+            Stage stage = (Stage) maximizeAppImg.getScene().getWindow();
+            if (stage.isFullScreen()) {
+                stage.setFullScreen(false);
+                stage.setWidth(1360); // Устанавливаем ширину окна
+                stage.setHeight(720); // Устанавливаем высоту окна
+            } else {
+                stage.setFullScreen(true);
+            }
         });
 
 
