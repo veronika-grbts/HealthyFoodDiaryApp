@@ -61,7 +61,7 @@ public class WeightLossGoalsComponent {
     }
 
     //метод для получения лучшего веса для пользователя
-    public double getTargetWeightByPhoneNumber(long phoneNumber) {
+    public static double getTargetWeightByPhoneNumber(long phoneNumber) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Double> criteriaQuery = builder.createQuery(Double.class);

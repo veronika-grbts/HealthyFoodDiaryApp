@@ -19,25 +19,25 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1360.0" style="-fx-background-color: linear-gradient(from 0% 20% to 30% 60%,  #F4E9E9,  #f3f3f3);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HealthyDiaryApp.view.CalorieCalculatorView">
     <children>
-      <Pane layoutX="281.0" layoutY="73.0" prefHeight="123.0" prefWidth="1079.0" style="-fx-background-color: #6f991d;" AnchorPane.leftAnchor="281.0" AnchorPane.rightAnchor="0.0">
+      <Pane layoutY="73.0" prefHeight="123.0" prefWidth="1360.0" style="-fx-background-color: #6f991d;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label layoutX="65.0" layoutY="39.0" text="Лічильник калорій" textFill="#f4e9e9">
+            <Label fx:id="namePage" layoutX="316.0" layoutY="39.0" prefHeight="45.0" prefWidth="236.0" text="Лічильник калорій" textFill="#f4e9e9">
                <font>
                   <Font name="Gabriola" size="36.0" />
                </font>
             </Label>
-            <ImageView fx:id="updateImage" fitHeight="39.0" fitWidth="45.0" layoutX="780.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="updateImage" fitHeight="39.0" fitWidth="45.0" layoutX="1016.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/turning.png" />
                </image>
             </ImageView>
-            <Button fx:id="updateBtn" contentDisplay="CENTER" layoutX="772.0" layoutY="39.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="55.0" style="-fx-background-color: transparent;" textAlignment="CENTER" />
+            <Button fx:id="updateBtn" contentDisplay="CENTER" layoutX="1008.0" layoutY="39.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="55.0" style="-fx-background-color: transparent;" textAlignment="CENTER" />
          </children>
          <effect>
             <DropShadow color="#000000a6" />
          </effect>
       </Pane>
-      <VBox layoutY="11.0" prefHeight="737.0" prefWidth="283.0" style="-fx-background-color: #452f42;" AnchorPane.bottomAnchor="-28.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="11.0">
+      <VBox fx:id="VBoxMenu" layoutY="11.0" prefHeight="737.0" prefWidth="283.0" style="-fx-background-color: #452f42;" AnchorPane.bottomAnchor="-28.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="11.0">
          <children>
             <Pane prefHeight="130.0" prefWidth="332.0">
                <children>
@@ -122,6 +122,11 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <ImageView fx:id="closemenu" fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="42.0" AnchorPane.rightAnchor="20.0">
+                     <image>
+                        <Image url="@../images/arrow.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </children>
@@ -154,7 +159,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-    <AnchorPane layoutX="281.0" layoutY="196.0" minHeight="0.0" minWidth="0.0" prefHeight="526.0" prefWidth="1079.0" style="-fx-background-color: transparent;" stylesheets="@../css/file.css" AnchorPane.leftAnchor="281.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0">
+    <AnchorPane fx:id="paneInfo" layoutX="281.0" layoutY="196.0" minHeight="0.0" minWidth="0.0" prefHeight="526.0" prefWidth="1079.0" style="-fx-background-color: transparent;" stylesheets="@../css/file.css" AnchorPane.leftAnchor="281.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0">
          <children>
             <AnchorPane layoutX="30.0" layoutY="56.0" prefHeight="168.0" prefWidth="510.0" style="-fx-background-color: rgba(169, 183, 203, 0.8); -fx-border-width: 1 1 1 1; -fx-border-radius: 25px; -fx-background-radius: 25px; -fx-border-color: #55607c; -fx-stroke: #201e1e;">
                <children>
@@ -310,5 +315,10 @@
             </AnchorPane>
          </children>
       </AnchorPane>
+      <ImageView fx:id="openMenu" fitHeight="45.0" fitWidth="45.0" layoutX="36.0" layoutY="685.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="11.0">
+         <image>
+            <Image url="@../images/openMenu.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

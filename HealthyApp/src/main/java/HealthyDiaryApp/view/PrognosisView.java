@@ -1,11 +1,12 @@
 package HealthyDiaryApp.view;
 
 import HealthyDiaryApp.controller.PrognosisController;
+import HealthyDiaryApp.entity.User;
+import HealthyDiaryApp.filePDF.PDFCreatorForPrognosis;
 import HealthyDiaryApp.navigation.BaseMenuClass;
 import HealthyDiaryApp.navigation.MouseEnterHandler;
-import javafx.animation.Interpolator;
-import javafx.animation.RotateTransition;
-import javafx.animation.Timeline;
+import HealthyDiaryApp.singleton.ApplicationContext;
+import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +23,12 @@ public class PrognosisView extends BaseMenuClass {
     private PrognosisController  prognosisController = new PrognosisController();
 
     @FXML
+    private ChoiceBox<String> activityLevelPageChoiceYourself;
+
+    @FXML
+    private Label namePage;
+
+    @FXML
     private HBox hBoxTime;
 
     @FXML
@@ -35,6 +42,9 @@ public class PrognosisView extends BaseMenuClass {
 
     @FXML
     private Label secondsLabel;
+
+    @FXML
+    private AnchorPane pageInfo;
 
     @FXML
     private Button firstDataBtn;
@@ -88,9 +98,6 @@ public class PrognosisView extends BaseMenuClass {
     private TextField heighPageChoiceYourself;
 
     @FXML
-    private ChoiceBox<String> activityLevelPageChoiceYourself;
-
-    @FXML
     private Button countPageChoiceData;
 
     @FXML
@@ -115,16 +122,16 @@ public class PrognosisView extends BaseMenuClass {
     private AnchorPane barChar;
 
     @FXML
+    private ImageView standClock;
+
+    @FXML
     private AnchorPane userLowWeightPage;
 
     @FXML
     private ImageView closeWindowLowWeightImg;
 
     @FXML
-    private ImageView closeAppImg;
-
-    @FXML
-    private ImageView MinimizeAppImg;
+    private VBox VBoxMenu;
 
     @FXML
     private Button createdMenuPageBtn;
@@ -148,10 +155,25 @@ public class PrognosisView extends BaseMenuClass {
     private Button mainPageBtn;
 
     @FXML
-    private ImageView standClock;
+    private ImageView closemenu;
+
+    @FXML
+    private AnchorPane topBtnMenu;
 
     @FXML
     private ImageView maximizeAppImg;
+
+    @FXML
+    private ImageView closeAppImg;
+
+    @FXML
+    private ImageView MinimizeAppImg;
+
+    @FXML
+    private ImageView openMenu;
+
+    @FXML
+    private Button createPdfFileAboutprognosis;
 
     @FXML
     void ClosePane(MouseEvent event) {
@@ -192,6 +214,12 @@ public class PrognosisView extends BaseMenuClass {
                 "Низкий", "Средний", "Высокий"
         );
 
+        createPdfFileAboutprognosis.setOnAction(event -> {
+            User currentUser = getUserFromApplicationContext();
+            String userName = currentUser.getNameUser(); // Здесь нужно получить имя пользователя
+            PDFCreatorForPrognosis pdfCreator = new PDFCreatorForPrognosis();
+            pdfCreator.createPdfFileAboutPrognosis(currentUser);
+                });
         // Установка вариантов ответов в чойсбокс
         activityLevelPageChoiceYourself.setItems(activityLevels);
         prognosisController.initialized(chartPane, graphicBMI, barChar, currentWeightUser, ageUser, heightUser,
@@ -288,6 +316,80 @@ public class PrognosisView extends BaseMenuClass {
             }
         });
 
+        closemenu.setOnMouseClicked(event -> {
+            slideOutMenu(); // Вызываем метод для анимации закрытия меню
+        });
+
+        openMenu.setOnMouseClicked(event -> {
+            slideInMenu(); // Вызываем метод для анимации открытия меню
+        });
 
     }
+
+    // Метод для анимации закрытия меню
+    private void slideOutMenu() {
+        // Анимация исчезновения VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VBoxMenu.setTranslateX(-VBoxMenu.getWidth() * frac);
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), pageInfo );
+        infoTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем paneWithInfo влево на ширину меню
+        infoTransition.play();
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), namePage);
+        nameTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        nameTransition.play();
+
+
+        // Показываем openMenu
+        openMenu.setVisible(true);
+
+        // Включаем анимацию появления кнопки openMenu
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.5), openMenu);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.play();
+    }
+
+    // Метод для анимации открытия меню
+    private void slideInMenu() {
+        // Анимация появления VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VBoxMenu.setTranslateX(-VBoxMenu.getWidth() * (1 - frac));
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), pageInfo);
+        infoTransition.setToX(0); // Возвращаем paneWithInfo в исходное положение
+        infoTransition.play();
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), namePage);
+        nameTransition.setToX(0); // Возвращаем PaneName в исходное положение
+        nameTransition.play();
+
+        openMenu.setVisible(false); // Скрываем кнопку openMenu
+    }
+
+    public User getUserFromApplicationContext() {
+        return ApplicationContext.getInstance().getCurrentUser();
+    }
+
 }

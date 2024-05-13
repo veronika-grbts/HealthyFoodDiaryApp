@@ -1,6 +1,7 @@
 package HealthyDiaryApp.navigation;
 
 import HealthyDiaryApp.HibbernateRunner;
+import HealthyDiaryApp.view.WindowSize;
 import javafx.stage.Stage;
 /*
  * NavigationMenu class
@@ -24,7 +25,7 @@ public class NavigationMenu {
 
     public static void navigateToPage(String pageName) {
         try {
-            HibbernateRunner.setRoot(stage, pageName); // Передаем текущий Stage
+            HibbernateRunner.setRoot(pageName); // Передаем текущий Stage
         } catch (IOException e) {
             e.printStackTrace();
         }

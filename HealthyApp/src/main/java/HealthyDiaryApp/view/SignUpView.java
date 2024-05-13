@@ -111,6 +111,9 @@ public class SignUpView extends BaseMenuClass implements Initializable {
     @FXML
     private ImageView MinimizeAppImg;
 
+    @FXML
+    private Stage stage;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -195,9 +198,13 @@ public class SignUpView extends BaseMenuClass implements Initializable {
         });
     }
 
+
     @FXML
     void handleFinishBtn(ActionEvent event) {
-        signUpController.handleFinishBtn(finishBtn, signUpName, sighUpPhone, signUpAge,
+        // Присваиваем значение stage в методе initialize
+        this.stage = (Stage) backBtn.getScene().getWindow();
+
+        signUpController.handleFinishBtn(stage,finishBtn, signUpName, sighUpPhone, signUpAge,
                 signUpWeight, signUpHeight, signUpGender,
                 signUpActivityLevel, checkBoxAllergy,
                 checkBoxCause, signUpPane3);

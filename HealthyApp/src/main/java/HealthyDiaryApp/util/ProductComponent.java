@@ -47,6 +47,32 @@ public class ProductComponent {
             return null;
         }
     }
+
+    // Метод для проверки существования названия продукта в базе данных
+    public boolean isProductNameExists(String name) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+
+            // Создаем CriteriaBuilder для создания критериев запроса
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            // Создаем CriteriaQuery для определения структуры запроса
+            CriteriaQuery<Long> criteriaQuery = builder.createQuery(Long.class);
+            // Определяем корневой элемент запроса и указываем, что мы выбираем количество записей
+            Root<Products> root = criteriaQuery.from(Products.class);
+            criteriaQuery.select(builder.count(root));
+            // Устанавливаем условие для фильтрации по названию продукта
+            criteriaQuery.where(builder.equal(root.get("nameProduct"), name));
+            // Выполняем запрос и получаем результат
+            Query<Long> query = session.createQuery(criteriaQuery);
+            Long count = query.getSingleResult();
+            // Если количество найденных продуктов больше 0, то возвращаем true, иначе false
+            return count > 0;
+        } catch (Exception e) {
+            // Обработка исключений, если что-то пошло не так
+            e.printStackTrace();
+            return false;
+        }
+    }
     //Метод для отримання всіх елементів з таблиці Products
     public List<Products> getAllProduct() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -115,4 +141,6 @@ public class ProductComponent {
                     nameProduct, e);
         }
     }
+
+
 }

@@ -14,6 +14,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import HealthyDiaryApp.HibbernateRunner;
 import HealthyDiaryApp.enums.ActivityLevel;
@@ -34,7 +35,7 @@ public class SignUpController {
     private IngredientComponent ingredientComponent = new IngredientComponent();
     private WeightLossGoalsComponent weightLossGoalsComponent = new WeightLossGoalsComponent();
 
-    public void handleFinishBtn(Button finishBtn, TextField signUpName, TextField sighUpPhone, TextField signUpAge,
+    public void handleFinishBtn(Stage stage, Button finishBtn, TextField signUpName, TextField sighUpPhone, TextField signUpAge,
                                 TextField signUpWeight, TextField signUpHeight, ComboBox<String> signUpGender,
                                 ComboBox<ActivityLevel> signUpActivityLevel, CheckBox checkBoxAllergy,
                                 CheckBox checkBoxCause, AnchorPane signUpPane3 ){

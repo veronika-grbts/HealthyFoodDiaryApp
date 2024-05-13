@@ -4,13 +4,18 @@ import HealthyDiaryApp.controller.CreatedMenuController;
 import HealthyDiaryApp.entity.UserSelectedMenu;
 import HealthyDiaryApp.model.CustomMenuItem;
 import HealthyDiaryApp.navigation.MouseEnterHandler;
+import javafx.animation.FadeTransition;
+import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import HealthyDiaryApp.navigation.BaseMenuClass;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 /*
  * CreatedMenuView class
  *
@@ -41,6 +46,10 @@ public class CreatedMenuView extends BaseMenuClass {
 
     @FXML
     private ImageView updateImage;
+
+    @FXML
+    private AnchorPane paneWithInfo;
+
 
     @FXML
     private Button updateBtn;
@@ -87,6 +96,22 @@ public class CreatedMenuView extends BaseMenuClass {
     @FXML
     private AnchorPane tableAnchorePane;
 
+
+    @FXML
+    private ImageView openMenu;
+
+
+    @FXML
+    private ImageView closemenu;
+
+
+    @FXML
+    private VBox VboxMenu;
+
+
+    @FXML
+    private Label namePage;
+
     // Метод для установки обработчиков событий наведения и убирания мыши с кнопки loseWeightMenuButton
     private void setMouseHandlers() {
         MouseEnterHandler.addMouseEnterHandler(loseWeightMenuButton, forecastMenuItem, progresisMenuItem, changePageBtn);
@@ -126,10 +151,99 @@ public class CreatedMenuView extends BaseMenuClass {
         });
 
 
+        closemenu.setOnMouseClicked(event -> {
+            slideOutMenu(); // Вызываем метод для анимации закрытия меню
+        });
+
+        openMenu.setOnMouseClicked(event -> {
+            slideInMenu(); // Вызываем метод для анимации открытия меню
+        });
+
         createdMenuController.initialize(tableProduct, productsComboBox, checkBoxCreatedPdf, updateBtn, updateImage,
                 mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn, loseWeightMenuButton,
                 forecastMenuItem, statisticsMenuItem, createdMenutBtn, typeMealColumn, nameProductColumn,
                 quantityColumn);
 
     }
+
+    // Метод для анимации закрытия меню
+    private void slideOutMenu() {
+        // Анимация исчезновения VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VboxMenu.setTranslateX(-VboxMenu.getWidth() * frac);
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), paneWithInfo);
+        infoTransition.setToX(-VboxMenu.getWidth()); // Перемещаем paneWithInfo влево на ширину меню
+        infoTransition.play();
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), namePage);
+        nameTransition.setToX(-VboxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        nameTransition.play();
+
+
+        TranslateTransition btnTransition = new TranslateTransition(Duration.seconds(0.5), updateBtn);
+        btnTransition.setToX(-VboxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        btnTransition.play();
+
+
+        TranslateTransition imgBtnTransition = new TranslateTransition(Duration.seconds(0.5), updateImage);
+        imgBtnTransition.setToX(-VboxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        imgBtnTransition.play();
+
+        // Показываем openMenu
+        openMenu.setVisible(true);
+
+        // Включаем анимацию появления кнопки openMenu
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.5), openMenu);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.play();
+    }
+
+    // Метод для анимации открытия меню
+    private void slideInMenu() {
+        // Анимация появления VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VboxMenu.setTranslateX(-VboxMenu.getWidth() * (1 - frac));
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), paneWithInfo);
+        infoTransition.setToX(0); // Возвращаем paneWithInfo в исходное положение
+        infoTransition.play();
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), namePage);
+        nameTransition.setToX(0); // Возвращаем PaneName в исходное положение
+        nameTransition.play();
+
+        TranslateTransition btnTransition = new TranslateTransition(Duration.seconds(0.5), updateBtn);
+        btnTransition.setToX(0); // Возвращаем PaneName в исходное положение
+        btnTransition.play();
+
+
+        TranslateTransition imgBtnTransition = new TranslateTransition(Duration.seconds(0.5), updateImage);
+        imgBtnTransition.setToX(0); // Перемещаем PaneName влево на ширину меню
+        imgBtnTransition.play();
+
+        openMenu.setVisible(false); // Скрываем кнопку openMenu
+    }
+
 }

@@ -27,6 +27,7 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
 
+
 public class PrimaryController {
 
     public static void handleSignIn(Stage stage ,Button signInBtn, TextField phoneNumberField) {
@@ -37,7 +38,7 @@ public class PrimaryController {
                 // Зберігаємо user в ApplicationContext
                 ApplicationContext.getInstance().setCurrentUser(user);
 
-                HibbernateRunner.setRoot(stage,"mainpage");
+                HibbernateRunner.setRoot("mainpage");
             } else {
                 ErrorDialogController.showErrorAlert("Користувач не знайдений", "Користувач із вказаним номером телефону не знайдений.");
             }

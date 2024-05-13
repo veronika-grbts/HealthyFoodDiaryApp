@@ -19,14 +19,19 @@ import HealthyDiaryApp.controller.SettingsController;
 import HealthyDiaryApp.enums.ActivityLevel;
 import HealthyDiaryApp.entity.User;
 import HealthyDiaryApp.navigation.MouseEnterHandler;
+import javafx.animation.FadeTransition;
+import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import HealthyDiaryApp.navigation.BaseMenuClass;
 
@@ -38,6 +43,60 @@ public class SettingsView extends BaseMenuClass {
 
     @FXML
     private Button deleteUserBtn;
+
+    @FXML
+    private AnchorPane deleteUserPane;
+
+    @FXML
+    private ImageView plusCancleImg;
+
+    @FXML
+    private Button cancelDeleteBtn;
+
+    @FXML
+    private Button deleteUserAccountBtn;
+
+    @FXML
+    private Button createdMenuPageBtn;
+
+    @FXML
+    private Button loseWeightMenuButton;
+
+    @FXML
+    private Button changePageBtn;
+
+    @FXML
+    private Button progresisMenuItem;
+
+    @FXML
+    private Button forecastMenuItem;
+
+    @FXML
+    private Button calculatorPageBtn;
+
+    @FXML
+    private Button mainPageBtn;
+
+    @FXML
+    private ImageView closeMenu;
+
+    @FXML
+    private AnchorPane topBtnMenu;
+
+    @FXML
+    private ImageView maximizeAppImg;
+
+    @FXML
+    private ImageView closeAppImg;
+
+    @FXML
+    private ImageView MinimizeAppImg;
+
+    @FXML
+    private ScrollPane myScrollPane;
+
+    @FXML
+    private AnchorPane myAnchorePane;
 
     @FXML
     private TextField nameTextField;
@@ -79,50 +138,16 @@ public class SettingsView extends BaseMenuClass {
     private ImageView plusAllergyBtn;
 
     @FXML
-    private AnchorPane deleteUserPane;
+    private VBox VBoxMenu;
 
     @FXML
-    private ImageView plusCancleImg;
+    private ImageView openMenu;
 
     @FXML
-    private Button cancelDeleteBtn;
+    private Pane deleteBtnPane;
 
     @FXML
-    private Button deleteUserAccountBtn;
-
-    @FXML
-    private ImageView closeAppImg;
-
-    @FXML
-    private ImageView MinimizeAppImg;
-
-    @FXML
-    private Button createdMenuPageBtn;
-
-    @FXML
-    private Button loseWeightMenuButton;
-
-    @FXML
-    private Button changePageBtn;
-
-    @FXML
-    private Button progresisMenuItem;
-
-    @FXML
-    private Button forecastMenuItem;
-
-    @FXML
-    private Button calculatorPageBtn;
-
-    @FXML
-    private Button mainPageBtn;
-
-    @FXML
-    private ImageView maximizeAppImg;
-
-
-    @FXML
-    private ScrollPane scrollPane;
+    private Label namePage;
 
     @FXML
     void AddAllergy(MouseEvent event) {
@@ -138,9 +163,85 @@ public class SettingsView extends BaseMenuClass {
     private void setMouseHandlers() {
         MouseEnterHandler.addMouseEnterHandler(loseWeightMenuButton, forecastMenuItem, progresisMenuItem, changePageBtn);
     }
+
+
+    // Метод для анимации закрытия меню
+    private void slideOutMenu() {
+        // Анимация исчезновения VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VBoxMenu.setTranslateX(-VBoxMenu.getWidth() * frac);
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), myAnchorePane);
+        infoTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем paneWithInfo влево на ширину меню
+        infoTransition.play();
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), namePage);
+        nameTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        nameTransition.play();
+
+
+        TranslateTransition btnTransition = new TranslateTransition(Duration.seconds(0.5), deleteUserBtn);
+        btnTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        btnTransition.play();
+
+        TranslateTransition btnImgTransition = new TranslateTransition(Duration.seconds(0.5), deleteImage);
+        btnImgTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        btnImgTransition.play();
+
+        // Показываем openMenu
+        openMenu.setVisible(true);
+
+        // Включаем анимацию появления кнопки openMenu
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.5), openMenu);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.play();
+    }
+
+    // Метод для анимации открытия меню
+    private void slideInMenu() {
+        // Анимация появления VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VBoxMenu.setTranslateX(-VBoxMenu.getWidth() * (1 - frac));
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), myAnchorePane);
+        infoTransition.setToX(0); // Возвращаем paneWithInfo в исходное положение
+        infoTransition.play();
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), namePage);
+        nameTransition.setToX(0); // Возвращаем PaneName в исходное положение
+        nameTransition.play();
+
+        TranslateTransition btnTransition = new TranslateTransition(Duration.seconds(0.5), deleteBtnPane);
+        btnTransition.setToX(0); // Возвращаем PaneName в исходное положение
+        btnTransition.play();
+
+        openMenu.setVisible(false); // Скрываем кнопку openMenu
+    }
+
+
     @FXML
     void initialize() {
-
 
         setMouseHandlers(); // Установить обработчики событий наведения и убирания мыши
         // Обработчик для закрытия приложения при нажатии на closeAppImg
@@ -203,7 +304,15 @@ public class SettingsView extends BaseMenuClass {
 
         cancelDeleteBtn.setOnAction(event -> deleteUserPane.setVisible(false));
 
-        deleteUserAccountBtn.setOnAction(event -> {
+        closeMenu.setOnMouseClicked(event -> {
+            slideOutMenu(); // Вызываем метод для анимации закрытия меню
+        });
+
+        openMenu.setOnMouseClicked(event -> {
+            slideInMenu(); // Вызываем метод для анимации открытия меню
+        });
+
+       deleteUserAccountBtn.setOnAction(event -> {
             settingsController.deleteUserAccount(currentUser);
             try {
                 HibbernateRunner.setRoot("primary");

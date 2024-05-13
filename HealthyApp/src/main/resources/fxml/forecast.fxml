@@ -23,9 +23,9 @@
                 <DropShadow color="#0000004a" />
             </effect>
         </AnchorPane>
-        <Pane layoutX="282.0" layoutY="73.0" prefHeight="123.0" prefWidth="1078.0" style="-fx-background-color: #6f991d;" AnchorPane.leftAnchor="282.0" AnchorPane.rightAnchor="0.0">
+        <Pane layoutY="73.0" prefHeight="123.0" prefWidth="1360.0" style="-fx-background-color: #6f991d;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
-                <Label layoutX="65.0" layoutY="39.0" text="Статистика схуднення" textFill="#f4e9e9">
+                <Label fx:id="namePage" layoutX="331.0" layoutY="39.0" text="Статистика схуднення" textFill="#f4e9e9">
                     <font>
                         <Font name="Gabriola" size="36.0" />
                     </font>
@@ -43,16 +43,16 @@
                 <DropShadow />
             </effect>
         </ImageView>
-        <ScrollPane fitToWidth="true" layoutX="283.0" layoutY="196.0" prefHeight="525.0" prefWidth="1078.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="283.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0">
+        <ScrollPane fitToWidth="true" layoutY="196.0" prefHeight="524.0" prefWidth="1360.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="196.0">
             <content>
-                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="520.0" minWidth="1070.0">
+                <AnchorPane fx:id="pageInfo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="520.0" minWidth="1070.0">
                     <children>
-                  <Label layoutX="32.0" layoutY="59.0" text="Діаграма : " textFill="#867c7c" AnchorPane.topAnchor="59.0">
+                  <Label layoutX="341.0" layoutY="31.0" prefHeight="53.0" prefWidth="207.0" text="Діаграма : " textFill="#867c7c" AnchorPane.topAnchor="31.0">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <LineChart fx:id="weightProgressChart" layoutX="32.0" layoutY="146.0" prefHeight="453.0" prefWidth="580.0" AnchorPane.leftAnchor="32.0">
+                  <LineChart fx:id="weightProgressChart" layoutX="327.0" layoutY="146.0" prefHeight="453.0" prefWidth="572.0" AnchorPane.leftAnchor="327.0">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -60,7 +60,7 @@
                       <NumberAxis autoRanging="false" lowerBound="50.0" prefHeight="306.0" prefWidth="32.0" side="LEFT" />
                     </yAxis>
                   </LineChart>
-                  <Label layoutX="229.0" layoutY="71.0" prefHeight="35.0" prefWidth="363.0" text="Зміни кілограмів користувача" textFill="#91ae8d" AnchorPane.topAnchor="71.0">
+                  <Label layoutX="552.0" layoutY="43.0" prefHeight="35.0" prefWidth="363.0" text="Зміни кілограмів користувача" textFill="#91ae8d" AnchorPane.topAnchor="43.0">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -215,7 +215,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <VBox layoutY="11.0" prefHeight="737.0" prefWidth="283.0" style="-fx-background-color: #452f42;" AnchorPane.bottomAnchor="-28.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="11.0">
+      <VBox fx:id="VBoxMenu" layoutY="11.0" prefHeight="737.0" prefWidth="283.0" style="-fx-background-color: #452f42;" AnchorPane.bottomAnchor="-28.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="11.0">
          <children>
             <Pane prefHeight="130.0" prefWidth="332.0">
                <children>
@@ -300,6 +300,11 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <ImageView fx:id="closemenu" fitHeight="45.0" fitWidth="50.0" layoutX="222.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="42.0">
+                     <image>
+                        <Image url="@../images/arrow.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </children>
@@ -327,5 +332,10 @@
             </ImageView>
          </children>
       </AnchorPane>
+      <ImageView fx:id="openMenu" fitHeight="45.0" fitWidth="45.0" layoutX="16.0" layoutY="665.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="11.0">
+         <image>
+            <Image url="@../images/openMenu.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

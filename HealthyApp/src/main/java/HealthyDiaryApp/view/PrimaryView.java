@@ -62,83 +62,63 @@ public class PrimaryView  implements Initializable  {
 
     @FXML
     private ImageView maximizeAppImg;
+
     @FXML
     private AnchorPane topBtnMenu;
     private double normalWidth;
     private double normalHeight;
 
+    private Stage stage;
+
         @Override
         public void initialize (URL location, ResourceBundle resources){
-
-
             normalWidth = 1076;
             normalHeight = 720;
 
             AnimationButton.addFadeAnimation(signUpBtn);
             AnimationButton.addHoverAnimation(signInBtn);
 
-            // Обработчик для закрытия приложения при нажатии на closeAppImg
+            // Привязка обработчиков событий к кнопкам
             closeAppImg.setOnMouseClicked(event -> {
-                // Получаем сцену и закрываем ее
-              Stage stage = (Stage) closeAppImg.getScene().getWindow();
-                stage.close();
+                Stage primaryStage = (Stage) closeAppImg.getScene().getWindow();
+                primaryStage.close();
             });
 
-            // Обработчик для сворачивания окна при нажатии на MinimizeAppImg
             MinimizeAppImg.setOnMouseClicked(event -> {
-                // Получаем сцену и минимизируем окно
-               Stage stage = (Stage) MinimizeAppImg.getScene().getWindow();
-                stage.setIconified(true);
+                Stage primaryStage = (Stage) MinimizeAppImg.getScene().getWindow();
+                primaryStage.setIconified(true);
             });
 
             maximizeAppImg.setOnMouseClicked(event -> {
-                Stage stage = (Stage) maximizeAppImg.getScene().getWindow();
-                if (stage.isFullScreen()) {
-                    // Возвращаем окно в обычный режим
-                    stage.setFullScreen(false);
-                    stage.setWidth(1360);
-                    stage.setHeight(720);
-                    // Возвращаем изображение к исходным размерам
-                    normalWidth = 1052;
-                    normalHeight = 720;
-                    mainPageImg.setFitWidth(normalWidth);
-                    mainPageImg.setFitHeight(normalHeight);
-                    mainPageImg.setPreserveRatio(true); // Сохраняем пропорции изображения
-
-                    // Сохраняем размеры и положение окна перед изменением
-                    WindowSize.width = 1360;
-                    WindowSize.height = 720;
-                    WindowSize.x = stage.getX();
-                    WindowSize.y = stage.getY();
+                Stage primaryStage = (Stage) maximizeAppImg.getScene().getWindow();
+                if (primaryStage.isFullScreen()) {
+                    primaryStage.setFullScreen(false);
+                    primaryStage.setWidth(1360);
+                    primaryStage.setHeight(720);
+                    // Сохраняем новые размеры окна
+                    WindowSize.saveNewWindowSize(1360, 720);
                 } else {
-                    // Устанавливаем окно в полноэкранный режим
-                    stage.setFullScreen(true);
-                    // Сохраняем текущие размеры окна
-                    normalWidth = stage.getWidth();
-                    normalHeight = stage.getHeight();
-                    // Устанавливаем размеры изображения равными размерам окна
-                    mainPageImg.setFitWidth(normalWidth);
-                    mainPageImg.setFitHeight(normalHeight);
-                    mainPageImg.setPreserveRatio(true); // Сохраняем пропорции изображения
-
-                    // Сохраняем размеры и положение окна перед изменением
-                    WindowSize.width = stage.getWidth();
-                    WindowSize.height = stage.getHeight();
-                    WindowSize.x = stage.getX();
-                    WindowSize.y = stage.getY();
+                    primaryStage.setFullScreen(true);
+                    // Сохраняем новые размеры окна
+                    WindowSize.saveNewWindowSize(primaryStage.getWidth(), primaryStage.getHeight());
                 }
             });
 
-
             signInBtn.setOnAction(event -> {
+                // Получаем текущую сцену
+                Scene scene = mainPageImg.getScene();
+                // Получаем Stage из сцены
+                Stage stage = (Stage) scene.getWindow();
+
                 if (loginField.getText().isEmpty() || phoneNumberField.getText().isEmpty()) {
                     AnimationButton.moveButtonToLeftAndBack(signInBtn);
                 }
-                PrimaryController.handleSignIn(signInBtn, phoneNumberField);
+                PrimaryController.handleSignIn(stage,signInBtn, phoneNumberField);
             });
 
             signUpBtn.setOnAction(event -> {
                 PrimaryController.handleSignUp(signUpBtn);
             });
         }
-    }
+
+}

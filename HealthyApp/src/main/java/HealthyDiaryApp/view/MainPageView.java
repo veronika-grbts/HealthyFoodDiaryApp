@@ -19,25 +19,24 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import HealthyDiaryApp.navigation.MouseEnterHandler;
+import javafx.animation.*;
 import javafx.application.Platform;
 import HealthyDiaryApp.navigation.NavigationMenu;
-import javafx.animation.FadeTransition;
-import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import HealthyDiaryApp.controller.MainPageController;
 import HealthyDiaryApp.navigation.BaseMenuClass;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -49,6 +48,12 @@ public class MainPageView extends BaseMenuClass {
     private AnchorPane mainAnchorePane;
 
     @FXML
+    private AnchorPane paneWithInfo;
+
+    @FXML
+    private TextField height;
+
+    @FXML
     private TextField name_id;
 
     @FXML
@@ -56,9 +61,6 @@ public class MainPageView extends BaseMenuClass {
 
     @FXML
     private TextField age;
-
-    @FXML
-    private TextField height;
 
     @FXML
     private TextField weight;
@@ -70,13 +72,13 @@ public class MainPageView extends BaseMenuClass {
     private TextField allergy;
 
     @FXML
-    private Button existBtn;
+    private Pane PaneName;
 
     @FXML
-    private Button mainPageBtn;
+    private Label NamePage;
 
     @FXML
-    private Button calculatorPageBtn;
+    private VBox VBoxMenu;
 
     @FXML
     private Button createdMenuPageBtn;
@@ -85,13 +87,28 @@ public class MainPageView extends BaseMenuClass {
     private Button loseWeightMenuButton;
 
     @FXML
-    private Button forecastMenuItem;
+    private Button changePageBtn;
 
     @FXML
     private Button progresisMenuItem;
 
     @FXML
-    private Button changePageBtn;
+    private Button forecastMenuItem;
+
+    @FXML
+    private Button calculatorPageBtn;
+
+    @FXML
+    private Button mainPageBtn;
+
+    @FXML
+    private ImageView closeMenu;
+
+    @FXML
+    private AnchorPane topBtnMenu;
+
+    @FXML
+    private ImageView maximizeAppImg;
 
     @FXML
     private ImageView closeAppImg;
@@ -100,8 +117,10 @@ public class MainPageView extends BaseMenuClass {
     private ImageView MinimizeAppImg;
 
     @FXML
-    private ImageView maximizeAppImg;
+    private ImageView openMenu;
 
+    @FXML
+    private Button existBtn;
 
 
     // Метод для анимации появления элементов
@@ -127,8 +146,79 @@ public class MainPageView extends BaseMenuClass {
         MouseEnterHandler.addMouseEnterHandler(loseWeightMenuButton, forecastMenuItem, progresisMenuItem, changePageBtn);
     }
 
+    // Метод для анимации закрытия меню
+    private void slideOutMenu() {
+        // Анимация исчезновения VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VBoxMenu.setTranslateX(-VBoxMenu.getWidth() * frac);
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), paneWithInfo);
+        infoTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем paneWithInfo влево на ширину меню
+        infoTransition.play();
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), NamePage);
+        nameTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        nameTransition.play();
+
+
+        TranslateTransition btnTransition = new TranslateTransition(Duration.seconds(0.5), existBtn);
+        btnTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        btnTransition.play();
+
+        // Показываем openMenu
+        openMenu.setVisible(true);
+
+        // Включаем анимацию появления кнопки openMenu
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.5), openMenu);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.play();
+    }
+
+    // Метод для анимации открытия меню
+    private void slideInMenu() {
+        // Анимация появления VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VBoxMenu.setTranslateX(-VBoxMenu.getWidth() * (1 - frac));
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), paneWithInfo);
+        infoTransition.setToX(0); // Возвращаем paneWithInfo в исходное положение
+        infoTransition.play();
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), NamePage);
+        nameTransition.setToX(0); // Возвращаем PaneName в исходное положение
+        nameTransition.play();
+
+        TranslateTransition btnTransition = new TranslateTransition(Duration.seconds(0.5), existBtn);
+        btnTransition.setToX(0); // Возвращаем PaneName в исходное положение
+        btnTransition.play();
+
+        openMenu.setVisible(false); // Скрываем кнопку openMenu
+    }
+
+
     @FXML
-    void initialize() {
+    void initialize()  {
         initializeButtons(mainPageBtn, calculatorPageBtn, createdMenuPageBtn, changePageBtn, loseWeightMenuButton, forecastMenuItem, progresisMenuItem);
         AnimationButton.addHoverAnimation(existBtn);
 
@@ -165,6 +255,14 @@ public class MainPageView extends BaseMenuClass {
 
         existBtn.setOnAction(event -> {
             NavigationMenu.navigateToPage("primary");
+        });
+
+        closeMenu.setOnMouseClicked(event -> {
+            slideOutMenu(); // Вызываем метод для анимации закрытия меню
+        });
+
+        openMenu.setOnMouseClicked(event -> {
+            slideInMenu(); // Вызываем метод для анимации открытия меню
         });
     }
 

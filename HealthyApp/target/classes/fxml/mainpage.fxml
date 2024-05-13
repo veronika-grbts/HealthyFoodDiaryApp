@@ -13,83 +13,90 @@
 
 <AnchorPane fx:id="mainAnchorePane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="720.0" minWidth="1360.0" style="-fx-background-color: linear-gradient(from 0% 20% to 30% 60%,  #F4E9E9,  #f3f3f3);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HealthyDiaryApp.view.MainPageView">
     <children>
-        <AnchorPane layoutX="287.0" layoutY="195.0" prefHeight="525.0" prefWidth="1078.0" style="-fx-background-color: #ACC860;" visible="false" AnchorPane.leftAnchor="287.0" AnchorPane.topAnchor="195.0">
+        <AnchorPane fx:id="paneWithInfo" layoutX="287.0" layoutY="195.0" prefHeight="525.0" prefWidth="1078.0" AnchorPane.leftAnchor="287.0" AnchorPane.topAnchor="195.0">
             <effect>
                 <DropShadow color="#0000004a" />
             </effect>
-        </AnchorPane>
-        <Label layoutX="372.0" layoutY="236.0" text="Ім'я користувача :" textFill="#201e1e">
-            <font>
-                <Font name="Ebrima" size="24.0" />
-            </font>
-        </Label>
-        <TextField fx:id="name_id" editable="false" layoutX="604.0" layoutY="225.0" prefHeight="55.0" prefWidth="393.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
-         <font>
-            <Font name="System Italic" size="24.0" />
-         </font>
-      </TextField>
-        <Label layoutX="372.0" layoutY="308.0" text="Номер телефону :" textFill="#201e1e">
-            <font>
-                <Font name="Ebrima" size="24.0" />
-            </font>
-        </Label>
-        <TextField fx:id="numberPhone" editable="false" layoutX="604.0" layoutY="298.0" prefHeight="35.0" prefWidth="265.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
-         <font>
-            <Font name="System Italic" size="24.0" />
-         </font></TextField>
-        <Label layoutX="372.0" layoutY="379.0" prefHeight="35.0" prefWidth="50.0" text="Вік :" textFill="#201e1e">
-            <font>
-                <Font name="Ebrima" size="24.0" />
-            </font>
-        </Label>
-        <TextField fx:id="age" editable="false" layoutX="603.0" layoutY="366.0" prefHeight="52.0" prefWidth="265.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
-         <font>
-            <Font name="System Italic" size="24.0" />
-         </font></TextField>
-        <Label layoutX="372.0" layoutY="442.0" text="Зріст :" textFill="#201e1e">
-            <font>
-                <Font name="Ebrima" size="24.0" />
-            </font>
-        </Label>
-        <TextField fx:id="height" editable="false" layoutX="603.0" layoutY="433.0" prefHeight="52.0" prefWidth="265.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
-         <font>
-            <Font name="System Italic" size="24.0" />
-         </font></TextField>
-        <Label layoutX="372.0" layoutY="507.0" text="Вага :" textFill="#201e1e">
-            <font>
-                <Font name="Ebrima" size="24.0" />
-            </font>
-        </Label>
-        <TextField fx:id="weight" editable="false" layoutX="603.0" layoutY="499.0" prefHeight="52.0" prefWidth="167.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
-         <font>
-            <Font name="System Italic" size="24.0" />
-         </font></TextField>
-        <Label layoutX="370.0" layoutY="578.0" text="Стать :" textFill="#201e1e">
-            <font>
-                <Font name="Ebrima" size="24.0" />
-            </font>
-        </Label>
-        <TextField fx:id="gender" editable="false" layoutX="604.0" layoutY="561.0" prefHeight="52.0" prefWidth="167.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
-         <font>
-            <Font name="System Italic" size="24.0" />
-         </font></TextField>
-        <Label layoutX="372.0" layoutY="651.0" text="Наявність алергії :" textFill="#201e1e">
-            <font>
-                <Font name="Ebrima" size="24.0" />
-            </font>
-        </Label>
-        <TextField fx:id="allergy" editable="false" layoutX="603.0" layoutY="639.0" prefHeight="52.0" prefWidth="167.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
-         <font>
-            <Font name="System Italic" size="24.0" />
-         </font></TextField>
-      <Pane layoutX="282.0" layoutY="73.0" prefHeight="123.0" prefWidth="1078.0" style="-fx-background-color: #6f991d;" AnchorPane.leftAnchor="282.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label layoutX="65.0" layoutY="39.0" text="Профіль користувача" textFill="#f4e9e9">
+              <TextField fx:id="height" editable="false" layoutX="121.0" layoutY="247.0" prefHeight="52.0" prefWidth="265.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
+               <font>
+                  <Font name="System Italic" size="24.0" />
+               </font>
+            </TextField>
+              <Label layoutX="23.0" layoutY="132.0" text="Номер телефону :" textFill="#201e1e">
+                  <font>
+                      <Font name="Ebrima" size="24.0" />
+                  </font>
+              </Label>
+              <Label layoutX="22.0" layoutY="62.0" text="Ім'я користувача :" textFill="#201e1e">
+                  <font>
+                      <Font name="Ebrima" size="24.0" />
+                  </font>
+              </Label>
+              <TextField fx:id="name_id" editable="false" layoutX="261.0" layoutY="42.0" prefHeight="55.0" prefWidth="393.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
+               <font>
+                  <Font name="System Italic" size="24.0" />
+               </font>
+            </TextField>
+              <TextField fx:id="numberPhone" editable="false" layoutX="253.0" layoutY="115.0" prefHeight="35.0" prefWidth="265.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
+               <font>
+                  <Font name="System Italic" size="24.0" />
+               </font>
+            </TextField>
+              <Label layoutX="21.0" layoutY="194.0" prefHeight="35.0" prefWidth="50.0" text="Вік :" textFill="#201e1e">
+                  <font>
+                      <Font name="Ebrima" size="24.0" />
+                  </font>
+              </Label>
+              <TextField fx:id="age" editable="false" layoutX="121.0" layoutY="177.0" prefHeight="52.0" prefWidth="265.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
+               <font>
+                  <Font name="System Italic" size="24.0" />
+               </font>
+            </TextField>
+              <Label layoutX="21.0" layoutY="264.0" text="Зріст :" textFill="#201e1e">
+                  <font>
+                      <Font name="Ebrima" size="24.0" />
+                  </font>
+              </Label>
+              <Label layoutX="20.0" layoutY="323.0" text="Вага :" textFill="#201e1e">
+                  <font>
+                      <Font name="Ebrima" size="24.0" />
+                  </font>
+              </Label>
+              <TextField fx:id="weight" editable="false" layoutX="121.0" layoutY="306.0" prefHeight="52.0" prefWidth="167.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
+               <font>
+                  <Font name="System Italic" size="24.0" />
+               </font>
+            </TextField>
+              <Label layoutX="23.0" layoutY="388.0" text="Стать :" textFill="#201e1e">
+                  <font>
+                      <Font name="Ebrima" size="24.0" />
+                  </font>
+              </Label>
+              <TextField fx:id="gender" editable="false" layoutX="121.0" layoutY="371.0" prefHeight="52.0" prefWidth="167.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
+               <font>
+                  <Font name="System Italic" size="24.0" />
+               </font>
+            </TextField>
+              <Label layoutX="21.0" layoutY="439.0" text="Наявність алергії :" textFill="#201e1e">
+                  <font>
+                      <Font name="Ebrima" size="24.0" />
+                  </font>
+              </Label>
+              <TextField fx:id="allergy" editable="false" layoutX="261.0" layoutY="422.0" prefHeight="52.0" prefWidth="167.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #2d6b22; -fx-background-color: transparent; -fx-border-radius: 10px;">
+               <font>
+                  <Font name="System Italic" size="24.0" />
+               </font>
+            </TextField>
+         </children>
+        </AnchorPane>
+      <Pane fx:id="PaneName" layoutX="282.0" layoutY="73.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="123.0" minWidth="1078.0" style="-fx-background-color: #6f991d;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label fx:id="NamePage" layoutX="306.0" layoutY="39.0" text="Профіль користувача" textFill="#f4e9e9">
                <font>
                   <Font name="Gabriola" size="36.0" />
                </font>
             </Label>
-            <Button fx:id="existBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="635.0" layoutY="39.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="217.0" style="-fx-background-color: transparent; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #f4e9e9;" text="ВИХІД З ЗАПИСУ" textAlignment="JUSTIFY" textFill="#f4e9e9" />
          </children>
          <effect>
             <DropShadow color="#000000a6" />
@@ -103,7 +110,7 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <VBox layoutY="11.0" prefHeight="737.0" prefWidth="283.0" style="-fx-background-color: #452f42;" AnchorPane.bottomAnchor="-28.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="11.0">
+      <VBox fx:id="VBoxMenu" layoutY="11.0" prefHeight="737.0" prefWidth="283.0" style="-fx-background-color: #452f42;" AnchorPane.bottomAnchor="-28.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="11.0">
          <children>
             <Pane prefHeight="130.0" prefWidth="332.0">
                <children>
@@ -188,6 +195,11 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <ImageView fx:id="closeMenu" fitHeight="45.0" fitWidth="50.0" layoutX="222.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="42.0">
+                     <image>
+                        <Image url="@../images/arrow.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </children>
@@ -215,5 +227,11 @@
             </ImageView>
          </children>
       </AnchorPane>
+      <ImageView fx:id="openMenu" fitHeight="45.0" fitWidth="45.0" layoutX="11.0" layoutY="661.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/openMenu.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="existBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="900.0" layoutY="115.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="217.0" style="-fx-background-color: transparent; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: #f4e9e9;" text="ВИХІД З ЗАПИСУ" textAlignment="JUSTIFY" textFill="#f4e9e9" />
     </children>
 </AnchorPane>

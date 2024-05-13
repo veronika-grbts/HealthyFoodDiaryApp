@@ -7,6 +7,9 @@ import java.util.ResourceBundle;
 
 import HealthyDiaryApp.controller.ErrorDialogController;
 import HealthyDiaryApp.navigation.MouseEnterHandler;
+import javafx.animation.FadeTransition;
+import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import HealthyDiaryApp.controller.CalorieCalculatorController;
@@ -19,7 +22,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import HealthyDiaryApp.navigation.BaseMenuClass;
 import HealthyDiaryApp.util.ProductComponent;
@@ -38,11 +43,57 @@ import HealthyDiaryApp.util.ProductComponent;
 public class CalorieCalculatorView extends BaseMenuClass {
     private  CalorieCalculatorController calorieCalculatorController = new CalorieCalculatorController();
     private ProductComponent productComponent = new ProductComponent();
+
+    @FXML
+    private Label namePage;
+
     @FXML
     private ImageView updateImage;
 
     @FXML
     private Button updateBtn;
+
+    @FXML
+    private VBox VBoxMenu;
+
+    @FXML
+    private Button createdMenuPageBtn;
+
+    @FXML
+    private Button loseWeightMenuButton;
+
+    @FXML
+    private Button changePageBtn;
+
+    @FXML
+    private Button progresisMenuItem;
+
+    @FXML
+    private Button forecastMenuItem;
+
+    @FXML
+    private Button calculatorPageBtn;
+
+    @FXML
+    private Button mainPageBtn;
+
+    @FXML
+    private ImageView closemenu;
+
+    @FXML
+    private AnchorPane topBtnMenu;
+
+    @FXML
+    private ImageView maximizeAppImg;
+
+    @FXML
+    private ImageView closeAppImg;
+
+    @FXML
+    private ImageView MinimizeAppImg;
+
+    @FXML
+    private AnchorPane paneInfo;
 
     @FXML
     private TextField fatField;
@@ -57,9 +108,6 @@ public class CalorieCalculatorView extends BaseMenuClass {
     private TextField caloriesField;
 
     @FXML
-    private ComboBox<String> productsComboBox;
-
-    @FXML
     private Button addProductBtn;
 
     @FXML
@@ -67,14 +115,6 @@ public class CalorieCalculatorView extends BaseMenuClass {
 
     @FXML
     private ImageView plusProduct;
-    @FXML
-    private TableView<UserSelectedProduct> tableProduct;
-
-    @FXML
-    private TableColumn<UserSelectedProduct, String> nameProduct;
-
-    @FXML
-    private TableColumn<UserSelectedProduct, Double> quantity;
 
     @FXML
     private AnchorPane PaneAddProduct;
@@ -101,34 +141,21 @@ public class CalorieCalculatorView extends BaseMenuClass {
     private ImageView closePane;
 
     @FXML
-    private ImageView closeAppImg;
+    private ImageView openMenu;
 
     @FXML
-    private ImageView MinimizeAppImg;
+    private ComboBox<String> productsComboBox;
 
     @FXML
-    private Button createdMenuPageBtn;
+    private TableView<UserSelectedProduct> tableProduct;
 
     @FXML
-    private Button loseWeightMenuButton;
+    private TableColumn<UserSelectedProduct, String> nameProduct;
 
     @FXML
-    private Button changePageBtn;
+    private TableColumn<UserSelectedProduct, Double> quantity;
 
-    @FXML
-    private Button progresisMenuItem;
 
-    @FXML
-    private Button forecastMenuItem;
-
-    @FXML
-    private Button calculatorPageBtn;
-
-    @FXML
-    private Button mainPageBtn;
-
-    @FXML
-    private ImageView maximizeAppImg;
 
     // Метод для установки обработчиков событий наведения и убирания мыши с кнопки loseWeightMenuButton
     private void setMouseHandlers() {
@@ -229,6 +256,94 @@ public class CalorieCalculatorView extends BaseMenuClass {
         });
 
         plusProduct.setOnMouseClicked(this::Handle);
+
+        closemenu.setOnMouseClicked(event -> {
+            slideOutMenu(); // Вызываем метод для анимации закрытия меню
+        });
+
+        openMenu.setOnMouseClicked(event -> {
+            slideInMenu(); // Вызываем метод для анимации открытия меню
+        });
+    }
+
+    // Метод для анимации закрытия меню
+    private void slideOutMenu() {
+        // Анимация исчезновения VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VBoxMenu.setTranslateX(-VBoxMenu.getWidth() * frac);
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), paneInfo);
+        infoTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем paneWithInfo влево на ширину меню
+        infoTransition.play();
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), namePage);
+        nameTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        nameTransition.play();
+
+
+        TranslateTransition btnTransition = new TranslateTransition(Duration.seconds(0.5), updateBtn);
+        btnTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        btnTransition.play();
+
+
+        TranslateTransition imgBtnTransition = new TranslateTransition(Duration.seconds(0.5), updateImage);
+        imgBtnTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        imgBtnTransition.play();
+
+        // Показываем openMenu
+        openMenu.setVisible(true);
+
+        // Включаем анимацию появления кнопки openMenu
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.5), openMenu);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.play();
+    }
+
+    // Метод для анимации открытия меню
+    private void slideInMenu() {
+        // Анимация появления VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VBoxMenu.setTranslateX(-VBoxMenu.getWidth() * (1 - frac));
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), paneInfo);
+        infoTransition.setToX(0); // Возвращаем paneWithInfo в исходное положение
+        infoTransition.play();
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), namePage);
+        nameTransition.setToX(0); // Возвращаем PaneName в исходное положение
+        nameTransition.play();
+
+        TranslateTransition btnTransition = new TranslateTransition(Duration.seconds(0.5), updateBtn);
+        btnTransition.setToX(0); // Возвращаем PaneName в исходное положение
+        btnTransition.play();
+
+
+        TranslateTransition imgBtnTransition = new TranslateTransition(Duration.seconds(0.5), updateImage);
+        imgBtnTransition.setToX(0); // Перемещаем PaneName влево на ширину меню
+        imgBtnTransition.play();
+
+        openMenu.setVisible(false); // Скрываем кнопку openMenu
     }
     @FXML
     void Handle(MouseEvent event) {
@@ -246,6 +361,9 @@ public class CalorieCalculatorView extends BaseMenuClass {
             boolean isProteinValid = TextFieldValidator.isWeightValid(proteinText);
             boolean isCarbsValid = TextFieldValidator.isWeightValid(carbsText);
             boolean isNameValid = TextFieldValidator.isValidField(nameProductField);
+            // Проверка наличия имени в базе данных
+            boolean doesNameExist = checkIfNameExists(name);
+
             // Установка стиля для полей ввода
             if (!isCalorieValid) {
                 TextFieldValidator.setInvalidStyle(calorieProductField);
@@ -277,8 +395,8 @@ public class CalorieCalculatorView extends BaseMenuClass {
                 TextFieldValidator.setValidStyle(nameProductField);
             }
 
-            // Если все данные введены правильно, то продолжаем выполнение действий
-            if (isCalorieValid && isFatValid && isProteinValid && isCarbsValid) {
+            // Если все данные введены правильно и имя не существует, то продолжаем выполнение действий
+            if (isCalorieValid && isFatValid && isProteinValid && isCarbsValid && isNameValid && !doesNameExist) {
                 double calorie = Double.parseDouble(calorieText);
                 double fat = Double.parseDouble(fatText);
                 double protein = Double.parseDouble(proteinText);
@@ -287,14 +405,20 @@ public class CalorieCalculatorView extends BaseMenuClass {
                 productComponent.addNewProducts(name, calorie, fat, protein, carbs);
                 PaneAddProduct.setVisible(false);
             } else {
-                // Вывести сообщение об ошибке или выполнить другие действия, если введены неправильные данные
-                ErrorDialogController.showErrorAlert("Помилка при вводі даних", "Будь-ласка введіть коректний формат для даних.");
+                // Вывести сообщение об ошибке, если введены неправильные данные или имя уже существует
+                if (doesNameExist) {
+                    ErrorDialogController.showErrorAlert("Помилка при вводі даних", "Продукт із таким ім'ям вже існує у базі даних.");
+                } else {
+                    ErrorDialogController.showErrorAlert("Помилка при вводі даних", "Будь-ласка введіть коректний формат для даних.");
+                }
             }
         });
         closePane.setOnMouseClicked(this::ClosePane);
     }
-
-
+    // Метод для проверки существования имени в базе данных
+    private boolean checkIfNameExists(String name) {
+        return productComponent.isProductNameExists(name);
+    }
     @FXML
     void ClosePane(MouseEvent event) {
         PaneAddProduct.setVisible(false);

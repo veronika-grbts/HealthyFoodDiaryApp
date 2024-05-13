@@ -4,6 +4,9 @@ import java.net.URL;
 import java.util.*;
 //import java.util.Date;
 import HealthyDiaryApp.navigation.MouseEnterHandler;
+import javafx.animation.FadeTransition;
+import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
@@ -14,6 +17,7 @@ import javafx.scene.layout.VBox;
 import HealthyDiaryApp.controller.ForecastController;
 import HealthyDiaryApp.navigation.BaseMenuClass;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /*
  * ForecastView class
@@ -28,14 +32,15 @@ import javafx.stage.Stage;
 
 public class ForecastView extends BaseMenuClass {
     private ForecastController forecastController = new ForecastController();
-    @FXML
-    private AnchorPane oopsWindowPane;
-
-    @FXML
-    private Button updateCouseInPageBtn;
 
     @FXML
     private LineChart<String, Number> weightProgressChart;
+
+    @FXML
+    private Label namePage;
+
+    @FXML
+    private AnchorPane pageInfo;
 
     @FXML
     private AnchorPane progressPane;
@@ -80,10 +85,7 @@ public class ForecastView extends BaseMenuClass {
     private Button addNewWeightUserBtn;
 
     @FXML
-    private ImageView closeAppImg;
-
-    @FXML
-    private ImageView MinimizeAppImg;
+    private VBox VBoxMenu;
 
     @FXML
     private Button createdMenuPageBtn;
@@ -107,7 +109,22 @@ public class ForecastView extends BaseMenuClass {
     private Button mainPageBtn;
 
     @FXML
+    private ImageView closemenu;
+
+    @FXML
+    private AnchorPane topBtnMenu;
+
+    @FXML
     private ImageView maximizeAppImg;
+
+    @FXML
+    private ImageView closeAppImg;
+
+    @FXML
+    private ImageView MinimizeAppImg;
+
+    @FXML
+    private ImageView openMenu;
 
     @FXML
     void ClosePaneWithLowWeight (MouseEvent event) {
@@ -174,5 +191,83 @@ public class ForecastView extends BaseMenuClass {
             closeWindowAddProgressWeightImg.setOnMouseClicked(this::closeWindowAddProgressWeightImg);
         });
 
+        closemenu.setOnMouseClicked(event -> {
+            slideOutMenu(); // Вызываем метод для анимации закрытия меню
+        });
+
+        openMenu.setOnMouseClicked(event -> {
+            slideInMenu(); // Вызываем метод для анимации открытия меню
+        });
+    }
+
+    // Метод для анимации закрытия меню
+    private void slideOutMenu() {
+        // Анимация исчезновения VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VBoxMenu.setTranslateX(-VBoxMenu.getWidth() * frac);
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), pageInfo);
+        infoTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем paneWithInfo влево на ширину меню
+        infoTransition.play();
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), namePage);
+        nameTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        nameTransition.play();
+
+
+        TranslateTransition btnTransition = new TranslateTransition(Duration.seconds(0.5), updateBestWeightUserBtn);
+        btnTransition.setToX(-VBoxMenu.getWidth()); // Перемещаем PaneName влево на ширину меню
+        btnTransition.play();
+
+        // Показываем openMenu
+        openMenu.setVisible(true);
+
+        // Включаем анимацию появления кнопки openMenu
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.5), openMenu);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.play();
+    }
+
+    // Метод для анимации открытия меню
+    private void slideInMenu() {
+        // Анимация появления VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VBoxMenu.setTranslateX(-VBoxMenu.getWidth() * (1 - frac));
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), pageInfo);
+        infoTransition.setToX(0); // Возвращаем paneWithInfo в исходное положение
+        infoTransition.play();
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), namePage);
+        nameTransition.setToX(0); // Возвращаем PaneName в исходное положение
+        nameTransition.play();
+
+        TranslateTransition btnTransition = new TranslateTransition(Duration.seconds(0.5), updateBestWeightUserBtn);
+        btnTransition.setToX(0); // Возвращаем PaneName в исходное положение
+        btnTransition.play();
+
+
+        openMenu.setVisible(false); // Скрываем кнопку openMenu
     }
 }

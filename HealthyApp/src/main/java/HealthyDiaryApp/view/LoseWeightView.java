@@ -17,9 +17,7 @@ import HealthyDiaryApp.entity.User;
 import HealthyDiaryApp.navigation.MouseEnterHandler;
 import HealthyDiaryApp.singleton.ApplicationContext;
 import HealthyDiaryApp.util.UserComponent;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
@@ -57,6 +55,10 @@ public class LoseWeightView extends BaseMenuClass {
     private static final int ANIMATION_DURATION = 500;
     private static final String FEMALE_PHOTOS_DIRECTORY = "C://Users//User//IdeaProjects//HealthyApp//src//main//resources//images//female";
     private static final String MALE_PHOTOS_DIRECTORY= "C://Users//User//IdeaProjects//HealthyApp//src//main//resources//images//male";
+
+    @FXML
+    private Label namePage;
+
     @FXML
     private Button updateBestWeightUserBtn;
 
@@ -74,6 +76,12 @@ public class LoseWeightView extends BaseMenuClass {
 
     @FXML
     private Label secondsLabel;
+
+    @FXML
+    private ScrollPane myScrollPane;
+
+    @FXML
+    private AnchorPane AnchorePaneinScroll;
 
     @FXML
     private TextField bodyMassIndexFieldText;
@@ -148,12 +156,6 @@ public class LoseWeightView extends BaseMenuClass {
     private ImageView userShinishedLossWeightImg;
 
     @FXML
-    private ImageView closeAppImg;
-
-    @FXML
-    private ImageView MinimizeAppImg;
-
-    @FXML
     private Button createdMenuPageBtn;
 
     @FXML
@@ -175,14 +177,137 @@ public class LoseWeightView extends BaseMenuClass {
     private Button mainPageBtn;
 
     @FXML
+    private ImageView closemenu;
+
+    @FXML
+    private AnchorPane topBtnMenu;
+
+    @FXML
     private ImageView maximizeAppImg;
 
     @FXML
-    private AnchorPane AnchorePaneinScroll;
+    private ImageView closeAppImg;
+
+    @FXML
+    private ImageView MinimizeAppImg;
+
+    @FXML
+    private ImageView openMenu;
+
+    @FXML
+    private VBox VBoxMane;
+
+    @FXML
+    private AnchorPane paneIMT;
+
+    @FXML
+    private AnchorPane paneInfo;
+
+    @FXML
+    private AnchorPane panePieChart;
 
     // Метод для установки обработчиков событий наведения и убирания мыши с кнопки loseWeightMenuButton
     private void setMouseHandlers() {
         MouseEnterHandler.addMouseEnterHandler(loseWeightMenuButton, forecastMenuItem, progresisMenuItem, changePageBtn);
+    }
+
+    // Метод для анимации закрытия меню
+    private void slideOutMenu() {
+        // Анимация исчезновения VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VBoxMane.setTranslateX(-VBoxMane.getWidth() * frac);
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition imtTransition = new TranslateTransition(Duration.seconds(0.5), paneIMT);
+        imtTransition.setToX(-VBoxMane.getWidth()); // Перемещаем paneWithInfo влево на ширину меню
+        imtTransition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), paneInfo);
+        infoTransition.setToX(-VBoxMane.getWidth()); // Перемещаем paneWithInfo влево на ширину меню
+        infoTransition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition pieChartTransition = new TranslateTransition(Duration.seconds(0.5), panePieChart);
+        pieChartTransition.setToX(-VBoxMane.getWidth()); // Перемещаем paneWithInfo влево на ширину меню
+        pieChartTransition.play();
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), namePage);
+        nameTransition.setToX(-VBoxMane.getWidth()); // Перемещаем PaneName влево на ширину меню
+        nameTransition.play();
+
+        TranslateTransition hBoxTimeTransition = new TranslateTransition(Duration.seconds(0.5), hBoxTime);
+        hBoxTimeTransition.setToX(-VBoxMane.getWidth()); // Перемещаем PaneName влево на ширину меню
+        hBoxTimeTransition.play();
+
+        TranslateTransition btnTransition = new TranslateTransition(Duration.seconds(0.5), updateBestWeightUserBtn);
+        btnTransition.setToX(-VBoxMane.getWidth()); // Перемещаем PaneName влево на ширину меню
+        btnTransition.play();
+
+        // Показываем openMenu
+        openMenu.setVisible(true);
+
+        // Включаем анимацию появления кнопки openMenu
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.5), openMenu);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.play();
+    }
+
+    // Метод для анимации открытия меню
+    private void slideInMenu() {
+        // Анимация появления VBoxMenu
+        Transition transition = new Transition() {
+            {
+                setCycleDuration(Duration.seconds(0.5));
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                VBoxMane.setTranslateX(-VBoxMane.getWidth() * (1 - frac));
+            }
+        };
+        transition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition imtTransition = new TranslateTransition(Duration.seconds(0.5), paneIMT);
+        imtTransition.setToX(0); // Перемещаем paneWithInfo влево на ширину меню
+        imtTransition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition infoTransition = new TranslateTransition(Duration.seconds(0.5), paneInfo);
+        infoTransition.setToX(0); // Перемещаем paneWithInfo влево на ширину меню
+        infoTransition.play();
+
+        // Анимация перемещения paneWithInfo и PaneName
+        TranslateTransition pieChartTransition = new TranslateTransition(Duration.seconds(0.5), panePieChart);
+        pieChartTransition.setToX(0); // Перемещаем paneWithInfo влево на ширину меню
+        pieChartTransition.play();
+
+
+        TranslateTransition nameTransition = new TranslateTransition(Duration.seconds(0.5), namePage);
+        nameTransition.setToX(0); // Перемещаем PaneName влево на ширину меню
+        nameTransition.play();
+
+
+        TranslateTransition hBoxTimeTransition = new TranslateTransition(Duration.seconds(0.5), hBoxTime);
+        hBoxTimeTransition.setToX(0); // Перемещаем PaneName влево на ширину меню
+        hBoxTimeTransition.play();
+
+        TranslateTransition btnTransition = new TranslateTransition(Duration.seconds(0.5), updateBestWeightUserBtn);
+        btnTransition.setToX(0); // Возвращаем PaneName в исходное положение
+        btnTransition.play();
+
+        openMenu.setVisible(false); // Скрываем кнопку openMenu
     }
 
     @FXML
@@ -258,6 +383,15 @@ public class LoseWeightView extends BaseMenuClass {
         });
 
         userShinishedLossWeightImg.setOnMouseClicked(this::ClosePaneFinishedLossWeightImg);
+
+        closemenu.setOnMouseClicked(event -> {
+            slideOutMenu(); // Вызываем метод для анимации закрытия меню
+        });
+
+        openMenu.setOnMouseClicked(event -> {
+            slideInMenu(); // Вызываем метод для анимации открытия меню
+        });
+
     }
     private void setRandomUserPhoto() {
         User user = getUserFromApplicationContext();
